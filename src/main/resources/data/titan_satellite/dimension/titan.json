@@ -1,0 +1,11 @@
+{
+  "type": "titan_satellite:titan",
+  "generator": {
+    "type": "minecraft:noise",
+    "settings": "titan_satellite:titan",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "titan_satellite:tholin_dune_sea"
+    }
+  }
+}

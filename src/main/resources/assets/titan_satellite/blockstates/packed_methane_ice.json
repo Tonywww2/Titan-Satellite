@@ -1,0 +1,5 @@
+{
+  "variants": {
+    "": { "model": "titan_satellite:block/packed_methane_ice" }
+  }
+}

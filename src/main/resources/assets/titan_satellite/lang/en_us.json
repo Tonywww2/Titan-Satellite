@@ -1,0 +1,22 @@
+{
+  "itemGroup.titan_satellite.titan": "Titan Satellite",
+
+  "block.titan_satellite.titan_stone": "Titan Stone",
+  "block.titan_satellite.titan_basalt": "Titan Basalt",
+  "block.titan_satellite.tholin_sand": "Tholin Sand",
+  "block.titan_satellite.crushed_ice": "Crushed Ice",
+  "block.titan_satellite.cryo_ice": "Cryo Ice",
+  "block.titan_satellite.packed_methane_ice": "Packed Methane Ice",
+  "block.titan_satellite.cryovolcanic_geyser": "Cryovolcanic Geyser",
+  "block.titan_satellite.methane_pool_core": "Methane Pool Core",
+  "block.titan_satellite.special_methane_pump": "Special Methane Pump",
+  "block.titan_satellite.tholin_crystal": "Tholin Crystal",
+  "block.titan_satellite.liquid_methane": "Liquid Methane",
+  "block.titan_satellite.liquid_ammonia": "Liquid Ammonia",
+
+  "item.titan_satellite.aero_membrane": "Aero-Membrane",
+  "item.titan_satellite.liquid_methane_bucket": "Liquid Methane Bucket",
+  "item.titan_satellite.liquid_ammonia_bucket": "Liquid Ammonia Bucket",
+
+  "entity.titan_satellite.aero_jelly": "Aero-Jelly"
+}

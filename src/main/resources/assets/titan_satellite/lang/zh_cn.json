@@ -1,0 +1,22 @@
+{
+  "itemGroup.titan_satellite.titan": "土卫六",
+
+  "block.titan_satellite.titan_stone": "泰坦岩",
+  "block.titan_satellite.titan_basalt": "泰坦玄武岩",
+  "block.titan_satellite.tholin_sand": "托林沙",
+  "block.titan_satellite.crushed_ice": "碎冰",
+  "block.titan_satellite.cryo_ice": "寒冰",
+  "block.titan_satellite.packed_methane_ice": "甲烷浮冰",
+  "block.titan_satellite.cryovolcanic_geyser": "冰火山喷泉",
+  "block.titan_satellite.methane_pool_core": "甲烷池核心",
+  "block.titan_satellite.special_methane_pump": "特制甲烷泵",
+  "block.titan_satellite.tholin_crystal": "托林晶体",
+  "block.titan_satellite.liquid_methane": "液态甲烷",
+  "block.titan_satellite.liquid_ammonia": "液态氨",
+
+  "item.titan_satellite.aero_membrane": "浮游薄膜",
+  "item.titan_satellite.liquid_methane_bucket": "液态甲烷桶",
+  "item.titan_satellite.liquid_ammonia_bucket": "液态氨桶",
+
+  "entity.titan_satellite.aero_jelly": "甲烷浮游体"
+}

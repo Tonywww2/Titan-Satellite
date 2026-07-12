@@ -1,0 +1,36 @@
+# ===== Gradle =====
+.gradle/
+build/
+out/
+
+# Keep the Gradle wrapper jar (required to build the project)
+!gradle/wrapper/gradle-wrapper.jar
+
+# ===== Stonecutter (version preprocessing cache) =====
+.stonecutter/
+
+# ===== Minecraft dev run directory (generated worlds, logs, crash reports, configs) =====
+run/
+runs/
+
+# ===== IDE: IntelliJ IDEA =====
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# ===== IDE: Eclipse =====
+.settings/
+.classpath
+.project
+bin/
+
+# ===== IDE: VS Code =====
+.vscode/
+
+# ===== Logs =====
+*.log
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
