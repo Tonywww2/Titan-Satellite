@@ -45,10 +45,10 @@ public record BiomeHeightDensityFunction(double factor) implements DensityFuncti
 
         // 以平滑的 base/mid/detail 为主，仅保留少量 fracture 作粗糙感（移除更高频 weather，消除亚格锄齿）
         double relief =
-                  plateau * 0.44D                                 // 平缓台地大区（已扭曲）
+                  plateau * 0.48D                                 // 平缓台地大区（已扭曲）
                 + mid * 0.28D                                     // 中尺度丘陵/沙脊
                 + detail * 0.20D                                  // 细节起伏
-                + fracture * 0.08D;                               // 少量破碎（适度保留）
+                + fracture * 0.04D;                               // 少量破碎（适度保留）
 
         return Mth.clamp(relief * factor, -Math.abs(factor), Math.abs(factor));
     }

@@ -1,5 +1,5 @@
 {
-  "sea_level": 20,
+  "sea_level": 12,
   "disable_mob_generation": false,
   "aquifers_enabled": false,
   "ore_veins_enabled": false,
@@ -23,7 +23,7 @@
       "shift_x": "minecraft:shift_x",
       "shift_y": 0.0,
       "shift_z": "minecraft:shift_z",
-      "xz_scale": 0.1,
+      "xz_scale": 0.2,
       "y_scale": 0.0
     },
     "vegetation": "titan_satellite:climate/vegetation",

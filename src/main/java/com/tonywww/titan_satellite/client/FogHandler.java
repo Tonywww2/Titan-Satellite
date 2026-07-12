@@ -28,10 +28,10 @@ public final class FogHandler {
     private static final float FOG_G = 0.45F;
     private static final float FOG_B = 0.19F;
     /** 液态甲烷深渊（methane_abyss）浓雾近 / 远平面（格）——低能见度。 */
-    private static final float FOG_START = 72.0F;
-    private static final float FOG_END = 128.0F;
+    private static final float FOG_START = 128.0F;
+    private static final float FOG_END = 144.0F;
     /** 深渊以外群系的淡雾近 / 远平面（格）——仅远处留一层橙黄薄霭，能见度大幅提高。 */
-    private static final float THIN_FOG_START = 96.0F;
+    private static final float THIN_FOG_START = 144.0F;
     private static final float THIN_FOG_END = 192.0F;
     /** 液态甲烷深渊群系 id（仅此群系维持浓雾）。 */
     private static final ResourceLocation METHANE_ABYSS =
