@@ -112,7 +112,7 @@ flowchart LR
 ### Stage A · 契约冻结与脚手架（前置：M0 ✅）
 > 两任务文件完全不相交；均建立 §2 冻结面，各自独立编译。
 
-**PA-1 · 注册/装配/lang/渲染器 冻结**  ☐ owner:___ output:___
+**PA-1 · 注册/装配/lang/渲染器 冻结**  ◐ owner:agent1 output:进行中
 - Owns: `registry/TS*.java`（含新增 `TSMobEffects`、`TSParticles`、`TSBlockEntities`）、`TitanSatellite.java`、`block/*Block.java`（桩）、`entity/*.java`（桩，含 `probe_laser`）、`item/*.java`（桩）、`client/*Renderer.java`（桩）+`client/TitanClientEvents.java`、`lang/en_us.json`+`lang/zh_cn.json`。
 - Reads: §2 全部 ID/签名。
 - Deliverable/验收: `build` 通过；`runServer` Done（全注册项以桩存在）；`runClient` 到标题页；lang 完整。

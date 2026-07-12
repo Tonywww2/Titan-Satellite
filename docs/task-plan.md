@@ -27,7 +27,7 @@
 
 | ID | 任务 | Cx | Deps | 验收标准 | Files |
 |---|---|---|---|---|---|
-| ☐ T0.1 | 全注册与装配冻结：声明 M1–M5 全部方块/物品/实体/流体/生物效果/粒子/方块实体/激光弹射物的 `RegistryObject`（指向桩类）；主类 wiring；全部 lang；客户端渲染器注册（指向桩） | L | — | `build` 通过；`runServer` Done、所有注册项以桩存在；`runClient` 到标题页不崩 | `registry/TS*.java`, `TitanSatellite.java`, `block/*`, `entity/*`, `item/*`, `client/*Renderer.java`+`TitanClientEvents.java`, `lang/*.json` |
+| ◐ T0.1 | 全注册与装配冻结：声明 M1–M5 全部方块/物品/实体/流体/生物效果/方块实体的 `RegistryObject`（指向桩类）；主类 wiring；全部 lang；客户端渲染器注册（指向桩） | L | agent1 | `build` 通过；`runServer` Done、所有注册项以桩存在；`runClient` 到标题页不崩 | `registry/TS*.java`, `TitanSatellite.java`, `block/*`, `entity/*`, `item/*`, `client/*Renderer.java`+`TitanClientEvents.java`, `lang/*.json` |
 | ☐ T0.2 | 系统与 worldgen 类型脚手架：worldgen 自定义类型注册（DensityFunction/Feature/Structure codec）+ 桩类；环境 Capability 接口 + 附加处理；`MethaneExtractionWaveEvent`；Mixin 配置 + 插件；`damage_type` 数据；`is_titan` 群系标签 | M | — | 编译通过；capability/event/mixin 骨架就位、自订阅不需改主类；`is_titan` 标签与 damage_type 加载无误 | `worldgen/**`（类型注册+桩）, `capability/*`, `event/*`, `mixin/*`, `data/.../damage_type/*`, `data/.../tags/worldgen/biome/is_titan.json` |
 
 **Gate 0**：`:1.20.1-forge:build` + `runServer` Done（全注册项以桩加载）+ `runClient` 到标题页。
