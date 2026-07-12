@@ -4,7 +4,10 @@
   "package": "com.tonywww.titan_satellite.mixin",
   "compatibilityLevel": "JAVA_17",
   "refmap": "titan_satellite.refmap.json",
-  "mixins": [],
+  "plugin": "com.tonywww.titan_satellite.mixin.TitanMixinPlugin",
+  "mixins": [
+    "WaveSpawnMixin"
+  ],
   "client": [],
   "injectors": {
     "defaultRequire": 1

@@ -13,8 +13,8 @@ This design document combines Titan's real-world geological features with Minecr
 
 ## 〇、 维度基础参数 (Base Dimension Parameters)
 
-*   **重力 (Gravity):** 低重力环境（相当于地球的 14%）。玩家拥有永久的跳跃提升和缓慢降落效果。 / Low gravity (14% of Earth's). Players have permanent Jump Boost and Slow Falling.
-*   **温度与空气 (Temperature & Oxygen):** 极寒（-179°C），无氧环境。玩家暴露在地表需穿着保暖与供氧装备。 / Extreme cold (-179°C) and no oxygen. Thermal and oxygen gear are required on the surface.
+*   **重力 (Gravity):** 采用普通重力（不改变玩家重力/跳跃/降落）。土卫六低重力仅作背景设定，不作玩法机制。 / Normal gravity (no player gravity/jump/fall changes). Titan's low gravity is background lore only, not a gameplay mechanic.
+*   **温度与空气 (Temperature & Oxygen):** 极寒（-179°C）、无氧的橙黄大气仅作**环境氛围**（冷色群系、冰/甲烷地貌），**不再有需装备抵御的极寒/缺氧生存机制**。 / Extreme cold (-179°C) and the anoxic orange atmosphere are environmental ambiance only (cold biomes, ice/methane terrain); there is no cold/oxygen survival mechanic requiring gear.
 *   **光照与天气 (Lighting & Weather):** 浓厚的橙黄色大气层，地表光照极低。普通降雨替换为“液态甲烷雨”。 / Dense orange haze, very low surface light. Normal rain is replaced with "Liquid Methane Rain."
 *   **高度限制 (Build Limit):** Y = 0 至 Y = 320。
 
@@ -22,30 +22,38 @@ This design document combines Titan's real-world geological features with Minecr
 
 ## 一、 地形与群系分布 (Terrain & Biomes)
 
-### 1. 液态甲烷深渊 (Methane Abyss) [Y: 0 - 64]
-由坚硬的黑石/玄武岩构成的陡峭峡谷。
-Steep canyons formed of hard blackstone and basalt.
-*   **特异地貌 (Special Feature):** **甲烷海 (Methane Mare) [Y: 0 - 45]**。峡谷底部被液态甲烷完全淹没。 / Canyon bottoms flooded entirely with liquid methane.
+> **地形基调 (Terrain tone):** 整体追求强烈的**破碎感**——悬崖峧壁、断层、陡坡与孤峰交错，避免平缓过渡；配合 0–320 的极大高差营造险峻、可垂直探索的地貌。 / Overall a strongly **fragmented** terrain — cliffs, precipices, fault scarps, steep slopes and isolated spires, avoiding smooth transitions; combined with the 0–320 elevation range for a rugged, vertically-explorable landscape.
 
-### 2. 撞击陨坑荒原 (Cratered Wastelands) [Y: 64 - 110]
-相对平坦的冰冻荒原，由碎冰和砾石构成。
-Relatively flat frozen wastelands made of crushed ice and gravel.
-*   **特异地貌 (Special Feature):** **巨型陨石坑 (Giant Craters) [Y: 40 - 80]**。砸穿地层的巨大凹陷，底部露出微型甲烷湖。 / Massive depressions smashing through the crust, exposing miniature methane lakes.
+> **群系分布机制 (Biome distribution):** 六大群系由 `multi_noise` 的气候噪声（temperature/humidity/continentalness/erosion/weirdness/depth）铺开；各群系专属表层方块由 `surface_rule` 决定，专属地物由按群系限定的 Feature 注入。**冰火山断崖为极地迷宫冰原内部中心的稀有子区域**。 / Six biomes spread by multi_noise climate fields; per-biome surface blocks via surface_rule, per-biome landmarks via biome-limited features. The Cryovolcanic Cliffs is a rare sub-region nested at the center of the Polar Labyrinths.
 
-### 3. 托林沙海 (Tholin Dune Seas) [Y: 100 - 170]
-广阔的橙色沙丘区，表面覆盖着托林有机化合物粉末。
+### 1. 土卫六·液态甲烷深渊 (Titan · Methane Abyss) [Y: 0 - 32]
+由**沉积泰坦石 (sedimentary_titan_stone)** 构成的陡峭峡谷地带。地表遍布**大量碎裂的裂隙**（形似缩小的老版本峡谷），裂隙底部积存着液态甲烷。
+Steep canyon terrain of sedimentary titan stone; the surface is riven with **numerous fractured fissures** (like smaller legacy ravines), with liquid methane pooling at their bottoms.
+*   **特异地貌 (Special Feature):** **甲烷海 (Methane Mare)**。大面积地表整体坡陷至海平面以下、被液态甲烷彻底淹没，形成开阔的甲烷之海（类似巨型天坑式的地表移除）。 / Vast stretches of surface collapse below sea level and are completely flooded by liquid methane (large sinkhole-like surface removal).
+
+### 2. 土卫六·撞击陨坑荒原 (Titan · Cratered Wastelands) [Y: 64 - 80]
+由**风化泰坦石 (weathered_titan_stone)** 构成的冰冻荒原。地表零散分布着**树枝状结晶 (branch_crystal)** 丛，如冻结的枝杉。
+Frozen wastelands of weathered titan stone, dotted with **branching crystal (branch_crystal)** growths like frozen twigs.
+*   **特异地貌 (Special Feature):** **巨型陨石坑 (Giant Craters)**。带**凸起坑缘**的真实陨石坑轮廓（碗形凹陷 + 抬升的环形边缘）；坑底**小概率**露出微型甲烷湖。 / Realistic impact craters with **raised rims**; the crater floor **rarely** exposes a miniature methane lake.
+
+### 3. 土卫六·托林沙海 (Titan · Tholin Dune Seas) [Y: 64 - 80]
+广阔的橙色托林沙丘区，表面覆盖着托林有机化合物粉末（**tholin_sand**）。
 Vast orange dune fields covered in powdery tholin organics.
-*   **特异地貌 (Special Feature):** **巨型沙脊 (Megayardangs) [Y: 140 - 190]**。高墙般的狭长山脊。 / Wall-like, long, and narrow sand ridges.
+*   **特异地貌 (Special Feature):** **巨型沙脊 (Megayardangs)**。高墙般狭长的风蚀山脊，配合连绵起伏的沙丘。 / Wall-like, long, narrow wind-eroded ridges amid rolling dunes.
 
-### 4. 极地迷宫冰原 (Polar Labyrinths) [Y: 160 - 240]
-地势急剧抬升，冰层受溶解侵蚀形成的支离破碎的迷宫。
-Elevation rises sharply, forming shattered, eroded ice mazes.
-*   **特异地貌 (Special Feature):** **冰层天坑 (Ice Sinkholes) [Y: 120 - 160]**。隐藏的巨大冰窟窿，直通下层地形。 / Hidden massive sinkholes dropping directly to lower biomes.
+### 4. 土卫六·极地迷宫冰原 (Titan · Polar Labyrinths) [Y: 160 - 200]
+地势急剧抬升的甲烷浮冰（**packed_methane_ice**）迷宫。**地表向下数格后即化为巨型的破碎海绵**——密布空洞的多孔冰体。
+Sharply rising labyrinths of packed methane ice. **A few blocks below the surface it turns into a giant shattered sponge** — porous ice riddled with cavities.
+*   **特异地貌 (Special Feature):** **巨型冰层天坑 (Ice Sinkholes)**。巨大的冰窟竆直通下层地形。 / Massive ice sinkholes dropping straight to lower terrain.
 
-### 5. 冰火山断崖 (Cryovolcanic Cliffs) [Y: 220 - 320]
-由蓝冰和浮冰交错构成的极度险峻的垂直断崖。
-Extremely steep vertical cliffs composed of Blue Ice and Packed Ice.
-*   **特异地貌 (Special Feature):** **氨水火山口 (Ammonia Calderas) [Y: 280 - 320]**。山巅的凹陷区域。 / Sunken craters at the very peaks.
+### 5. 土卫六·冰火山断崖 (Titan · Cryovolcanic Cliffs) [Y: 280 - 320]
+由寒冰（**cryo_ice**）构成的极度险峭的垂直断崖，**仅生成于极地迷宫冰原的中心区域**、被极地群系环绕。
+Extremely steep vertical cliffs of cryo ice, generating **only at the center of the Polar Labyrinths**, encircled by the polar biome.
+*   **特异地貌 (Special Feature):** **冰火山喷泉群 (Cryovolcanic Geysers)** 与山巅的**氨水火山口 (Ammonia Calderas)**。 / Clusters of cryovolcanic geysers and ammonia calderas at the peaks.
+
+### 6. 土卫六·荒芜高原 (Titan · Barren Plateau) [Y: 150 - 200]（新增 / New）
+由**风化泰坦石 (weathered_titan_stone)** 构成的高耸台地。地质类似极地迷宫冰原，但**空洞区域极少出现**、地层坚实。与相邻群系之间以**极其陡峭的断崖**过渡。
+Towering plateaus of weathered titan stone. Geologically similar to the Polar Labyrinths but with **very few cavities** and solid strata; transitions to neighboring biomes are **extremely steep escarpments**.
 
 ---
 
@@ -59,7 +67,7 @@ Extremely steep vertical cliffs composed of Blue Ice and Packed Ice.
 ### 2. 冰硅甲虫 (Cryo-Scavenger)
 *   **类型 (Type):** 中立 (Neutral)
 *   **特征 (Features):** 拥有坚硬冰晶外壳的节肢动物。 / Arthropods with tough ice-crystal shells.
-*   **掉落物 (Drops):** “冰晶甲壳”（用于合成或升级抗寒护甲的硬化材料）。 / "Cryo-Carapace" (hardening material for crafting/upgrading cold-resistant armor).
+*   **掉落物 (Drops):** “冰晶甲壳”（用于合成或升级装备的硬化材料）。 / "Cryo-Carapace" (hardening material for crafting/upgrading equipment).
 
 ### 3. 氨泉掠食者 (Ammonia Stalker)
 *   **类型 (Type):** 敌对 (Hostile)

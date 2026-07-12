@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "titan_satellite:methane_abyss", "required": false },
+    { "id": "titan_satellite:cratered_wastelands", "required": false },
+    { "id": "titan_satellite:tholin_dune_sea", "required": false },
+    { "id": "titan_satellite:polar_labyrinth", "required": false },
+    { "id": "titan_satellite:cryovolcanic_cliff", "required": false },
+    { "id": "titan_satellite:barren_plateau", "required": false }
+  ]
+}

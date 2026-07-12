@@ -37,9 +37,23 @@ public final class TSCreativeTabs {
                         output.accept(TSBlocks.METHANE_POOL_CORE.get());
                         output.accept(TSBlocks.SPECIAL_METHANE_PUMP.get());
                         output.accept(TSBlocks.THOLIN_CRYSTAL.get());
+                        // M6 新增表层/装饰块
+                        output.accept(TSBlocks.WEATHERED_TITAN_STONE.get());
+                        output.accept(TSBlocks.SEDIMENTARY_TITAN_STONE.get());
+                        output.accept(TSBlocks.BRANCH_CRYSTAL.get());
                         // 流体桶
                         output.accept(TSItems.LIQUID_METHANE_BUCKET.get());
                         output.accept(TSItems.LIQUID_AMMONIA_BUCKET.get());
+                        // 生物掉落材料
+                        output.accept(TSItems.CRYO_CARAPACE.get());
+                        output.accept(TSItems.TOXIC_GLAND.get());
+                        output.accept(TSItems.DEPLETED_BATTERY.get());
+                        output.accept(TSItems.PRECISION_COMPONENTS.get());
+                        // 刷怪蛋
+                        output.accept(TSItems.AERO_JELLY_SPAWN_EGG.get());
+                        output.accept(TSItems.CRYO_SCAVENGER_SPAWN_EGG.get());
+                        output.accept(TSItems.AMMONIA_STALKER_SPAWN_EGG.get());
+                        output.accept(TSItems.CORRUPTED_PROBE_SPAWN_EGG.get());
                     })
                     .build());
 }

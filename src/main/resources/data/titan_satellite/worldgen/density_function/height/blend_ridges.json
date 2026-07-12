@@ -1,0 +1,22 @@
+{
+  "_comment": "blend C: lerp(blend_veg, cryo@300 (rugged +biome_height*20), w_cryo).",
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:mul",
+    "argument1": "titan_satellite:height/blend_veg",
+    "argument2": {
+      "type": "minecraft:add",
+      "argument1": 1.0,
+      "argument2": { "type": "minecraft:mul", "argument1": -1.0, "argument2": "titan_satellite:height/w_cryo" }
+    }
+  },
+  "argument2": {
+    "type": "minecraft:mul",
+    "argument1": {
+      "type": "minecraft:add",
+      "argument1": 300.0,
+      "argument2": { "type": "titan_satellite:biome_height", "factor": 20.0 }
+    },
+    "argument2": "titan_satellite:height/w_cryo"
+  }
+}

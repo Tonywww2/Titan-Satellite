@@ -2,6 +2,9 @@ package com.tonywww.titan_satellite.registry;
 
 import com.tonywww.titan_satellite.TitanSatellite;
 import com.tonywww.titan_satellite.entity.AeroJelly;
+import com.tonywww.titan_satellite.entity.AmmoniaStalker;
+import com.tonywww.titan_satellite.entity.CorruptedProbe;
+import com.tonywww.titan_satellite.entity.CryoScavenger;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -27,7 +30,23 @@ public final class TSEntities {
                     .clientTrackingRange(8)
                     .build("aero_jelly"));
 
+    // 冰硅甲虫（中立，桩）。
+    public static final RegistryObject<EntityType<CryoScavenger>> CRYO_SCAVENGER = REGISTER.register("cryo_scavenger",
+            () -> EntityType.Builder.of(CryoScavenger::new, MobCategory.CREATURE)
+                    .sized(0.9F, 0.6F).clientTrackingRange(10).build("cryo_scavenger"));
+    // 氨泉掉食者（敌对，桩）。
+    public static final RegistryObject<EntityType<AmmoniaStalker>> AMMONIA_STALKER = REGISTER.register("ammonia_stalker",
+            () -> EntityType.Builder.of(AmmoniaStalker::new, MobCategory.MONSTER)
+                    .sized(0.9F, 1.4F).clientTrackingRange(10).build("ammonia_stalker"));
+    // 失控探测器（敌对，桩）。
+    public static final RegistryObject<EntityType<CorruptedProbe>> CORRUPTED_PROBE = REGISTER.register("corrupted_probe",
+            () -> EntityType.Builder.of(CorruptedProbe::new, MobCategory.MONSTER)
+                    .sized(0.8F, 0.8F).clientTrackingRange(12).build("corrupted_probe"));
+
     public static void onAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(AERO_JELLY.get(), AeroJelly.createAttributes().build());
+        event.put(CRYO_SCAVENGER.get(), CryoScavenger.createAttributes().build());
+        event.put(AMMONIA_STALKER.get(), AmmoniaStalker.createAttributes().build());
+        event.put(CORRUPTED_PROBE.get(), CorruptedProbe.createAttributes().build());
     }
 }

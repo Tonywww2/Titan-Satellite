@@ -1,5 +1,5 @@
 {
-  "sea_level": 72,
+  "sea_level": 20,
   "disable_mob_generation": false,
   "aquifers_enabled": false,
   "ore_veins_enabled": false,
@@ -17,20 +17,22 @@
     "fluid_level_floodedness": 0,
     "fluid_level_spread": 0,
     "lava": 0,
-    "temperature": 0,
-    "vegetation": 0,
-    "continents": 0,
-    "erosion": 0,
-    "depth": 0,
-    "ridges": 0,
-    "initial_density_without_jaggedness": 0,
-    "final_density": {
-      "type": "minecraft:y_clamped_gradient",
-      "from_y": 40,
-      "to_y": 88,
-      "from_value": 1.0,
-      "to_value": -1.0
+    "temperature": {
+      "type": "minecraft:shifted_noise",
+      "noise": "minecraft:temperature",
+      "shift_x": "minecraft:shift_x",
+      "shift_y": 0.0,
+      "shift_z": "minecraft:shift_z",
+      "xz_scale": 0.1,
+      "y_scale": 0.0
     },
+    "vegetation": "titan_satellite:climate/vegetation",
+    "continents": "titan_satellite:climate/continents",
+    "erosion": "titan_satellite:climate/erosion",
+    "depth": 0,
+    "ridges": "titan_satellite:climate/ridges",
+    "initial_density_without_jaggedness": 0,
+    "final_density": "titan_satellite:titan_final_density",
     "vein_toggle": 0,
     "vein_ridged": 0,
     "vein_gap": 0
@@ -45,8 +47,16 @@
       "secondary_depth_range": 0
     },
     "then_run": {
-      "type": "minecraft:block",
-      "result_state": { "Name": "titan_satellite:tholin_sand" }
+      "type": "minecraft:sequence",
+      "sequence": [
+        { "type": "minecraft:condition", "if_true": { "type": "minecraft:biome", "biome_is": ["titan_satellite:methane_abyss"] }, "then_run": { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:sedimentary_titan_stone" } } },
+        { "type": "minecraft:condition", "if_true": { "type": "minecraft:biome", "biome_is": ["titan_satellite:cratered_wastelands"] }, "then_run": { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:weathered_titan_stone" } } },
+        { "type": "minecraft:condition", "if_true": { "type": "minecraft:biome", "biome_is": ["titan_satellite:tholin_dune_sea"] }, "then_run": { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:tholin_sand" } } },
+        { "type": "minecraft:condition", "if_true": { "type": "minecraft:biome", "biome_is": ["titan_satellite:polar_labyrinth"] }, "then_run": { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:packed_methane_ice" } } },
+        { "type": "minecraft:condition", "if_true": { "type": "minecraft:biome", "biome_is": ["titan_satellite:cryovolcanic_cliff"] }, "then_run": { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:cryo_ice" } } },
+        { "type": "minecraft:condition", "if_true": { "type": "minecraft:biome", "biome_is": ["titan_satellite:barren_plateau"] }, "then_run": { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:weathered_titan_stone" } } },
+        { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:tholin_sand" } }
+      ]
     }
   },
   "spawn_target": []

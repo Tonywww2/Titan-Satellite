@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": "#titan_satellite:is_titan",
+  "spawners": {
+    "type": "titan_satellite:cryo_scavenger",
+    "weight": 12,
+    "minCount": 1,
+    "maxCount": 3
+  }
+}

@@ -1,12 +1,14 @@
 package com.tonywww.titan_satellite;
 
 import com.mojang.logging.LogUtils;
+import com.tonywww.titan_satellite.registry.TSBlockEntities;
 import com.tonywww.titan_satellite.registry.TSBlocks;
 import com.tonywww.titan_satellite.registry.TSCreativeTabs;
 import com.tonywww.titan_satellite.registry.TSEntities;
 import com.tonywww.titan_satellite.registry.TSFluidTypes;
 import com.tonywww.titan_satellite.registry.TSFluids;
 import com.tonywww.titan_satellite.registry.TSItems;
+import com.tonywww.titan_satellite.registry.TSMobEffects;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -28,7 +30,9 @@ public class TitanSatellite {
         TSFluidTypes.REGISTER.register(modBus);
         TSFluids.REGISTER.register(modBus);
         TSBlocks.REGISTER.register(modBus);
+        TSBlockEntities.REGISTER.register(modBus);
         TSItems.REGISTER.register(modBus);
+        TSMobEffects.REGISTER.register(modBus);
         TSEntities.REGISTER.register(modBus);
         TSCreativeTabs.REGISTER.register(modBus);
 

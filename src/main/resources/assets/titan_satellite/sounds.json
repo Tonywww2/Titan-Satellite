@@ -1,0 +1,7 @@
+{
+  "block.titan_fluid.solidify": {
+    "sounds": [
+      "minecraft:random/fizz"
+    ]
+  }
+}

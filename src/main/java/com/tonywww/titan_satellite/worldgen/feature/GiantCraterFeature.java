@@ -1,0 +1,74 @@
+package com.tonywww.titan_satellite.worldgen.feature;
+
+import com.mojang.serialization.Codec;
+import com.tonywww.titan_satellite.registry.TSBlocks;
+import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
+
+/**
+ * 巨型陨石坑特征（PA-2 桩）。M1（PB-3）填充：砸穿地层的巨大凹陷，底部露出微型甲烷湖。
+ */
+public class GiantCraterFeature extends Feature<NoneFeatureConfiguration> {
+
+    public GiantCraterFeature(Codec<NoneFeatureConfiguration> codec) {
+        super(codec);
+    }
+
+    @Override
+    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+        WorldGenLevel level = context.level();
+        BlockPos origin = context.origin();
+        RandomSource random = context.random();
+        int radius = 9 + random.nextInt(6);            // 半径 9-14
+        boolean hasPool = random.nextInt(4) == 0;      // 25% 坑底露出微型甲烷湖
+        BlockState air = Blocks.AIR.defaultBlockState();
+        BlockState surface = TSBlocks.WEATHERED_TITAN_STONE.get().defaultBlockState();
+        BlockState deep = TSBlocks.TITAN_BASALT.get().defaultBlockState();
+        BlockState methane = TSBlocks.LIQUID_METHANE_BLOCK.get().defaultBlockState();
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        boolean placed = false;
+        for (int dx = -radius - 1; dx <= radius + 1; dx++) {
+            for (int dz = -radius - 1; dz <= radius + 1; dz++) {
+                double horiz = Math.sqrt((double) (dx * dx + dz * dz));
+                if (horiz > radius + 1) {
+                    continue;
+                }
+                int wx = origin.getX() + dx;
+                int wz = origin.getZ() + dz;
+                if (horiz <= radius - 2) {
+                    // 碗形凹陷：中心深、向外变浅
+                    int bowl = (int) ((radius - 2 - horiz) * 0.9D) + 1;
+                    for (int dy = 3; dy > -bowl; dy--) {
+                        pos.set(wx, origin.getY() + dy, wz);
+                        setBlock(level, pos, air);
+                    }
+                    pos.set(wx, origin.getY() - bowl, wz);
+                    setBlock(level, pos, deep);            // 坑底露出深层岩（砸穿地层）
+                    placed = true;
+                    if (hasPool && horiz < (radius - 2) * 0.35D) {
+                        pos.set(wx, origin.getY() - bowl + 1, wz);
+                        setBlock(level, pos, methane);     // 坑底微型甲烷湖
+                    }
+                } else {
+                    // 凸起坑缘环：抬升的环形边缘
+                    double t = 1.0D - Math.abs(horiz - (radius - 0.5D)) / 1.5D;
+                    if (t > 0.0D) {
+                        int rimH = 1 + (int) (t * 3.0D);   // 峰高 1-4
+                        for (int dy = 1; dy <= rimH; dy++) {
+                            pos.set(wx, origin.getY() + dy, wz);
+                            setBlock(level, pos, surface);
+                        }
+                        placed = true;
+                    }
+                }
+            }
+        }
+        return placed;
+    }
+}

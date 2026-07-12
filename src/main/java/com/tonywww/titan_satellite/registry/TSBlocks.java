@@ -1,6 +1,10 @@
 package com.tonywww.titan_satellite.registry;
 
 import com.tonywww.titan_satellite.TitanSatellite;
+import com.tonywww.titan_satellite.block.CryovolcanicGeyserBlock;
+import com.tonywww.titan_satellite.block.MethanePoolCoreBlock;
+import com.tonywww.titan_satellite.block.SpecialMethanePumpBlock;
+import com.tonywww.titan_satellite.block.TholinCrystalBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -48,20 +52,32 @@ public final class TSBlocks {
             new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.5F, 0.5F, SoundType.GLASS)));
 
     // ---- 特殊/功能方块（占位，行为逻辑后续里程碑实现）----
-    // 冰火山喷泉：周期喷发击飞实体（占位）。
+    // 冰火山喷泉：周期喷发击飞实体（行为由 M4/PE-1 填充）。
     public static final RegistryObject<Block> CRYOVOLCANIC_GEYSER = register("cryovolcanic_geyser", () ->
-            new Block(props(MapColor.ICE, 1.5F, 1.5F, SoundType.GLASS).lightLevel(s -> 6)));
-    // 甲烷池核心：开采塔防事件触发点（占位）。
+            new CryovolcanicGeyserBlock(props(MapColor.ICE, 1.5F, 1.5F, SoundType.GLASS).lightLevel(s -> 6)));
+    // 甲烷池核心：开采塔防事件触发点（行为由 M4/PE-2 填充）。
     public static final RegistryObject<Block> METHANE_POOL_CORE = register("methane_pool_core", () ->
-            new Block(props(MapColor.COLOR_BLACK, 25.0F, 1200.0F, SoundType.NETHER_ORE)
+            new MethanePoolCoreBlock(props(MapColor.COLOR_BLACK, 25.0F, 1200.0F, SoundType.NETHER_ORE)
                     .requiresCorrectToolForDrops().lightLevel(s -> 3)));
-    // 特制甲烷泵：玩家放置以开采（占位）。
+    // 特制甲烷泵：玩家放置以开采（带方块实体，行为由 M4/PE-2 填充）。
     public static final RegistryObject<Block> SPECIAL_METHANE_PUMP = register("special_methane_pump", () ->
-            new Block(props(MapColor.METAL, 4.0F, 6.0F, SoundType.METAL).requiresCorrectToolForDrops()));
-    // 托林晶体：晶洞发光合成材料（占位）。
+            new SpecialMethanePumpBlock(props(MapColor.METAL, 4.0F, 6.0F, SoundType.METAL).requiresCorrectToolForDrops()));
+    // 托林晶体：晶洞发光合成材料（破坏放毒气，行为由 M4/PE-3 填充）。
     public static final RegistryObject<Block> THOLIN_CRYSTAL = register("tholin_crystal", () ->
-            new Block(props(MapColor.COLOR_ORANGE, 1.5F, 1.5F, SoundType.AMETHYST)
+            new TholinCrystalBlock(props(MapColor.COLOR_ORANGE, 1.5F, 1.5F, SoundType.AMETHYST)
                     .requiresCorrectToolForDrops().lightLevel(s -> 10)));
+
+    // ---- M6 群系特色化新增表层/装饰方块（PG-1）----
+    // 风化泰坦石：荒芜高原 / 撞击陨坑荒原 表层（占位复用 titan_stone 贴图）。
+    public static final RegistryObject<Block> WEATHERED_TITAN_STONE = register("weathered_titan_stone", () ->
+            new Block(props(MapColor.TERRACOTTA_GRAY, 1.4F, 5.5F, SoundType.STONE).requiresCorrectToolForDrops()));
+    // 沉积泰坦石：液态甲烷深渊 表层（占位复用 titan_basalt 贴图）。
+    public static final RegistryObject<Block> SEDIMENTARY_TITAN_STONE = register("sedimentary_titan_stone", () ->
+            new Block(props(MapColor.TERRACOTTA_BROWN, 1.3F, 4.5F, SoundType.STONE).requiresCorrectToolForDrops()));
+    // 树枝状结晶：撞击陨坑荒原 地表装饰（十字无碰撞，占位复用原版 warped_roots 形态）。
+    public static final RegistryObject<Block> BRANCH_CRYSTAL = register("branch_crystal", () ->
+            new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.0F, 0.0F, SoundType.AMETHYST_CLUSTER)
+                    .noCollission().noOcclusion().lightLevel(s -> 4)));
 
     // ---- 流体方块（无 BlockItem，用桶交互；可作维度 default_fluid）----
     public static final RegistryObject<LiquidBlock> LIQUID_METHANE_BLOCK = REGISTER.register("liquid_methane", () ->

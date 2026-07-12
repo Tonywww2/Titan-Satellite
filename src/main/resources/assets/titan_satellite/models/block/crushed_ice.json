@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cube_all",
   "textures": {
-    "all": "minecraft:block/snow"
+    "all": "titan_satellite:block/crushed_ice"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "_comment": "blend B: lerp(blend_ridges, methane@16 (rugged +biome_height*16), w_methane).",
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:mul",
+    "argument1": "titan_satellite:height/blend_ridges",
+    "argument2": {
+      "type": "minecraft:add",
+      "argument1": 1.0,
+      "argument2": { "type": "minecraft:mul", "argument1": -1.0, "argument2": "titan_satellite:height/w_methane" }
+    }
+  },
+  "argument2": {
+    "type": "minecraft:mul",
+    "argument1": {
+      "type": "minecraft:add",
+      "argument1": 16.0,
+      "argument2": { "type": "titan_satellite:biome_height", "factor": 16.0 }
+    },
+    "argument2": "titan_satellite:height/w_methane"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "_comment": "Transition weight for tholin (vegetation < -0.2). 0.5 + 30*(-0.2 - vegetation), clamped 0..1.",
+  "type": "minecraft:clamp",
+  "input": {
+    "type": "minecraft:add",
+    "argument1": -5.5,
+    "argument2": { "type": "minecraft:mul", "argument1": -30.0, "argument2": "titan_satellite:climate/vegetation" }
+  },
+  "min": 0.0,
+  "max": 1.0
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_satellite:cryovolcanic_cliff",
+  "features": "titan_satellite:geyser_patch",
+  "step": "vegetal_decoration"
+}

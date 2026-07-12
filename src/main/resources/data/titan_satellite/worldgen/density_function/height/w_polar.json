@@ -1,0 +1,11 @@
+{
+  "_comment": "Transition weight for polar (erosion < -0.3). 0.5 + 30*(-0.3 - erosion), clamped 0..1 -> ramp over erosion in [-0.333,-0.267].",
+  "type": "minecraft:clamp",
+  "input": {
+    "type": "minecraft:add",
+    "argument1": -8.5,
+    "argument2": { "type": "minecraft:mul", "argument1": -30.0, "argument2": "titan_satellite:climate/erosion" }
+  },
+  "min": 0.0,
+  "max": 1.0
+}

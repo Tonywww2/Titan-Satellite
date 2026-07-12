@@ -1,0 +1,8 @@
+{
+  "type": "titan_satellite:titan_structure",
+  "variant": "outpost",
+  "biomes": "#titan_satellite:has_structure/pioneer_outpost",
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
+  "spawn_overrides": {}
+}

@@ -13,10 +13,33 @@
   "block.titan_satellite.tholin_crystal": "Tholin Crystal",
   "block.titan_satellite.liquid_methane": "Liquid Methane",
   "block.titan_satellite.liquid_ammonia": "Liquid Ammonia",
+  "block.titan_satellite.weathered_titan_stone": "Weathered Titan Stone",
+  "block.titan_satellite.sedimentary_titan_stone": "Sedimentary Titan Stone",
+  "block.titan_satellite.branch_crystal": "Branch Crystal",
 
   "item.titan_satellite.aero_membrane": "Aero-Membrane",
+  "item.titan_satellite.cryo_carapace": "Cryo-Carapace",
+  "item.titan_satellite.toxic_gland": "Toxic Gland",
+  "item.titan_satellite.depleted_battery": "Depleted High-Energy Battery",
+  "item.titan_satellite.precision_components": "Precision Electronic Components",
   "item.titan_satellite.liquid_methane_bucket": "Liquid Methane Bucket",
   "item.titan_satellite.liquid_ammonia_bucket": "Liquid Ammonia Bucket",
+  "item.titan_satellite.aero_jelly_spawn_egg": "Aero-Jelly Spawn Egg",
+  "item.titan_satellite.cryo_scavenger_spawn_egg": "Cryo-Scavenger Spawn Egg",
+  "item.titan_satellite.ammonia_stalker_spawn_egg": "Ammonia Stalker Spawn Egg",
+  "item.titan_satellite.corrupted_probe_spawn_egg": "Corrupted Probe Spawn Egg",
 
-  "entity.titan_satellite.aero_jelly": "Aero-Jelly"
+  "effect.titan_satellite.tholin_toxin": "Tholin Toxin",
+
+  "entity.titan_satellite.aero_jelly": "Aero-Jelly",
+  "entity.titan_satellite.cryo_scavenger": "Cryo-Scavenger",
+  "entity.titan_satellite.ammonia_stalker": "Ammonia Stalker",
+  "entity.titan_satellite.corrupted_probe": "Corrupted Probe",
+
+  "biome.titan_satellite.methane_abyss": "Titan · Methane Abyss",
+  "biome.titan_satellite.cratered_wastelands": "Titan · Cratered Wastelands",
+  "biome.titan_satellite.tholin_dune_sea": "Titan · Tholin Dune Sea",
+  "biome.titan_satellite.polar_labyrinth": "Titan · Polar Labyrinth",
+  "biome.titan_satellite.cryovolcanic_cliff": "Titan · Cryovolcanic Cliff",
+  "biome.titan_satellite.barren_plateau": "Titan · Barren Plateau"
 }

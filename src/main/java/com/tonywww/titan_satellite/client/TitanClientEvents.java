@@ -19,5 +19,8 @@ public final class TitanClientEvents {
     @SubscribeEvent
     public static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(TSEntities.AERO_JELLY.get(), AeroJellyRenderer::new);
+        event.registerEntityRenderer(TSEntities.CRYO_SCAVENGER.get(), CryoScavengerRenderer::new);
+        event.registerEntityRenderer(TSEntities.AMMONIA_STALKER.get(), AmmoniaStalkerRenderer::new);
+        event.registerEntityRenderer(TSEntities.CORRUPTED_PROBE.get(), CorruptedProbeRenderer::new);
     }
 }

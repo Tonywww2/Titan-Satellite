@@ -1,0 +1,11 @@
+{
+  "_comment": "Transition weight for methane (continentalness < -0.6). 0.5 + 30*(-0.6 - continents), clamped 0..1.",
+  "type": "minecraft:clamp",
+  "input": {
+    "type": "minecraft:add",
+    "argument1": -17.5,
+    "argument2": { "type": "minecraft:mul", "argument1": -30.0, "argument2": "titan_satellite:climate/continents" }
+  },
+  "min": 0.0,
+  "max": 1.0
+}
