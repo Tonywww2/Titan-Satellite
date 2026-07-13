@@ -1,8 +1,11 @@
 package com.tonywww.titan_satellite.entity;
 
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -15,6 +18,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 /**
  * 冰硅甲虫（Cryo-Scavenger，中立）。平时游荡、不主动攻击玩家；受击后反击并唤醒附近同类，
@@ -24,6 +28,8 @@ public class CryoScavenger extends PathfinderMob {
 
     /** 冰晶护甲：常规物理伤害（穿甲/无敌绕过除外）的乘算系数。 */
     private static final float CARAPACE_DAMAGE_MULTIPLIER = 0.6F;
+    /** 冰球冲撞冷却（tick，不持久化）。 */
+    private int chargeCooldown;
 
     public CryoScavenger(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -57,5 +63,36 @@ public class CryoScavenger extends PathfinderMob {
             finalAmount *= CARAPACE_DAMAGE_MULTIPLIER;
         }
         return super.hurt(source, finalAmount);
+    }
+
+    /** 冰球冲撞：有目标且 2–10 格、着地、可视时，周期性朝目标猛冲一次。 */
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (this.chargeCooldown > 0) {
+            this.chargeCooldown--;
+            return;
+        }
+        LivingEntity target = this.getTarget();
+        if (target != null && this.onGround() && this.hasLineOfSight(target)) {
+            double distSqr = this.distanceToSqr(target);
+            if (distSqr > 4.0D && distSqr < 100.0D) {
+                Vec3 dir = target.position().subtract(this.position()).normalize();
+                this.setDeltaMovement(this.getDeltaMovement().add(dir.x * 0.9D, 0.32D, dir.z * 0.9D));
+                this.hasImpulse = true;
+                this.chargeCooldown = 80; // ~4s
+                this.playSound(SoundEvents.STONE_HIT, 1.0F, 0.8F);
+            }
+        }
+    }
+
+    /** 冲撞命中附加额外击退（冰球撞飞）。 */
+    @Override
+    public boolean doHurtTarget(Entity target) {
+        boolean hurt = super.doHurtTarget(target);
+        if (hurt && target instanceof LivingEntity living) {
+            living.knockback(0.6D, this.getX() - living.getX(), this.getZ() - living.getZ());
+        }
+        return hurt;
     }
 }

@@ -1,0 +1,5 @@
+{
+  "_comment": "3D detail noise added to titan_final_density to break the clean geometric cuboid faces of steep biome-border cliffs into natural rugged rock. Wavelengths 64/32/16 blocks (all >= 4x the 4-block noise cell) so it adds no sub-4-block aliasing (which was the original 4x4 jaggedness bug). Does NOT change biome height bands or transition width.",
+  "firstOctave": -6,
+  "amplitudes": [ 1.0, 1.0, 0.6 ]
+}

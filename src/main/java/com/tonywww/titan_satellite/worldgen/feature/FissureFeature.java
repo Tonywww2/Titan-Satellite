@@ -67,8 +67,10 @@ public class FissureFeature extends Feature<NoneFeatureConfiguration> {
                     if (tcx < minChunkX || tcx > maxChunkX || tcz < minChunkZ || tcz > maxChunkZ) {
                         continue;                                                  // 越界丢弃，保持在安全写入区域
                     }
-                    if (level.getBlockState(pos).isAir()) {
-                        continue;                                                  // 只替换实心，保持封闭
+                    BlockState existing = level.getBlockState(pos);
+                    if (existing.isAir() || !existing.getFluidState().isEmpty()) {
+                        continue;                                                  // 只替换实心岩体：跳过空气与既有液体
+                                                                                   // （否则气腔会替换甲烷海/湖的液面 → 覆盖液体）
                     }
                     if (dy > -2) {
                         setBlock(level, pos, air);       // 顶部封闭气腔

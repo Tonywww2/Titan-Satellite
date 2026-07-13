@@ -59,11 +59,17 @@ public final class TSCreativeTabs {
                         output.accept(TSItems.TOXIC_GLAND.get());
                         output.accept(TSItems.DEPLETED_BATTERY.get());
                         output.accept(TSItems.PRECISION_COMPONENTS.get());
+                        // 生态深化掉落材料（ECO）
+                        output.accept(TSItems.CRYSTALLINE_TWIG.get());
+                        output.accept(TSItems.THOLIN_FIBRE.get());
+                        output.accept(TSItems.TOUGH_NEURAL_GLAND.get());
+                        output.accept(TSItems.THOLIN_SILK_SAC.get());
                         // 刷怪蛋
                         output.accept(TSItems.AERO_JELLY_SPAWN_EGG.get());
                         output.accept(TSItems.CRYO_SCAVENGER_SPAWN_EGG.get());
                         output.accept(TSItems.AMMONIA_STALKER_SPAWN_EGG.get());
                         output.accept(TSItems.CORRUPTED_PROBE_SPAWN_EGG.get());
+                        output.accept(TSItems.THOLIN_WEAVER_SPAWN_EGG.get());
                     })
                     .build());
 }

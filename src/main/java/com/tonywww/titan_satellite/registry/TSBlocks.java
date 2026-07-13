@@ -2,8 +2,10 @@ package com.tonywww.titan_satellite.registry;
 
 import com.tonywww.titan_satellite.TitanSatellite;
 import com.tonywww.titan_satellite.block.CryovolcanicGeyserBlock;
+import com.tonywww.titan_satellite.block.MethaneIceBloomBlock;
 import com.tonywww.titan_satellite.block.MethanePoolCoreBlock;
 import com.tonywww.titan_satellite.block.SpecialMethanePumpBlock;
+import com.tonywww.titan_satellite.block.SlowingBushBlock;
 import com.tonywww.titan_satellite.block.TholinCrystalBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -92,22 +94,22 @@ public final class TSBlocks {
     // 硬化托林：托林沙海 结壳/风柱材料。
     public static final RegistryObject<Block> HARDENED_THOLIN = register("hardened_tholin", () ->
             new Block(props(MapColor.COLOR_ORANGE, 1.2F, 1.2F, SoundType.STONE).requiresCorrectToolForDrops()));
-    // 托林灌木：托林沙海 十字有机装饰（无碰撞）。
+    // 托林灌木：托林沙海 十字有机装饰（无碰撞，穿行减速）。
     public static final RegistryObject<Block> THOLIN_SHRUB = register("tholin_shrub", () ->
-            new Block(props(MapColor.COLOR_ORANGE, 0.0F, 0.0F, SoundType.GRASS).noCollission().noOcclusion()));
-    // 甲烷冰花：极地迷宫冰原 十字发光冰晶装饰（无碰撞）。
+            new SlowingBushBlock(props(MapColor.COLOR_ORANGE, 0.0F, 0.0F, SoundType.GRASS).noCollission().noOcclusion()));
+    // 甲烷冰花：极地迷宫冰原 十字发光冰晶装饰（无碰撞）；随机刻检测火源→连锁爆炸（见 MethaneIceBloomBlock）。
     public static final RegistryObject<Block> METHANE_ICE_BLOOM = register("methane_ice_bloom", () ->
-            new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.0F, 0.0F, SoundType.AMETHYST_CLUSTER)
-                    .noCollission().noOcclusion().lightLevel(s -> 5)));
+            new MethaneIceBloomBlock(props(MapColor.COLOR_LIGHT_BLUE, 0.0F, 0.0F, SoundType.AMETHYST_CLUSTER)
+                    .noCollission().noOcclusion().lightLevel(s -> 5).randomTicks()));
     // 氨晶体：冰火山断崖 青色发光晶体矿物。
     public static final RegistryObject<Block> AMMONIA_CRYSTAL = register("ammonia_crystal", () ->
             new Block(props(MapColor.COLOR_CYAN, 1.5F, 1.5F, SoundType.AMETHYST).lightLevel(s -> 7)));
     // 泰坦砾石：荒芜高原 砾石场装饰（静态，不下落）。
     public static final RegistryObject<Block> TITAN_GRAVEL = register("titan_gravel", () ->
             new Block(props(MapColor.STONE, 0.6F, 0.6F, SoundType.GRAVEL)));
-    // 霜枯灌木：陨坑/荒原/冰火山 十字枯枝装饰（无碰撞）。
+    // 霜枯灌木：陨坑/荒原/冰火山 十字枯枝装饰（无碰撞，穿行减速）。
     public static final RegistryObject<Block> FROST_BUSH = register("frost_bush", () ->
-            new Block(props(MapColor.COLOR_LIGHT_GRAY, 0.0F, 0.0F, SoundType.GRASS).noCollission().noOcclusion()));
+            new SlowingBushBlock(props(MapColor.COLOR_LIGHT_GRAY, 0.0F, 0.0F, SoundType.GRASS).noCollission().noOcclusion()));
 
     // ---- 流体方块（无 BlockItem，用桶交互；可作维度 default_fluid）----
     public static final RegistryObject<LiquidBlock> LIQUID_METHANE_BLOCK = REGISTER.register("liquid_methane", () ->

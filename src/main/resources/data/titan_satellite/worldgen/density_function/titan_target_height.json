@@ -1,6 +1,6 @@
 {
-  "_comment": "Biome-aware target surface height (top of blend tree). lerp(blend_ero_hi, polar@180, w_polar). Each biome maps to its Y band; flat biomes (polar/tholin/barren) get gentle wobble, rugged ones (methane/cratered/cryo) get biome_height relief; adjacent bands blend over a narrow climate window (w_* ramps) = short talus transition. flat_cache: Y-independent, one eval per column.",
-  "type": "minecraft:flat_cache",
+  "_comment": "Biome-aware target surface height (top of blend tree). lerp(blend_ero_hi, polar@180, w_polar). Each biome maps to its Y band; flat biomes (polar/tholin/barren) get gentle wobble, rugged ones (methane/cratered/cryo) get biome_height relief; adjacent bands blend over a narrow climate window (w_* ramps) = short talus transition. interpolated (NOT flat_cache/cache_2d): sampled at the 4-block noise-cell corners and trilinearly interpolated, so the surface RAMPS smoothly per block between cells instead of being held flat across each 4-block cell (flat_cache/cache_2d produced hard 4-block treads on every slope).",
+  "type": "minecraft:interpolated",
   "argument": {
     "type": "minecraft:add",
     "argument1": {

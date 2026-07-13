@@ -34,3 +34,6 @@ bin/
 # ===== OS =====
 .DS_Store
 Thumbs.db
+
+# Forge datagen hash cache (generated resources are committed, cache is not)
+src/generated/resources/.cache/

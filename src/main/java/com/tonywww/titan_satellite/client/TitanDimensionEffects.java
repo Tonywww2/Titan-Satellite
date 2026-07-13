@@ -41,7 +41,9 @@ public class TitanDimensionEffects extends DimensionSpecialEffects {
 
     @Override
     public boolean isFoggyAt(int x, int y) {
-        return true;
+        // 不再让整个维度强制浓雾；浓雾仅由 FogHandler 在液态甲烷深渊群系逐帧施加，
+        // 其余群系维持原版按视距渲染的普通雾。
+        return false;
     }
 
     @Nullable

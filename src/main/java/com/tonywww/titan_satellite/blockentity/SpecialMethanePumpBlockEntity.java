@@ -55,6 +55,8 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
     private static final int FLUID_PER_TICK = 8;
     /** 运行期每隔多少 tick 产出一次材料。 */
     private static final int ITEM_INTERVAL = 240;
+    /** 每累计抽取多少 mB 提升 1 点生态压力（波次强度）。 */
+    private static final int EXTRACTION_PER_INTENSITY = 4000;
 
     private Phase phase = Phase.IDLE;
     private int progress = 0;
@@ -62,6 +64,8 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
     private int integrity = MAX_INTEGRITY;
     /** 上一 tick 的红石供电状态（用于上升沿检测，防止持续/重复开启）。 */
     private boolean powered = false;
+    /** 本次开采累计抽取量（mB，用于生态压力→波次强度）。 */
+    private int extractedTotal = 0;
 
     /** 产出液体槽：只出不进（外部只能抽取，产出经 {@link OutputOnlyTank#fillInternal}）。 */
     private final OutputOnlyTank methaneTank = new OutputOnlyTank(TANK_CAPACITY,
@@ -92,13 +96,14 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
             return;
         }
         progress++;
-        // 波次调度
+        // 波次调度：波次强度随累计抽取量（生态压力）提升
         if (waveIndex < WAVE_COUNT && progress >= waveThreshold(waveIndex + 1)) {
             waveIndex++;
-            WaveController.beginWave(level, pos, waveIndex, waveIndex);
+            WaveController.beginWave(level, pos, waveIndex, waveIndex + extractedTotal / EXTRACTION_PER_INTENSITY);
         }
-        // 产出：液态甲烷入流体槽；材料按间隔入缓冲，并推送至正上方容器（自动化输出）
+        // 产出：液态甲烷入流体槽（累计抽取量）；材料按间隔入缓冲，并推送至正上方容器（自动化输出）
         methaneTank.fillInternal(new FluidStack(TSFluids.LIQUID_METHANE.get(), FLUID_PER_TICK), IFluidHandler.FluidAction.EXECUTE);
+        extractedTotal += FLUID_PER_TICK;
         if (progress % ITEM_INTERVAL == 0) {
             produceItem(level, pos, 1);
         }
@@ -179,6 +184,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
             progress = 0;
             waveIndex = 0;
             integrity = MAX_INTEGRITY;
+            extractedTotal = 0;
             setChanged();
             if (activator != null) {
                 activator.displayClientMessage(Component.literal("Methane extraction started - protect the pump!"), true);
@@ -200,6 +206,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         progress = 0;
         waveIndex = 0;
         integrity = MAX_INTEGRITY;
+        extractedTotal = 0;
         setChanged();
     }
 
@@ -285,6 +292,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         tag.putInt("Progress", progress);
         tag.putInt("WaveIndex", waveIndex);
         tag.putInt("Integrity", integrity);
+        tag.putInt("Extracted", extractedTotal);
         tag.putBoolean("Powered", powered);
         tag.put("Tank", methaneTank.writeToNBT(new CompoundTag()));
         tag.put("Output", outputBuffer.serializeNBT());
@@ -302,6 +310,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         waveIndex = tag.getInt("WaveIndex");
         integrity = tag.contains("Integrity") ? tag.getInt("Integrity") : MAX_INTEGRITY;
         powered = tag.getBoolean("Powered");
+        extractedTotal = tag.getInt("Extracted");
         methaneTank.readFromNBT(tag.getCompound("Tank"));
         if (tag.contains("Output")) {
             outputBuffer.deserializeNBT(tag.getCompound("Output"));

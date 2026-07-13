@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "titan_satellite:block/liquid_methane"
+    }
+  }
+}

@@ -69,6 +69,12 @@ public final class TSItems {
     public static final RegistryObject<Item> DEPLETED_BATTERY = register("depleted_battery", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> PRECISION_COMPONENTS = register("precision_components", () -> new Item(new Item.Properties()));
 
+    // ---- 生态深化掉落材料（ECO；仅普通物品，无生化机制）----
+    public static final RegistryObject<Item> CRYSTALLINE_TWIG = register("crystalline_twig", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> THOLIN_FIBRE = register("tholin_fibre", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> TOUGH_NEURAL_GLAND = register("tough_neural_gland", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> THOLIN_SILK_SAC = register("tholin_silk_sac", () -> new Item(new Item.Properties()));
+
     // ---- 刷怪蛋 ----
     public static final RegistryObject<Item> AERO_JELLY_SPAWN_EGG = register("aero_jelly_spawn_egg",
             () -> new ForgeSpawnEggItem(TSEntities.AERO_JELLY, 0xC9A24B, 0xF0E6C0, new Item.Properties()));
@@ -78,6 +84,8 @@ public final class TSItems {
             () -> new ForgeSpawnEggItem(TSEntities.AMMONIA_STALKER, 0x9FD8F0, 0x4B7A3A, new Item.Properties()));
     public static final RegistryObject<Item> CORRUPTED_PROBE_SPAWN_EGG = register("corrupted_probe_spawn_egg",
             () -> new ForgeSpawnEggItem(TSEntities.CORRUPTED_PROBE, 0x555555, 0xB0822E, new Item.Properties()));
+    public static final RegistryObject<Item> THOLIN_WEAVER_SPAWN_EGG = register("tholin_weaver_spawn_egg",
+            () -> new ForgeSpawnEggItem(TSEntities.THOLIN_WEAVER, 0xC86428, 0x3A2A1A, new Item.Properties()));
 
     private static RegistryObject<Item> register(String name, Supplier<Item> supplier) {
         return REGISTER.register(name, supplier);

@@ -13,8 +13,8 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 /**
- * 土卫六维度雾特效（客户端 <b>Forge 总线</b> {@link ViewportEvent}）：把雾色改为橙黄，
- * 并压低终端可见距离形成浓雾（低能见度）。仅在相机处于 {@link TSDimensions#TITAN_LEVEL} 时生效。
+ * 土卫六维度雾特效（客户端 <b>Forge 总线</b> {@link ViewportEvent}）：维度内统一橙黄雾色；
+ * 浓雾（低能见度）仅在 {@code methane_abyss}（液态甲烷深渊）群系生效，其余群系维持原版按视距渲染的普通雾。
  *
  * <p>天空类型 / 无星空 / 基础雾色见 {@link TitanDimensionEffects}；本类负责逐帧的雾色与浓度。
  */
@@ -28,11 +28,8 @@ public final class FogHandler {
     private static final float FOG_G = 0.45F;
     private static final float FOG_B = 0.19F;
     /** 液态甲烷深渊（methane_abyss）浓雾近 / 远平面（格）——低能见度。 */
-    private static final float FOG_START = 128.0F;
-    private static final float FOG_END = 144.0F;
-    /** 深渊以外群系的淡雾近 / 远平面（格）——仅远处留一层橙黄薄霭，能见度大幅提高。 */
-    private static final float THIN_FOG_START = 144.0F;
-    private static final float THIN_FOG_END = 192.0F;
+    private static final float FOG_START = 224.0F;
+    private static final float FOG_END = 256.0F;
     /** 液态甲烷深渊群系 id（仅此群系维持浓雾）。 */
     private static final ResourceLocation METHANE_ABYSS =
             new ResourceLocation(TitanSatellite.MODID, "methane_abyss");
@@ -48,17 +45,12 @@ public final class FogHandler {
 
     @SubscribeEvent
     public static void onRenderFog(ViewportEvent.RenderFog event) {
-        // 仅压缩地形可见雾（FOG_TERRAIN）；天空雾保持默认，避免天空穹顶异常。
-        if (event.getMode() == FogRenderer.FogMode.FOG_TERRAIN && isTitan(event.getCamera())) {
-            if (isMethaneAbyss(event.getCamera())) {
-                // 液态甲烷深渊：维持原浓雾、低能见度。
-                event.setNearPlaneDistance(FOG_START);
-                event.setFarPlaneDistance(FOG_END);
-            } else {
-                // 深渊以外：淡雾，能见度大幅提高。
-                event.setNearPlaneDistance(THIN_FOG_START);
-                event.setFarPlaneDistance(THIN_FOG_END);
-            }
+        // 仅在液态甲烷深渊压缩地形可见雾（FOG_TERRAIN）形成浓雾；其余群系不作覆盖，
+        // 交由原版按视距渲染普通雾（配合 TitanDimensionEffects#isFoggyAt 返回 false，
+        // 深渊以外不再有额外迷雾）。天空雾保持默认，避免天空穹顶异常。
+        if (event.getMode() == FogRenderer.FogMode.FOG_TERRAIN && isMethaneAbyss(event.getCamera())) {
+            event.setNearPlaneDistance(FOG_START);
+            event.setFarPlaneDistance(FOG_END);
             event.setCanceled(true);
         }
     }

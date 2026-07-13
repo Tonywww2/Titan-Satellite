@@ -1,5 +1,6 @@
 package com.tonywww.titan_satellite.entity;
 
+import com.tonywww.titan_satellite.registry.TSMobEffects;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -50,7 +51,8 @@ public class AmmoniaStalker extends Monster {
                 case NORMAL -> 140;
                 default -> 80;
             };
-            living.addEffect(new MobEffectInstance(MobEffects.POISON, duration, 0), this);
+            living.addEffect(new MobEffectInstance(TSMobEffects.THOLIN_TOXIN.get(), duration, 0), this);
+            living.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, 0), this);
         }
         return hurt;
     }

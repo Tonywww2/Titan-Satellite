@@ -7,6 +7,7 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -44,8 +45,13 @@ public class GiantCraterFeature extends Feature<NoneFeatureConfiguration> {
                 if (horiz <= radius - 2) {
                     // 碗形凹陷：中心深、向外变浅
                     int bowl = (int) ((radius - 2 - horiz) * 0.9D) + 1;
-                    for (int dy = 3; dy > -bowl; dy--) {
-                        pos.set(wx, origin.getY() + dy, wz);
+                    // 从该列真实地表一路清空到碗底，而非仅清 origin+3：陨石坑会跨区块写入，
+                    // 邻近区块可能已先跑完 vegetal（树枝结晶/霜枯灌木）；仅清 +3 会在坑上方留下
+                    // 悬浮地物。用 WORLD_SURFACE_WG 取该列（含邻区已放置方块）真实顶端一并挖除。
+                    int columnTop = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, wx, wz) - 1;
+                    int clearTop = Math.max(columnTop, origin.getY() + 3);
+                    for (int y = clearTop; y > origin.getY() - bowl; y--) {
+                        pos.set(wx, y, wz);
                         setBlock(level, pos, air);
                     }
                     pos.set(wx, origin.getY() - bowl, wz);

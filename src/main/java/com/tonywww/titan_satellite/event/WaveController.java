@@ -79,7 +79,7 @@ public final class WaveController {
      * 高度自定义每波怪物的生成逻辑和强度」）。
      */
     public static int baseWaveMobCount(int waveIndex, int intensity) {
-        return 2 + waveIndex;
+        return 2 + intensity;
     }
 
     /** 在泵周围环形选点生成一只深渊怪，并打上波次标记。 */
@@ -107,10 +107,9 @@ public final class WaveController {
                 spawn.getX() + 0.5, spawn.getY() + 0.5, spawn.getZ() + 0.5, 12, 0.3, 0.5, 0.3, 0.02);
     }
 
-    /** 前期以氨泉掠食者为主，第 3 波起有概率混入失控探测器。 */
+    /** 纯生物围攻：机械探测器已退出生态波次（仅存于先驱者前哨遗迹）；后续 D1 将混入托林织体蛛。 */
     private static EntityType<? extends Mob> pickMobType(ServerLevel level, int waveIndex) {
-        boolean probe = waveIndex >= 3 && level.random.nextInt(3) == 0;
-        return probe ? TSEntities.CORRUPTED_PROBE.get() : TSEntities.AMMONIA_STALKER.get();
+        return TSEntities.AMMONIA_STALKER.get();
     }
 
     /**

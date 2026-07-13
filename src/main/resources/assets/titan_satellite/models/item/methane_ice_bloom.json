@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "titan_satellite:block/methane_ice_bloom"
-  }
-}

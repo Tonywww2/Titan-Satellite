@@ -5,6 +5,9 @@ plugins {
 // 加载器由节点 gradle.properties 的 loom.platform 决定（当前节点为 forge）
 val loader = property("loom.platform").toString()
 val mcVersion = property("vers.mcVersion").toString()
+// 预先取出 mod.id（Project 作用域）：runConfigs 的 lambda 里 property(String) 会命中
+// RunConfigSettings.property（设 VM 属性、返回 Unit）而非 Project.property，故在外层取好。
+val modId = property("mod.id").toString()
 
 
 group = property("mod.group").toString()
@@ -25,6 +28,20 @@ loom {
     // 自动识别 mods.toml 的 [[mixins]]，缺了这行 mixin 在 dev 下静默不加载（NeoForge 原生识别）
     if (loader == "forge") {
         forge { mixinConfig("${property("mod.id")}.mixins.json") }
+        // Forge datagen 运行配置（GatherDataEvent）。data() 套用 Forge userdev 的 "data" 运行模板
+        // （BootstrapLauncher + --launchTarget forgedatauserdev），再补 datagen 参数：
+        // 输出到独立的根 src/generated/resources（与手写 src/main/resources 分开！Forge datagen 会
+        // 修剪 --output 目录下未生成的文件，若就地输出会删光手写 JSON）；--existing 指向
+        // src/main/resources 以校验已有贴图/模型引用。仅 Forge 节点可用（data() 仅 Forge-like）。
+        runConfigs.create("data") {
+            data()
+            programArgs(
+                "--mod", modId,
+                "--all",
+                "--output", rootProject.file("src/generated/resources").absolutePath,
+                "--existing", rootProject.file("src/main/resources").absolutePath,
+            )
+        }
     }
     // 只给活动节点生成 IDE 运行配置，run 目录集中到根
     if (stonecutter.current.isActive) {
@@ -46,6 +63,11 @@ repositories {
         name = "CurseMaven"
         url = uri("https://cursemaven.com")
         content { includeGroup("curse.maven") }
+    }
+    maven {                                    // Team Resourceful 基础库（bytecodecs / yabn）
+        name = "TeamResourceful"
+        url = uri("https://maven.teamresourceful.com/repository/maven-public/")
+        content { includeGroup("com.teamresourceful") }
     }
 }
 
@@ -80,6 +102,19 @@ dependencies {
         // 换过两次坑：① FTB Chunks 的 PistonBaseBlockMixin 本地变量捕获描述符不匹配 → 崩溃；
         // ② Xaero's Minimap 的 xaero.lib（JiJ 内嵌 jar）在 Loom dev 下不加载 → NoClassDefFoundError。
         "modRuntimeOnly"("maven.modrinth:journeymap:1.20.1-5.10.3-forge")
+
+        // Ad Astra 及其前置一律 modImplementation：tiny-remapper 重映射 Ad Astra 时需要完整的
+        // CodecRecipe(resourceful-lib)→Recipe 层级在 remap classpath 上，否则 SpaceStationRecipe
+        // 的 getType()/getSerializer() 覆写不会被重映射（残留 SRG m_6671_）→ 运行期 AbstractMethodError。
+        "modImplementation"("maven.modrinth:ad-astra:1.15.20")
+        "modImplementation"("maven.modrinth:resourceful-lib:2.1.29")     // Ad Astra 前置（≥2.1.23）
+        // Resourceful Config 用 Forge 版本 ID 锁定：按版本号 2.1.3 会命中同号的 Fabric 包 → 崩溃。
+        "modImplementation"("maven.modrinth:resourceful-config:DERs8u7v") // Ad Astra 前置（Forge 2.1.3）
+        "modImplementation"("maven.modrinth:botarium:2.3.4")             // Ad Astra 前置（≥2.3.0）
+        // 以下 JiJ 内嵌库 Loom dev 不解压，需显式补齐到 Forge 运行库。
+        "forgeRuntimeLibrary"("io.github.llamalad7:mixinextras-common:0.3.2") // Ad Astra mixin @WrapOperation
+        "forgeRuntimeLibrary"("com.teamresourceful:bytecodecs:1.0.2")   // resourceful-lib 内嵌
+        "forgeRuntimeLibrary"("com.teamresourceful:yabn:1.0.3")         // resourceful-lib 内嵌
     }
 }
 
@@ -113,3 +148,7 @@ java {
     withSourcesJar()
     toolchain.languageVersion = JavaLanguageVersion.of(javaVersion)
 }
+
+// 将 datagen 生成的资源（根 src/generated/resources）并入主源集，随构建打包。
+// 生成目录与手写 src/main/resources 分开；两者不得有同名文件（否则 processResources 重复）。
+sourceSets["main"].resources.srcDir(rootProject.file("src/generated/resources"))

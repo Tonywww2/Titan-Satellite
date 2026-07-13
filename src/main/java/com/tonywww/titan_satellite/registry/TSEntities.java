@@ -5,6 +5,7 @@ import com.tonywww.titan_satellite.entity.AeroJelly;
 import com.tonywww.titan_satellite.entity.AmmoniaStalker;
 import com.tonywww.titan_satellite.entity.CorruptedProbe;
 import com.tonywww.titan_satellite.entity.CryoScavenger;
+import com.tonywww.titan_satellite.entity.TholinWeaver;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
@@ -42,11 +43,16 @@ public final class TSEntities {
     public static final RegistryObject<EntityType<CorruptedProbe>> CORRUPTED_PROBE = REGISTER.register("corrupted_probe",
             () -> EntityType.Builder.of(CorruptedProbe::new, MobCategory.MONSTER)
                     .sized(0.8F, 0.8F).clientTrackingRange(12).build("corrupted_probe"));
+    // 托林织体蛛（敌对，伏击 + 吐丝）。
+    public static final RegistryObject<EntityType<TholinWeaver>> THOLIN_WEAVER = REGISTER.register("tholin_weaver",
+            () -> EntityType.Builder.of(TholinWeaver::new, MobCategory.MONSTER)
+                    .sized(1.1F, 0.8F).clientTrackingRange(10).build("tholin_weaver"));
 
     public static void onAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(AERO_JELLY.get(), AeroJelly.createAttributes().build());
         event.put(CRYO_SCAVENGER.get(), CryoScavenger.createAttributes().build());
         event.put(AMMONIA_STALKER.get(), AmmoniaStalker.createAttributes().build());
         event.put(CORRUPTED_PROBE.get(), CorruptedProbe.createAttributes().build());
+        event.put(THOLIN_WEAVER.get(), TholinWeaver.createAttributes().build());
     }
 }
