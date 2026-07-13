@@ -5,12 +5,14 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * 方块状态 + 方块模型 + 方块物品模型 datagen。复刻现有手写 JSON：
@@ -32,6 +34,8 @@ public class TSBlockStateProvider extends BlockStateProvider {
     /** cross 方块名 → 完整贴图 ResourceLocation 串。 */
     private static final Map<String, String> CROSS = new LinkedHashMap<>();
     private static final String[] LIQUIDS = {"liquid_methane", "liquid_ammonia"};
+    /** 需四向（Y 0/90/180/270）随机旋转贴图、以打破大面积平铺重复的 cube_all 方块（仿原版石头）。 */
+    private static final Set<String> RANDOM_Y_ROTATE = Set.of("titan_stone");
 
     static {
         CUBE.put("titan_stone", "titan_stone");
@@ -64,8 +68,13 @@ public class TSBlockStateProvider extends BlockStateProvider {
         CUBE.forEach((name, texture) -> {
             ModelFile model = models().cubeAll(name, modLoc("block/" + texture));
             Block block = block(name);
-            simpleBlock(block, model);
-            simpleBlockItem(block, model); // 物品模型 parent = 方块模型
+            if (RANDOM_Y_ROTATE.contains(name)) {
+                // 四向随机 Y 旋转（uvlock=false 才会真正旋转贴图，打破大面积平铺重复）
+                simpleBlock(block, ConfiguredModel.allYRotations(model, 0, false));
+            } else {
+                simpleBlock(block, model);
+            }
+            simpleBlockItem(block, model); // 物品模型 parent = 方块模型（不旋转）
         });
 
         CROSS.forEach((name, texture) -> {

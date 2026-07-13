@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -36,10 +37,17 @@ public class MegayardangFeature extends Feature<NoneFeatureConfiguration> {
             for (int w = -1; w <= 1; w++) {
                 int dx = alongX ? l : w;
                 int dz = alongX ? w : l;
-                for (int dy = 0; dy < h; dy++) {
-                    pos.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
-                    setBlock(level, pos, sand);
-                    placed = true;
+                int wx = origin.getX() + dx;
+                int wz = origin.getZ() + dz;
+                // 从该列真实地表往上垒（而非固定 origin.getY()）：沙脊横跨多列、各列地表高低不同，
+                // 用 origin 相对高度会在低处半空留下悬浮沙块；贴合各列地表才始终连地。
+                int terrainTop = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, wx, wz) - 1;
+                for (int k = 1; k <= h; k++) {
+                    pos.set(wx, terrainTop + k, wz);
+                    if (level.getBlockState(pos).isAir()) {   // 只在地表之上的空气里垒，不埋入既有实体
+                        setBlock(level, pos, sand);
+                        placed = true;
+                    }
                 }
             }
         }

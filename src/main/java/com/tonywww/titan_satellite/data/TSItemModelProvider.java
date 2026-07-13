@@ -41,6 +41,9 @@ public class TSItemModelProvider extends ItemModelProvider {
         withExistingParent("ammonia_stalker_spawn_egg", mcLoc("item/template_spawn_egg"));
         withExistingParent("corrupted_probe_spawn_egg", mcLoc("item/template_spawn_egg"));
         withExistingParent("tholin_weaver_spawn_egg", mcLoc("item/template_spawn_egg"));
+        withExistingParent("native_ice_worm_spawn_egg", mcLoc("item/template_spawn_egg"));
+        withExistingParent("methane_midge_spawn_egg", mcLoc("item/template_spawn_egg"));
+        withExistingParent("hydrotroph_grazer_spawn_egg", mcLoc("item/template_spawn_egg"));
     }
 
     private void generated(String name, String texture) {

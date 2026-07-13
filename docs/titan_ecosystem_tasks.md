@@ -38,10 +38,10 @@
 | **B2** | 生物 | 冰硅甲虫「缩成冰球冲撞」 | P2 | M | — | ✅ |
 | **B3** | 生物 | 甲烷浮游体 浮力/限高 AI + 重力模组兼容 | P2 | M | — | ✅ |
 | **E2** | 事件 | 抽取量 → 生态压力 → 波次强度联动 | P2 | M | — | ✅ |
-| **D2** | 新生物 | 原生冰虫 Native Ice Worm（巢穴精英） | P2 | L | A1,A2 | ⬜ |
-| **E3** | 事件 | 氨泉掠食者借冰火山喷泉弹射 AI | P3 | M | — | ⬜ |
-| **E4** | 事件 | 冰虫巢穴 Boss 化 + 生物有机壁方块 | P3 | L | D2 | ⬜ |
-| **D3** | 新生物 | 微浮群 / 化能食草兽（充实营养级） | P3 | M | — | ⬜ |
+| **D2** | 新生物 | 原生冰虫 Native Ice Worm（巢穴精英） | P2 | L | A1,A2 | ✅ |
+| **E3** | 事件 | 氨泉掠食者借冰火山喷泉弹射 AI | P3 | M | — | ✅ |
+| **E4** | 事件 | 冰虫巢穴 Boss 化 + 生物有机壁方块 | P3 | L | D2 | ✅ |
+| **D3** | 新生物 | 微浮群 / 化能食草兽（充实营养级） | P3 | M | — | ✅ |
 | **E5** | 事件 | 托林潮汐 / 甲烷退潮 周期事件 | P3 | L | E2 | ⬜ |
 | **G1** | 收尾 | lang/创造栏/loot 全量补齐 + runClient 目视 + CR 回写 | P1 | S | 各项 | ⬜ |
 
@@ -132,14 +132,16 @@
 - **验收（无头）：** `runServer` Done；`/summon` + `forceload` 观察伏击/吐丝（毒气云 `data get` 中毒）；`/locate biome tholin_dune_sea` 附近自然生成；掉落表 `loot spawn` 命中。
 - **拆分建议：** D1a 实体+渲染+注册（骨架）→ D1b AI（伏击/吐丝）→ D1c 生成+掉落+lang。
 
-#### D2 — 原生冰虫 Native Ice Worm（巢穴精英）〔P2 · L〕 ⬜ （依赖 A1,A2）
+#### D2 — 原生冰虫 Native Ice Worm（巢穴精英）〔P2 · L〕 ✅ （依赖 A1,A2）
 - **目标：** 冰虫巢穴深处的精英守卫/分解者（设计 §3.8、§5.2 缺口②）。
 - **交付物：** `entity/NativeIceWorm.java`（高 HP/抗性，钻地突袭，攻击附异星毒素）+ 渲染 + 注册 + 生成（`polar_labyrinth` 深处 / 巢穴结构挂钩）+ loot（`tough_neural_gland`）+ lang。
 - **验收：** 同 D1 模式；作为巢穴 Boss 的高血/高抗可 `data get ... Health` 核对。
+- **✅ 完成（CR-23）：** `NativeIceWorm`（HP60 / 护甲8 / 击退抗性0.6 / 移速0.25 / 攻击6 + `THOLIN_TOXIN` II，Leap+Melee AI，目标 HurtBy/Player）+ `NativeIceWormRenderer`（放大 2× 银鱼占位）+ `TSEntities`/生成蛋/创造栏/`TSEntityLoot`（`tough_neural_gland` 1-2 + `cryo_carapace` 0-2）+ `NativeIceWormSpawn`（ON_GROUND）+ `biome_modifier/native_ice_worm_spawn.json`（`polar_labyrinth` w3）+ 数据生成 lang（原生冰虫）/生成蛋模型。无头验证：`summon`→`Health 60.0f` ✓。
 
-#### D3 — 微浮群 / 化能食草兽（可选）〔P3 · M〕 ⬜
+#### D3 — 微浮群 / 化能食草兽（可选）〔P3 · M〕 ✅
 - **目标：** 充实营养级底层（设计 §3.8）：`methane_midge`（群集被动，浮游体食源）、`hydrotroph_grazer`（化能食草）。
 - **状态：** 纯体验增强，低优先；结构同 D1 精简版。
+- **✅ 完成（CR-24）：** `MethaneMidge`（被动飞行群集，HP3，无重力 + 低空 [+2,+10] 带悬浮漂移，缩小史莱姆占位）+ `HydrotrophGrazer`（被动食草，HP10，Float+Panic+游荡，猪模型占位）；各含 渲染/`TSEntities`/生成蛋/创造栏/`SpawnPlacement`(CREATURE `Mob::checkMobSpawnRules`)/biome_modifier(midge `#is_titan` w8 成群；grazer 荒原+陨石荒野 w8)/loot(midge 空表；grazer `aero_membrane` 0-1)/数据生成 lang+蛋模型。无头验证：midge Health 3.0 + 由 y100 受控降入 y≈80 带悬停（不自由落体）；grazer Health 10.0 + loot 掉 Aero-Membrane✓。
 
 ---
 
@@ -157,14 +159,16 @@
 - **步骤：** BE 累计 `extractedTotal` → `beginWave` intensity 传入 `baseWaveMobCount(waveIndex, intensity + f(extracted))`。
 - **验收（无头）：** 不同抽取量下 `data get` 每波怪数差异可复现。
 
-#### E3 — 氨泉掠食者借喷泉弹射 〔P3 · M〕 ⬜
+#### E3 — 氨泉掠食者借喷泉弹射 〔P3 · M〕 ✅
 - **目标：** 设计 §3.4 缺口③、§5.1 扩充：踩喷泉被击飞扑杀。
 - **步骤：** 复用 `CryovolcanicGeyserBlock` 的击飞（`stepOn`）——波次/野生 stalker 靠近喷泉时寻路踩上；或在其 AI 中检测喷泉喷发相位。
 - **验收：** `runClient`/`forceload` 目视被弹射。
+- **✅ 完成（CR-24）：** 被动击飞（`stepOn` 对任意踩上喷发态喷泉的实体）本已可用；新增主动 `GeyserLaunchGoal`（`AmmoniaStalker` 优先级1，仅当目标高于自身≥3格且 8 格内有喷泉时寻路踩上喷泉口，击飞由 `stepOn` 自动完成） + `isErupting` 改 public 供相位判定。无头验证：stalker 加载+召唤 HP24 无崩；主动寻路弹射需 runClient 目视（无头无玩家难触发寻路，击飞机制本身已于 PE-1 实测）。
 
-#### E4 — 冰虫巢穴 Boss 化 + 生物有机壁 〔P3 · L〕 ⬜ （依赖 D2）
+#### E4 — 冰虫巢穴 Boss 化 + 生物有机壁 〔P3 · L〕 ✅ （依赖 D2）
 - **目标：** 设计 §5.2 缺口①②：`tholin_geode`/`sponge_cave` 内加「生物有机壁」方块（可复用/新增 `hardened_tholin` 变体）+ 精英冰虫作 Boss + 破坏晶体惊醒之。
 - **验收：** `/place` 结构含有机壁 + 惊扰生成冰虫。
+- **✅ 完成（CR-23）：** `TitanStructurePiece.buildGeode` 地板改 `HARDENED_THOLIN`（生物有机壁）+ 新增 `spawnIceWorm` 在 `tholin_geode` 内生成精英冰虫 Boss；破坏托林晶体经既有 `TholinCrystalBlock.disturb` 惊醒附近 `Enemy`（冰虫为 Monster 自动满足）。无头验证：`/place structure titan_satellite:tholin_geode`→ 结构生成 + 冰虫已在巢穴内 ✓。
 
 #### E5 — 托林潮汐 / 甲烷退潮（可选）〔P3 · L〕 ⬜ （依赖 E2）
 - **目标：** 设计 §5.4 周期事件；甲烷退潮需把局部流体/`sea_level` 与开采量挂钩（进阶）。

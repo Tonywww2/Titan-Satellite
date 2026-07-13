@@ -42,32 +42,50 @@ public class GiantCraterFeature extends Feature<NoneFeatureConfiguration> {
                 }
                 int wx = origin.getX() + dx;
                 int wz = origin.getZ() + dz;
+                // 逐列取真实地表：terrainTop=实心岩顶（忽略无碰撞地物/流体），surfaceTop=含地物/流体顶。
+                // 坑体一律相对**该列真实地表**放置、绝不在半空落方块——破碎/悬崖地形下才不会出现悬浮坑底/坑缘。
+                int terrainTop = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, wx, wz) - 1;
+                int surfaceTop = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, wx, wz) - 1;
                 if (horiz <= radius - 2) {
                     // 碗形凹陷：中心深、向外变浅
                     int bowl = (int) ((radius - 2 - horiz) * 0.9D) + 1;
-                    // 从该列真实地表一路清空到碗底，而非仅清 origin+3：陨石坑会跨区块写入，
-                    // 邻近区块可能已先跑完 vegetal（树枝结晶/霜枯灌木）；仅清 +3 会在坑上方留下
-                    // 悬浮地物。用 WORLD_SURFACE_WG 取该列（含邻区已放置方块）真实顶端一并挖除。
-                    int columnTop = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, wx, wz) - 1;
-                    int clearTop = Math.max(columnTop, origin.getY() + 3);
-                    for (int y = clearTop; y > origin.getY() - bowl; y--) {
+                    int floorY = origin.getY() - bowl;
+                    if (terrainTop <= floorY) {
+                        // 该列真实地表已在碗底或更低（悬崖/深谷）：不铺碗底(否则悬浮)，仅铲掉其上方残留的悬浮地物
+                        for (int y = surfaceTop; y > terrainTop; y--) {
+                            pos.set(wx, y, wz);
+                            if (!level.getBlockState(pos).isAir()) {
+                                setBlock(level, pos, air);
+                            }
+                        }
+                        continue;
+                    }
+                    // 把该列真实顶端（含邻区已放置地物）一路清空到碗底之上，再在碗底铺深层岩（砸穿地层）
+                    for (int y = surfaceTop; y > floorY; y--) {
                         pos.set(wx, y, wz);
                         setBlock(level, pos, air);
                     }
-                    pos.set(wx, origin.getY() - bowl, wz);
-                    setBlock(level, pos, deep);            // 坑底露出深层岩（砸穿地层）
+                    pos.set(wx, floorY, wz);
+                    setBlock(level, pos, deep);
                     placed = true;
                     if (hasPool && horiz < (radius - 2) * 0.35D) {
-                        pos.set(wx, origin.getY() - bowl + 1, wz);
+                        pos.set(wx, floorY + 1, wz);
                         setBlock(level, pos, methane);     // 坑底微型甲烷湖
                     }
                 } else {
-                    // 凸起坑缘环：抬升的环形边缘
+                    // 凸起坑缘环：贴合该列真实地表垒一圈矮唇（始终连地、不悬浮）
                     double t = 1.0D - Math.abs(horiz - (radius - 0.5D)) / 1.5D;
                     if (t > 0.0D) {
                         int rimH = 1 + (int) (t * 3.0D);   // 峰高 1-4
+                        // 先铲掉地表以上残留（邻区悬浮地物），再从真实地表往上垒 rim
+                        for (int y = surfaceTop; y > terrainTop; y--) {
+                            pos.set(wx, y, wz);
+                            if (!level.getBlockState(pos).isAir()) {
+                                setBlock(level, pos, air);
+                            }
+                        }
                         for (int dy = 1; dy <= rimH; dy++) {
-                            pos.set(wx, origin.getY() + dy, wz);
+                            pos.set(wx, terrainTop + dy, wz);
                             setBlock(level, pos, surface);
                         }
                         placed = true;

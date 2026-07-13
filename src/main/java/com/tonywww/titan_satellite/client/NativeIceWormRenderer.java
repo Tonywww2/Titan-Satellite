@@ -1,0 +1,31 @@
+package com.tonywww.titan_satellite.client;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.tonywww.titan_satellite.entity.NativeIceWorm;
+import net.minecraft.client.model.SilverfishModel;
+import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.ResourceLocation;
+
+/**
+ * 原生冰虫渲染器（桩，复用放大的蠹虫模型 + 蠹虫贴图占位）。真实模型/贴图待美术替换。
+ */
+public class NativeIceWormRenderer extends MobRenderer<NativeIceWorm, SilverfishModel<NativeIceWorm>> {
+
+    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/silverfish.png");
+
+    public NativeIceWormRenderer(EntityRendererProvider.Context context) {
+        super(context, new SilverfishModel<>(context.bakeLayer(ModelLayers.SILVERFISH)), 0.6F);
+    }
+
+    @Override
+    protected void scale(NativeIceWorm entity, PoseStack pose, float partialTick) {
+        pose.scale(2.0F, 2.0F, 2.0F);
+    }
+
+    @Override
+    public ResourceLocation getTextureLocation(NativeIceWorm entity) {
+        return TEXTURE;
+    }
+}

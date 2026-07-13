@@ -77,7 +77,7 @@ public class TitanStructurePiece extends StructurePiece {
         BlockState shell = TSBlocks.CRYO_ICE.get().defaultBlockState();
         BlockState crystal = TSBlocks.THOLIN_CRYSTAL.get().defaultBlockState();
         BlockState hollow = Blocks.CAVE_AIR.defaultBlockState();
-        BlockState floor = TSBlocks.TITAN_BASALT.get().defaultBlockState();
+        BlockState floor = TSBlocks.HARDENED_THOLIN.get().defaultBlockState(); // 生物有机壁/巢底（E4）
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
 
         for (int dx = -r; dx <= r; dx++) {
@@ -108,6 +108,7 @@ public class TitanStructurePiece extends StructurePiece {
             }
         }
         placeChest(level, new BlockPos(origin.getX(), floorY + 1, origin.getZ()), box, random, GEODE_LOOT);
+        spawnIceWorm(level, new BlockPos(origin.getX() + 1, floorY + 1, origin.getZ()), box, random);
     }
 
     // ---- 先驱前哨站：地表废弃小屋 ----
@@ -184,6 +185,20 @@ public class TitanStructurePiece extends StructurePiece {
             probe.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
             probe.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
             level.addFreshEntity(probe);
+        }
+    }
+
+    /** 冰虫巢穴 Boss：在托林晶洞中央生成一只常驻的原生冰虫精英（E4）。 */
+    private void spawnIceWorm(WorldGenLevel level, BlockPos pos, BoundingBox box, RandomSource random) {
+        if (!box.isInside(pos)) {
+            return;
+        }
+        Mob worm = TSEntities.NATIVE_ICE_WORM.get().create(level.getLevel());
+        if (worm != null) {
+            worm.setPersistenceRequired();
+            worm.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
+            worm.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
+            level.addFreshEntity(worm);
         }
     }
 }

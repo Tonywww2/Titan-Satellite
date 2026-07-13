@@ -41,7 +41,7 @@ public class CryovolcanicGeyserBlock extends Block {
      * 该方块是否正处于喷发态。基于 {@code gameTime} + 按坐标计算的相位偏移，
      * 使相邻喷泉错峰喷发而非整齐划一。
      */
-    private static boolean isErupting(Level level, BlockPos pos) {
+    public static boolean isErupting(Level level, BlockPos pos) {
         long phase = Math.floorMod((long) pos.getX() * 7L + (long) pos.getZ() * 13L + (long) pos.getY() * 5L, CYCLE_TICKS);
         return Math.floorMod(level.getGameTime() + phase, CYCLE_TICKS) < ERUPT_TICKS;
     }

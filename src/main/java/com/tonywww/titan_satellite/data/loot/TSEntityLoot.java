@@ -37,6 +37,16 @@ public class TSEntityLoot implements LootTableSubProvider {
         consumer.accept(entity("tholin_weaver"), LootTable.lootTable()
                 .withPool(singleDrop(TSItems.TOUGH_NEURAL_GLAND.get(), 0, 1))
                 .withPool(singleDrop(TSItems.THOLIN_SILK_SAC.get(), 0, 2)));
+
+        consumer.accept(entity("native_ice_worm"), LootTable.lootTable()
+                .withPool(singleDrop(TSItems.TOUGH_NEURAL_GLAND.get(), 1, 2))
+                .withPool(singleDrop(TSItems.CRYO_CARAPACE.get(), 0, 2)));
+
+        // D3 填充生物：微浮群太小无掉落（空表）；蹒兽掉落少量浮游薄膜（化能气囊）。
+        consumer.accept(entity("methane_midge"), LootTable.lootTable());
+
+        consumer.accept(entity("hydrotroph_grazer"), LootTable.lootTable()
+                .withPool(singleDrop(TSItems.AERO_MEMBRANE.get(), 0, 1)));
     }
 
     /** 单物品掉落池：uniform(min,max) 数量 + looting_enchant(0-1)。 */

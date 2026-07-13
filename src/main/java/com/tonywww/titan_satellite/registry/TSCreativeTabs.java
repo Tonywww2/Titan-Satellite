@@ -70,6 +70,9 @@ public final class TSCreativeTabs {
                         output.accept(TSItems.AMMONIA_STALKER_SPAWN_EGG.get());
                         output.accept(TSItems.CORRUPTED_PROBE_SPAWN_EGG.get());
                         output.accept(TSItems.THOLIN_WEAVER_SPAWN_EGG.get());
+                        output.accept(TSItems.NATIVE_ICE_WORM_SPAWN_EGG.get());
+                        output.accept(TSItems.METHANE_MIDGE_SPAWN_EGG.get());
+                        output.accept(TSItems.HYDROTROPH_GRAZER_SPAWN_EGG.get());
                     })
                     .build());
 }

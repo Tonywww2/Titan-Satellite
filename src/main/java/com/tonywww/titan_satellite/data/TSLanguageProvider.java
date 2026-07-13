@@ -71,6 +71,9 @@ public class TSLanguageProvider extends LanguageProvider {
         t("item.titan_satellite.ammonia_stalker_spawn_egg", "Ammonia Stalker Spawn Egg", "氨泉掉食者刷怪蛋");
         t("item.titan_satellite.corrupted_probe_spawn_egg", "Tholin-Parasitized Probe Spawn Egg", "托林寄生探测器刷怪蛋");
         t("item.titan_satellite.tholin_weaver_spawn_egg", "Tholin-Weaver Spawn Egg", "托林织体蛛刷怪蛋");
+        t("item.titan_satellite.native_ice_worm_spawn_egg", "Native Ice Worm Spawn Egg", "原生冰虫刷怪蛋");
+        t("item.titan_satellite.methane_midge_spawn_egg", "Methane Midge Spawn Egg", "甲烷微浮群刷怪蛋");
+        t("item.titan_satellite.hydrotroph_grazer_spawn_egg", "Hydrotroph Grazer Spawn Egg", "氢营养蹒兽刷怪蛋");
 
         // 状态效果
         t("effect.titan_satellite.tholin_toxin", "Tholin Toxin", "托林毒素");
@@ -81,6 +84,9 @@ public class TSLanguageProvider extends LanguageProvider {
         t("entity.titan_satellite.ammonia_stalker", "Ammonia Stalker", "氨泉掉食者");
         t("entity.titan_satellite.corrupted_probe", "Tholin-Parasitized Probe", "托林寄生探测器");
         t("entity.titan_satellite.tholin_weaver", "Tholin-Weaver", "托林织体蛛");
+        t("entity.titan_satellite.native_ice_worm", "Native Ice Worm", "原生冰虫");
+        t("entity.titan_satellite.methane_midge", "Methane Midge", "甲烷微浮群");
+        t("entity.titan_satellite.hydrotroph_grazer", "Hydrotroph Grazer", "氢营养蹒兽");
 
         // 群系
         t("biome.titan_satellite.methane_abyss", "Titan \u00b7 Methane Abyss", "土卫六\u00b7液态甲烷深渊");

@@ -28,9 +28,10 @@
 | **群系 6 种** | ✅ | `dimension/titan.json` multi_noise | — |
 | 甲烷浮游体 Aero-Jelly | ✅ | `entity/AeroJelly`（无重力飞行悬浮） | ✅ B3 实测：由 y120 降入 y≈83 区带稳定悬停（不下沉地面、无抖动） |
 | 冰硅甲虫 Cryo-Scavenger | ✅ | `entity/CryoScavenger`（中立 + 0.6× 减伤 + 冰球冲撞） | ✅ B2：有目标时周期冲撞 + 命中额外击退 |
-| 氨泉掠食者 Ammonia Stalker | 🟡 | `entity/AmmoniaStalker`（两栖 + 异星毒素 + 降挖速） | ✅ 攻击已改异星毒素+挖掘疲劳（B1）；仍缺喷泉弹射（E3） |
-| 托林织体蛛 Tholin-Weaver | ✅ | `entity/TholinWeaver` + 渲染 + 刷怪蛋 + 生成 + 掉落 | ✅ D1：伏击(扮击)+近战附缓慢/异星毒素+吐丝黑网云；限沙海/荒原生成 |
-| 失控探测器 Corrupted Probe | ✅ | `entity/CorruptedProbe`（仅前哨遗迹） | ✅ F1(b)：已去自然/波次生成，仅 `TitanStructurePiece` 遗迹出现 |
+| 氨泉掠食者 Ammonia Stalker | ✅ | `entity/AmmoniaStalker`（两栖 + 异星毒素 + 降挖速 + 借喷泉弹射） | ✅ 攻击异星毒素+挖掘疲劳（B1）；✅ E3 主动借喷泉弹射 AI（目标在上方时寻路踩喷泉） |
+| 托林织体蛛 Tholin-Weaver | ✅ | `entity/TholinWeaver` + 渲染 + 刷怪蛋 + 生成 + 掉落 | ✅ D1：伏击(扮击)+近战附缓慢/异星毒素+吐丝黑网云；限沙海/荒原生成 || 原生冰虫 Native Ice Worm | ✅ | `entity/NativeIceWorm` + 渲染 + 刷怪蛋 + 生成 + 掉落 | ✅ D2：巢穴精英(HP60/护甲8/击退抗性0.6)跃击+近战附异星毒素 II；限 `polar_labyrinth` 稀有生成 + 作巢穴 Boss(E4) |
+| 甲烷微浮群 Methane Midge | ✅ | `entity/MethaneMidge` + 渲染 + 刷怪蛋 + 生成 + 掉落 | ✅ D3：被动飞行群集(HP3，无重力低空悬浮漂移)，浮游体食源；全 titan 群系成群生成 |
+| 氢营养蹒兽 Hydrotroph Grazer | ✅ | `entity/HydrotrophGrazer` + 渲染 + 刷怪蛋 + 生成 + 掉落 | ✅ D3：被动食草(HP10，受惊逃纤)，充实中层营养级；荒原/陨石荒野成群生成 || 失控探测器 Corrupted Probe | ✅ | `entity/CorruptedProbe`（仅前哨遗迹） | ✅ F1(b)：已去自然/波次生成，仅 `TitanStructurePiece` 遗迹出现 |
 | 异星毒素 Alien Toxin | ✅ | `TSMobEffects.THOLIN_TOXIN`（凋零式扣血） | ✅ A1 实测：中毒实体 Health 递减（100→89） |
 | 树枝状结晶 Branch Crystal | 🟡 | `block/BRANCH_CRYSTAL` + `branch_crystal`(worldgen) | 缺「晶化枝条」采集物 |
 | 托林灌木 Tholin Shrub | 🟡 | `block/THOLIN_SHRUB` + `tholin_shrub_patch` | 缺减速/剪采「托林纤维」 |
@@ -39,7 +40,7 @@
 | 冰火山喷泉 Cryovolcanic Geyser | ✅ | `block/CryovolcanicGeyserBlock` + `geyser_patch` | 击飞 + 周期喷发已实测 |
 | 甲烷池核心 + 特制甲烷泵 | ✅ | `MethanePoolCoreBlock` / `SpecialMethanePumpBlock(+BE)` | 已含红石/自动化/流体槽/攻泵欲望（CR-15） |
 | 生态狂乱潮（波次防御） | ✅ | `event/WaveController` + `MethaneExtractionWaveEvent` + `WaveSpawnMixin` | ✅ 纯生物化(氨泉+第3波起织体蛛) + E2 抽取量→波次强度 |
-| 托林晶洞 / 冰虫巢穴 | 🟡 | `tholin_geode`(结构) + `sponge_cave` + `TholinCrystalBlock`(破坏放毒惊怪) | 缺「精英原生冰虫」专属 mob |
+| 托林晶洞 / 冰虫巢穴 | ✅ | `tholin_geode`(结构) + `sponge_cave` + `TholinCrystalBlock`(破坏放毒惊怪) | ✅ E4：地板改 `HARDENED_THOLIN` 有机壁 + 内生精英冰虫 Boss（破晶惊醒） |
 | 掉落材料 | 🟡 | `aero_membrane`/`cryo_carapace`/`toxic_gland` + 枝条/纤维/神经腺/丝囊 ✅ | ✅ A2 四材料已注册+模型；多磷腈辅酶（可选）未做 |
 | 代谢链生化（呼吸/产能） | 🚫 Lore | — | **仅设定参考，不实装**（见 §1）；仅命名/材料/剧情可被 §4 取用 |
 
@@ -188,10 +189,10 @@ flowchart TD
 *   **现状:** `TSMobEffects.THOLIN_TOXIN` **已注册但空实现**（无 `applyEffectTick`，仅图标/计时）；`AmmoniaStalker`/晶洞毒气目前施加的是**原版 POISON**。
 *   **补齐建议:** 让 `THOLIN_TOXIN` 覆写 `applyEffectTick`（`living.hurt(伤害源, 1.0F)` 每 N tick，`isDurationEffectTick` 按 amplifier 调频，仿 `WITHER`）+ `isInstantenous()=false`；再把 `AmmoniaStalker.doHurtTarget`、`TholinWeaver`、`TholinCrystalBlock` 毒气云改用它。**即"异星毒素"名副其实。**
 
-### 3.8 〔扩充〕新增生物 (New Fauna) ⬜
-*   **原生冰虫 (Native Ice Worm) — 精英 · Hostile:** 潜伏冰虫巢穴深处；破坏发光晶体惊醒（设计已提及「精英级原生冰虫」）。分解者兼守卫，钻地突袭、高血高抗。掉落「还原酶腺体」。
-*   **甲烷微浮群 (Methane Midge) — 群集 · Passive:** 极小浮游群，浮游体的食源（营养级最底），成群随风漂移，靠近火源轻微轰燃。
-*   **氢营养蹒兽 (Hydrotroph Grazer) — 被动/中立:** 荒原上啃食氢泡菌毯的化能食草兽，冰硅甲虫/织体蛛的猎物，充实中层营养级。
+### 3.8 〔扩充〕新增生物 (New Fauna) ✅
+*   **原生冰虫 (Native Ice Worm) — 精英 · Hostile ✅ D2:** 潜伏冰虫巢穴深处；破坏发光晶体惊醒（设计已提及「精英级原生冰虫」）。分解者兼守卫，钻地突袭、高血高抗。掉落强韧神经腺 + 冰晶甲壳。已实装：`entity/NativeIceWorm`（HP60/护甲8/击退抗性0.6，Leap+Melee，命中附 `THOLIN_TOXIN` II）+ 作 `tholin_geode` 巢穴 Boss（E4）。
+*   **甲烷微浮群 (Methane Midge) — 群集 · Passive ✅ D3:** 极小浮游群，浮游体的食源（营养级最底），成群随风漂移。已实装：`entity/MethaneMidge`（HP3，无重力 + 低空 [+2,+10] 带悬浮，缩小史莱姆占位），全 titan 群系成群生成。
+*   **氢营养蹒兽 (Hydrotroph Grazer) — 被动/中立 ✅ D3:** 荒原上啻食氢泡菌毯的化能食草兽，充实中层营养级。已实装：`entity/HydrotrophGrazer`（HP10，被动 + 受惊逃纤，猪模型占位），荒原/陨石荒野成群生成。
 
 ---
 
@@ -220,11 +221,11 @@ flowchart TD
 
 ### 5.1 冰火山喷泉生态利用 (Geyser Exploitation) ✅
 *   `CryovolcanicGeyserBlock`：冰火山断崖自然生成，周期喷发高压液氨/冰晶，踩上实体获巨大垂直动能（击飞）——已实测（PE-1）。
-*   🎮 **扩充:** 让**氨泉掠食者**主动借喷泉弹射扑杀（§3.4 缺口③）；玩家可用击飞 + 滑翔跨越 Y 轴高差。
+*   🎮 **扩充 ✅ E3:** **氨泉掠食者**已能主动借喷泉弹射扑杀（`GeyserLaunchGoal`：目标在上方且附近有喷泉时寻路踩上，`stepOn` 自动击飞）；玩家亦可用击飞 + 滑翔跨越 Y 轴高差。
 
-### 5.2 生态特殊地牢：地下冰虫巢穴 (Underground Hives) 🟡
+### 5.2 生态特殊地牡：地下冰虫巢穴 (Underground Hives) ✅
 *   **已实现:** `tholin_geode`（自定义结构）+ `sponge_cave`（多孔海绵洞特征）+ `TholinCrystalBlock`（玩家破坏 50% → 毒气云 + 惊醒附近敌对，PE-3）+ 全局噪声洞穴系统（CR-14）。
-*   **缺口:** ①「生物有机壁」（高分子多糖硬壁）专用方块（可复用 `hardened_tholin`/新增）；②**精英原生冰虫** mob（§3.8）作为巢穴 Boss。
+*   **✅ 已补齐（E4）:** ①地板改用 `HARDENED_THOLIN`作「生物有机壁」；②`buildGeode` 内生成**精英原生冰虫**（§3.8）作巢穴 Boss，破坏托林晶体经 `TholinCrystalBlock.disturb` 惊醒之。
 
 ### 5.3 生态狂乱：甲烷开采防御战 (Ecosystem Frenzy Event) ✅🟡
 *   **已实现:** 在**甲烷池核心**上放**特制甲烷泵**开采 → 后端抛 `MethaneExtractionWaveEvent`（冻结签名）→ `WaveController` 波次刷怪围攻泵站，`WaveSpawnMixin` 强化波次怪并驱其攻泵。**CR-15 刚增强：红石启动（不可重复）、自动化产物入上方容器、只出不进甲烷流体槽、增强攻泵欲望**——均已实测。

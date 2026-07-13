@@ -23,5 +23,8 @@ public final class TitanClientEvents {
         event.registerEntityRenderer(TSEntities.AMMONIA_STALKER.get(), AmmoniaStalkerRenderer::new);
         event.registerEntityRenderer(TSEntities.CORRUPTED_PROBE.get(), CorruptedProbeRenderer::new);
         event.registerEntityRenderer(TSEntities.THOLIN_WEAVER.get(), TholinWeaverRenderer::new);
+        event.registerEntityRenderer(TSEntities.NATIVE_ICE_WORM.get(), NativeIceWormRenderer::new);
+        event.registerEntityRenderer(TSEntities.METHANE_MIDGE.get(), MethaneMidgeRenderer::new);
+        event.registerEntityRenderer(TSEntities.HYDROTROPH_GRAZER.get(), HydrotrophGrazerRenderer::new);
     }
 }

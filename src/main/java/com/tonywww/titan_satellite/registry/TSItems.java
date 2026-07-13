@@ -86,6 +86,12 @@ public final class TSItems {
             () -> new ForgeSpawnEggItem(TSEntities.CORRUPTED_PROBE, 0x555555, 0xB0822E, new Item.Properties()));
     public static final RegistryObject<Item> THOLIN_WEAVER_SPAWN_EGG = register("tholin_weaver_spawn_egg",
             () -> new ForgeSpawnEggItem(TSEntities.THOLIN_WEAVER, 0xC86428, 0x3A2A1A, new Item.Properties()));
+    public static final RegistryObject<Item> NATIVE_ICE_WORM_SPAWN_EGG = register("native_ice_worm_spawn_egg",
+            () -> new ForgeSpawnEggItem(TSEntities.NATIVE_ICE_WORM, 0x8FD8F0, 0xE0F4FF, new Item.Properties()));
+    public static final RegistryObject<Item> METHANE_MIDGE_SPAWN_EGG = register("methane_midge_spawn_egg",
+            () -> new ForgeSpawnEggItem(TSEntities.METHANE_MIDGE, 0xBFD8A0, 0x6E8A4A, new Item.Properties()));
+    public static final RegistryObject<Item> HYDROTROPH_GRAZER_SPAWN_EGG = register("hydrotroph_grazer_spawn_egg",
+            () -> new ForgeSpawnEggItem(TSEntities.HYDROTROPH_GRAZER, 0x8A6E5A, 0xC8A87A, new Item.Properties()));
 
     private static RegistryObject<Item> register(String name, Supplier<Item> supplier) {
         return REGISTER.register(name, supplier);

@@ -1,10 +1,15 @@
 package com.tonywww.titan_satellite.worldgen.feature;
 
 import com.mojang.serialization.Codec;
+import com.tonywww.titan_satellite.TitanSatellite;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -17,6 +22,18 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  * <p>仅在噪声高值处挖空（保留原有冰壁），配合边缘衰减使中心多孔、边缘保留壁，形成海绵状孔隙。
  */
 public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
+
+    /** 极地迷宫冰原群系键——破碎海绵仅在此群系“内部”生成。 */
+    private static final ResourceKey<Biome> POLAR_LABYRINTH =
+            ResourceKey.create(Registries.BIOME, new ResourceLocation(TitanSatellite.MODID, "polar_labyrinth"));
+    /** 洞体半径之外再向外要求的实心边距（格）：中心与该半径环上须全为极地群系，否则跳过。
+     *  取值偏大以抵消群系采样按 4 格量化的误差、并为过渡断崖留足实心冰壁。 */
+    private static final int EDGE_BUFFER = 6;
+    /** 8 个归一化水平方向（含对角），用于环形采样群系边界。 */
+    private static final double[][] DIRS8 = {
+            {1, 0}, {-1, 0}, {0, 1}, {0, -1},
+            {0.7071D, 0.7071D}, {0.7071D, -0.7071D}, {-0.7071D, 0.7071D}, {-0.7071D, -0.7071D}
+    };
 
     public SpongeCaveFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
@@ -32,6 +49,12 @@ public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
         int height = 8 + random.nextInt(8);            // 高度 8-15
         int topOffset = 2 + random.nextInt(2);         // 地表下 2-3 格起
         double threshold = 0.12D;                      // 孔隙阈值（越低孔越多）
+
+        // 群系边缘剔除：因极端高差，群系过渡处是陡峭断崖，海绵孔洞极易被切穿暴露。
+        // 要求洞体中心及其“半径 + 边距”环上一圈全部位于极地迷宫冰原内部，否则放弃本次生成。
+        if (!isInsidePolar(level, origin, radius + EDGE_BUFFER)) {
+            return false;
+        }
 
         BlockState air = Blocks.CAVE_AIR.defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
@@ -61,6 +84,25 @@ public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
         return placed;
+    }
+
+    /** 中心与“半径 r”环上 8 个方向是否全部为极地迷宫冰原（即远离群系过渡断崖）。 */
+    private static boolean isInsidePolar(WorldGenLevel level, BlockPos origin, int r) {
+        if (!isPolar(level, origin.getX(), origin.getY(), origin.getZ())) {
+            return false;
+        }
+        for (double[] dir : DIRS8) {
+            int sx = origin.getX() + (int) Math.round(dir[0] * r);
+            int sz = origin.getZ() + (int) Math.round(dir[1] * r);
+            if (!isPolar(level, sx, origin.getY(), sz)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isPolar(WorldGenLevel level, int x, int y, int z) {
+        return level.getBiome(new BlockPos(x, y, z)).is(POLAR_LABYRINTH);
     }
 
     // 确定性 3D 值噪声：整点哈希 + 三线性平滑插值，输出约 [0, 1]。
