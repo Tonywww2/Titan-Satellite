@@ -38,6 +38,8 @@
   "entity.titan_satellite.methane_midge": "Methane Midge",
   "entity.titan_satellite.native_ice_worm": "Native Ice Worm",
   "entity.titan_satellite.tholin_weaver": "Tholin-Weaver",
+  "fluid_type.titan_satellite.liquid_ammonia": "Liquid Ammonia",
+  "fluid_type.titan_satellite.liquid_methane": "Liquid Methane",
   "item.titan_satellite.aero_jelly_spawn_egg": "Aero-Jelly Spawn Egg",
   "item.titan_satellite.aero_membrane": "Aero-Membrane",
   "item.titan_satellite.ammonia_stalker_spawn_egg": "Ammonia Stalker Spawn Egg",

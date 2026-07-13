@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class HydrotrophGrazerRenderer extends MobRenderer<HydrotrophGrazer, PigModel<HydrotrophGrazer>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/pig/pig.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/hydrotroph_grazer.png");
 
     public HydrotrophGrazerRenderer(EntityRendererProvider.Context context) {
         super(context, new PigModel<>(context.bakeLayer(ModelLayers.PIG)), 0.7F);

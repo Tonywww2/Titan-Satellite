@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cross",
   "render_type": "minecraft:cutout",
   "textures": {
-    "cross": "minecraft:block/warped_roots"
+    "cross": "titan_satellite:block/branch_crystal"
   }
 }

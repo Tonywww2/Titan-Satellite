@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class AmmoniaStalkerRenderer extends MobRenderer<AmmoniaStalker, HumanoidModel<AmmoniaStalker>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/zombie/drowned.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/ammonia_stalker.png");
 
     public AmmoniaStalkerRenderer(EntityRendererProvider.Context context) {
         super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.ZOMBIE)), 0.5F);

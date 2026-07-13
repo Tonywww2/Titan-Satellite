@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "minecraft:item/spider_eye"
+    "layer0": "titan_satellite:item/toxic_gland"
   }
 }

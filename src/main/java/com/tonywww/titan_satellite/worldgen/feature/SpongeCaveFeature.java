@@ -12,6 +12,7 @@ import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -28,12 +29,14 @@ public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
             ResourceKey.create(Registries.BIOME, new ResourceLocation(TitanSatellite.MODID, "polar_labyrinth"));
     /** 洞体半径之外再向外要求的实心边距（格）：中心与该半径环上须全为极地群系，否则跳过。
      *  取值偏大以抵消群系采样按 4 格量化的误差、并为过渡断崖留足实心冰壁。 */
-    private static final int EDGE_BUFFER = 6;
-    /** 8 个归一化水平方向（含对角），用于环形采样群系边界。 */
-    private static final double[][] DIRS8 = {
-            {1, 0}, {-1, 0}, {0, 1}, {0, -1},
-            {0.7071D, 0.7071D}, {0.7071D, -0.7071D}, {-0.7071D, 0.7071D}, {-0.7071D, -0.7071D}
-    };
+    private static final int EDGE_BUFFER = 8;
+    /** 环形采样点数（越多越不易漏检切向断崖）。 */
+    private static final int RING_SAMPLES = 16;
+    /** 允许的最大地表落差（格）：一圈地表比中心低超过此值即判定邻近过渡断崖 / 陡坡，跳过本次生成。 */
+    private static final int MAX_DROP = 8;
+    /** 最低生成高度（格）：地表低于此高度即视为已跌入向低群系过渡的坡 / 崖上，跳过。
+     *  极地台面基准 Y≈180（180 + 4*wobble）；调高→更保守（仅台面顶部生成），调低→更宽松。 */
+    private static final int MIN_SURFACE_Y = 172;
 
     public SpongeCaveFeature(Codec<NoneFeatureConfiguration> codec) {
         super(codec);
@@ -45,14 +48,19 @@ public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos origin = context.origin();
         RandomSource random = context.random();
 
+        // 最低高度闸门：地表明显低于基准台面，说明处在向低群系过渡的坡 / 崖上，直接跳过。
+        if (origin.getY() < MIN_SURFACE_Y) {
+            return false;
+        }
+
         int radius = 5 + random.nextInt(4);            // 半径 5-8
         int height = 8 + random.nextInt(8);            // 高度 8-15
         int topOffset = 2 + random.nextInt(2);         // 地表下 2-3 格起
         double threshold = 0.12D;                      // 孔隙阈值（越低孔越多）
 
-        // 群系边缘剔除：因极端高差，群系过渡处是陡峭断崖，海绵孔洞极易被切穿暴露。
-        // 要求洞体中心及其“半径 + 边距”环上一圈全部位于极地迷宫冰原内部，否则放弃本次生成。
-        if (!isInsidePolar(level, origin, radius + EDGE_BUFFER)) {
+        // 群系边缘 + 地形落差双重剔除：因极端高差，群系过渡处是陡峭断崖，海绵孔洞极易被切穿暴露。
+        // 要求洞体中心及其“半径 + 边距”环上一圈：既全在极地群系内、地表又无明显下陷，否则放弃本次生成。
+        if (!isSafeInterior(level, origin, radius + EDGE_BUFFER)) {
             return false;
         }
 
@@ -86,15 +94,27 @@ public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
         return placed;
     }
 
-    /** 中心与“半径 r”环上 8 个方向是否全部为极地迷宫冰原（即远离群系过渡断崖）。 */
-    private static boolean isInsidePolar(WorldGenLevel level, BlockPos origin, int r) {
-        if (!isPolar(level, origin.getX(), origin.getY(), origin.getZ())) {
+    /**
+     * 洞体是否位于极地迷宫冰原“平坦内部”：中心在极地群系内，且以 r 为半径、{@link #RING_SAMPLES}
+     * 个方向的一圈上——(1) 全部仍是极地群系；(2) 地表相对中心的下陷不超过 {@link #MAX_DROP}。
+     * 任一不满足即视为邻近群系过渡断崖 / 陡坡，放弃生成。
+     */
+    private static boolean isSafeInterior(WorldGenLevel level, BlockPos origin, int r) {
+        int cx = origin.getX();
+        int cy = origin.getY();
+        int cz = origin.getZ();
+        if (!isPolar(level, cx, cy, cz)) {
             return false;
         }
-        for (double[] dir : DIRS8) {
-            int sx = origin.getX() + (int) Math.round(dir[0] * r);
-            int sz = origin.getZ() + (int) Math.round(dir[1] * r);
-            if (!isPolar(level, sx, origin.getY(), sz)) {
+        int centerSurface = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, cx, cz);
+        for (int i = 0; i < RING_SAMPLES; i++) {
+            double a = (Math.PI * 2.0D * i) / RING_SAMPLES;
+            int sx = cx + (int) Math.round(Math.cos(a) * r);
+            int sz = cz + (int) Math.round(Math.sin(a) * r);
+            if (!isPolar(level, sx, cy, sz)) {
+                return false;
+            }
+            if (centerSurface - level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, sx, sz) > MAX_DROP) {
                 return false;
             }
         }

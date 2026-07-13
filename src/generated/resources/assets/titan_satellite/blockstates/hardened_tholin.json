@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "titan_satellite:block/hardened_tholin"
-    }
+    "": [
+      {
+        "model": "titan_satellite:block/hardened_tholin"
+      },
+      {
+        "model": "titan_satellite:block/hardened_tholin",
+        "y": 90
+      },
+      {
+        "model": "titan_satellite:block/hardened_tholin",
+        "y": 180
+      },
+      {
+        "model": "titan_satellite:block/hardened_tholin",
+        "y": 270
+      }
+    ]
   }
 }

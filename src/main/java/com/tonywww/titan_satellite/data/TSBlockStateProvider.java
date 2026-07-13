@@ -19,7 +19,7 @@ import java.util.Set;
  * <ul>
  *   <li>cube_all：blockstate variants ""→block/&lt;name&gt;；模型 parent cube_all + all 贴图；物品 parent=方块模型。
  *       部分方块复用他块贴图（weathered→titan_stone、sedimentary→titan_basalt）。</li>
- *   <li>cross：parent cross + render_type cutout；物品为 generated + layer0=cross 贴图（branch_crystal 复用 warped_roots）。</li>
+ *   <li>cross：parent cross + render_type cutout；物品为 generated + layer0=cross 贴图（branch_crystal 用纯色占位贴图）。</li>
  *   <li>液体：仅 particle 贴图的无父模型；无 BlockItem。</li>
  * </ul>
  */
@@ -34,8 +34,19 @@ public class TSBlockStateProvider extends BlockStateProvider {
     /** cross 方块名 → 完整贴图 ResourceLocation 串。 */
     private static final Map<String, String> CROSS = new LinkedHashMap<>();
     private static final String[] LIQUIDS = {"liquid_methane", "liquid_ammonia"};
-    /** 需四向（Y 0/90/180/270）随机旋转贴图、以打破大面积平铺重复的 cube_all 方块（仿原版石头）。 */
-    private static final Set<String> RANDOM_Y_ROTATE = Set.of("titan_stone");
+    /**
+     * 需四向（Y 0/90/180/270）随机旋转模型、以打破大面积平铺重复的自然地形 / 矿物 cube_all 方块。
+     * 随机 Y 旋转主要打散俯视时的顶/底面重复纹理（仿原版沙砾/石头做法）。
+     * 功能机械方块（{@code cryovolcanic_geyser} / {@code methane_pool_core} /
+     * {@code special_methane_pump}）保持固定朝向，<b>不</b>在此列。
+     */
+    private static final Set<String> RANDOM_Y_ROTATE = Set.of(
+            // 大面积地形：石 / 沙 / 冰 / 砾石
+            "titan_stone", "titan_basalt", "weathered_titan_stone", "sedimentary_titan_stone",
+            "tholin_sand", "crushed_ice", "cryo_ice", "packed_methane_ice", "titan_gravel",
+            // 矿物 / 装饰实心方块
+            "abyss_crystal", "ammonia_crystal", "tholin_crystal", "meteor_fragment",
+            "hardened_tholin", "tholin_tar");
 
     static {
         CUBE.put("titan_stone", "titan_stone");
@@ -60,7 +71,7 @@ public class TSBlockStateProvider extends BlockStateProvider {
         CROSS.put("tholin_shrub", "titan_satellite:block/tholin_shrub");
         CROSS.put("methane_ice_bloom", "titan_satellite:block/methane_ice_bloom");
         CROSS.put("frost_bush", "titan_satellite:block/frost_bush");
-        CROSS.put("branch_crystal", "minecraft:block/warped_roots"); // 复用原版 warped_roots
+        CROSS.put("branch_crystal", "titan_satellite:block/branch_crystal"); // 纯色占位贴图
     }
 
     @Override

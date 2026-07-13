@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class TholinWeaverRenderer extends MobRenderer<TholinWeaver, SpiderModel<TholinWeaver>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/spider/cave_spider.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/tholin_weaver.png");
 
     public TholinWeaverRenderer(EntityRendererProvider.Context context) {
         super(context, new SpiderModel<>(context.bakeLayer(ModelLayers.SPIDER)), 0.7F);

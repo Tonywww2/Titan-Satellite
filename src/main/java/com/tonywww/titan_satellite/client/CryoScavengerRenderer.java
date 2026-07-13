@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class CryoScavengerRenderer extends MobRenderer<CryoScavenger, SpiderModel<CryoScavenger>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/spider/spider.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/cryo_scavenger.png");
 
     public CryoScavengerRenderer(EntityRendererProvider.Context context) {
         super(context, new SpiderModel<>(context.bakeLayer(ModelLayers.SPIDER)), 0.7F);

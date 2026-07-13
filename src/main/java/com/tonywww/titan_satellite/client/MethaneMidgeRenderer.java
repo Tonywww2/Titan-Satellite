@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class MethaneMidgeRenderer extends MobRenderer<MethaneMidge, SlimeModel<MethaneMidge>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/slime/slime.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/methane_midge.png");
 
     public MethaneMidgeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.15F);

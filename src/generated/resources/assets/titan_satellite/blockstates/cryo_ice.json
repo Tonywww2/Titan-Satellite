@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "titan_satellite:block/cryo_ice"
-    }
+    "": [
+      {
+        "model": "titan_satellite:block/cryo_ice"
+      },
+      {
+        "model": "titan_satellite:block/cryo_ice",
+        "y": 90
+      },
+      {
+        "model": "titan_satellite:block/cryo_ice",
+        "y": 180
+      },
+      {
+        "model": "titan_satellite:block/cryo_ice",
+        "y": 270
+      }
+    ]
   }
 }

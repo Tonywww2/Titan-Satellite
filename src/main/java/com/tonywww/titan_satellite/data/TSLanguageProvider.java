@@ -66,6 +66,10 @@ public class TSLanguageProvider extends LanguageProvider {
         t("item.titan_satellite.tholin_silk_sac", "Tholin Silk Sac", "托林丝囊");
         t("item.titan_satellite.liquid_methane_bucket", "Liquid Methane Bucket", "液态甲烷桶");
         t("item.titan_satellite.liquid_ammonia_bucket", "Liquid Ammonia Bucket", "液态氨桶");
+
+        // 流体类型（FluidType.getDescriptionId → fluid_type.<ns>.<path>）
+        t("fluid_type.titan_satellite.liquid_methane", "Liquid Methane", "液态甲烷");
+        t("fluid_type.titan_satellite.liquid_ammonia", "Liquid Ammonia", "液态氨");
         t("item.titan_satellite.aero_jelly_spawn_egg", "Aero-Jelly Spawn Egg", "甲烷浮游体刷怪蛋");
         t("item.titan_satellite.cryo_scavenger_spawn_egg", "Cryo-Scavenger Spawn Egg", "冰硅甲虫刷怪蛋");
         t("item.titan_satellite.ammonia_stalker_spawn_egg", "Ammonia Stalker Spawn Egg", "氨泉掉食者刷怪蛋");

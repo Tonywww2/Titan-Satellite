@@ -19,6 +19,7 @@
 | M4 | 事件玩法：喷泉击飞、甲烷开采塔防（自定义事件 + Mixin 刷怪）、晶洞惊扰 | Stage E |
 | M5 | 结构与打磨：晶洞/前哨站结构、维度天空雾特效、流体完善、音效、平衡与验收 | Stage F |
 | M6 | 群系特色化：修复气候 router（六群系真正分布）+ 3 新表层块（风化/沉积泰坦石、树枝结晶）+ 新群系荒芜高原 + 群系专属地形/地物（裂隙/甲烷海/真陨石坑/破碎海绵/嵌套冰火山）+ 特征注入（add_features） | Stage G |
+| M7 | **宏伟地物与结构**：6 群系宏伟地物（乙炔大晶洞/液甲烷倾瀑/撞击盆地/镜湖群/托林巨拱/丝网谷/悬冰大殿/主冰火山/冻氨瀑/石林迷城）+ 4 宏伟结构（深钻者/坠毁残骸/大巢/深空信标阵）+ 2 新方块（乙炔冰笋/托林菌网） | Stage H |
 
 > **契约冻结（Stage 0 / Stage A）** 是使 M1–M5 能并行的前置：所有跨任务注册项、命名、接口、lang、事件签名一次性冻结，之后各里程碑只读。
 
@@ -91,6 +92,19 @@
 
 **Gate 6**：进入 titan → 六群系可定位、各群系专属表层块与地物、冰火山位于极地中心区、荒芜高原台地与陡峭过渡、特征经 add_features 自然生成（非 /place）。
 
+## Stage 7 · M7 宏伟地物与结构（前置：Gate 6）
+
+> 在现有生态/地物/结构系统上叠加**复杂/大型/宏伟**地标。**地物** = 纯地形 Feature（无宝箱）；**结构** = `StructureType` + 宝箱。T7.1 冻结 2 新方块 id 后 T7.2–T7.4 可并行。参见 [titan_design.md](titan_design.md) §一「宏伟地物」/§6.2「宏伟结构」/§七 矩阵。
+
+| ID | 任务 | Cx | Deps | 验收标准 | Files |
+|---|---|---|---|---|---|
+| ☐ T7.1 | 2 新方块冻结：**乙炔冰笋 `acetylene_spire`**（易爆高能晶柱，采「凝乙炔」）+ **托林菌网 `tholin_mycelium`**（分解者/巢壁）；注册 + 纯色占位贴图/模型 + BlockItem + lang（中英） | M | Gate 6 | 2 块注册/模型/BlockItem/lang 就位；build 通过；`runClient` 可见占位色 | `registry/TSBlocks.java`,`TSItems.java`, 生成 `blockstates/models/lang`, `textures/block/*` |
+| ☐ T7.2 | 宏伟地物 · 深渊 + 陨坑：**乙炔大晶洞**（乙炔冰笋+深渊晶簇，近火爆）、**液甲烷倾瀑**、**陨星撞击盆地**（放大 `GiantCraterFeature` + 陨铁矿核 + 辐射脊线）、**陨坑镜湖群** → Feature + configured/placed + `add_features` biome_modifier | L | T7.1 | 各地物只在对应群系自然生成（非 /place）；矿核可挖、无悬浮 | `worldgen/feature/*.java`, `configured_feature/*`,`placed_feature/*`, `forge/biome_modifier/*_features.json` |
+| ☐ T7.3 | 宏伟地物 · 沙海/极地/冰火山/荒原：**托林天生巨拱**、**丝网谷**（+织体蛛生成加权）、**悬冰大殿**（中空冰穹）、**主冰火山**（锥+口湖+喷泉 patch）、**冻氨巨瀑**、**石林迷城** → Feature + 配置 + 注入 | L | T7.1 | 各地物自然生成、依真实地表建造（无悬浮，遵 repo 地物防悬浮约定） | 同构（各自 Feature/配置/biome_modifier） |
+| ☐ T7.4 | 宏伟结构：**深钻者**（深渊甲烷海据点+泵突袭）、**坠毁研究探测器残骸**（陨坑）、**大巢**（极地，扩展 `tholin_geode` 多腔 Boss 地牢）、**深空信标阵**（荒原）→ `StructureType`/`StructurePiece` + `structure_set`(低权重) + 宝箱 `loot_tables/chests` + 守卫/Boss 生成 | L | T7.1, 软需 现有结构/波次系统 | `/place structure` 无崩、`/locate structure` 命中；含宝箱战利品 + 守卫/Boss；深钻者可触发波次 | `worldgen/structure/*.java`, `data/.../structure/*`,`structure_set/*`, `tags/.../has_structure/*`, `loot_tables/chests/*` |
+
+**Gate 7**：进入 titan → 各群系宏伟地物自然生成（非 /place、无悬浮）；4 宏伟结构 `/locate` 命中且内含战利品/守卫/Boss；乙炔冰笋近火连锁爆炸、大巢破晶惊巢。
+
 ---
 
 ## 依赖图 (Dependency Graph)
@@ -107,6 +121,7 @@ flowchart LR
     C --> F
     E --> F
     B --> G["Stage G · M6 群系特色化\n(T6.1-6.4)"]
+    G --> H["Stage H · M7 宏伟地物与结构\n(T7.1-7.4)"]
     R1["⛔ 待验证: worldgen codec/mixin API"] -.blocks.-> S0
 ```
 

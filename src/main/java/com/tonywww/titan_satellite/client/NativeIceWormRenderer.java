@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class NativeIceWormRenderer extends MobRenderer<NativeIceWorm, SilverfishModel<NativeIceWorm>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/silverfish.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/native_ice_worm.png");
 
     public NativeIceWormRenderer(EntityRendererProvider.Context context) {
         super(context, new SilverfishModel<>(context.bakeLayer(ModelLayers.SILVERFISH)), 0.6F);

@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class AeroJellyRenderer extends MobRenderer<AeroJelly, SlimeModel<AeroJelly>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/slime/slime.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/aero_jelly.png");
 
     public AeroJellyRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.5F);

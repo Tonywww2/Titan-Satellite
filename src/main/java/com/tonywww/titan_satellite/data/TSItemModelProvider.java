@@ -1,9 +1,13 @@
 package com.tonywww.titan_satellite.data;
 
 import com.tonywww.titan_satellite.TitanSatellite;
+import com.tonywww.titan_satellite.registry.TSFluids;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.material.Fluid;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.ModelFile;
+import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
 /**
@@ -18,22 +22,23 @@ public class TSItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        // 材料物品（generated + 复用原版贴图）
-        generated("aero_membrane", "minecraft:item/phantom_membrane");
-        generated("cryo_carapace", "minecraft:item/prismarine_shard");
-        generated("toxic_gland", "minecraft:item/spider_eye");
-        generated("depleted_battery", "minecraft:item/redstone");
-        generated("precision_components", "minecraft:item/copper_ingot");
+        // 材料物品（generated + 本模组纯色占位贴图）
+        generated("aero_membrane", "titan_satellite:item/aero_membrane");
+        generated("cryo_carapace", "titan_satellite:item/cryo_carapace");
+        generated("toxic_gland", "titan_satellite:item/toxic_gland");
+        generated("depleted_battery", "titan_satellite:item/depleted_battery");
+        generated("precision_components", "titan_satellite:item/precision_components");
 
-        // 生态深化材料（ECO-A2；generated + 复用原版贴图占位）
-        generated("crystalline_twig", "minecraft:item/stick");
-        generated("tholin_fibre", "minecraft:item/string");
-        generated("tough_neural_gland", "minecraft:item/glow_ink_sac");
-        generated("tholin_silk_sac", "minecraft:item/slime_ball");
+        // 生态深化材料（ECO-A2；generated + 本模组纯色占位贴图）
+        generated("crystalline_twig", "titan_satellite:item/crystalline_twig");
+        generated("tholin_fibre", "titan_satellite:item/tholin_fibre");
+        generated("tough_neural_gland", "titan_satellite:item/tough_neural_gland");
+        generated("tholin_silk_sac", "titan_satellite:item/tholin_silk_sac");
 
-        // 流体桶（generated + water_bucket 贴图）
-        generated("liquid_methane_bucket", "minecraft:item/water_bucket");
-        generated("liquid_ammonia_bucket", "minecraft:item/water_bucket");
+        // 流体桶：forge:fluid_container 动态模型（空桶轮廓 + 按流体 FluidType.getTintColor 染色的液面），
+        // 不再复用固定蓝色的 water_bucket 贴图，故每种流体的桶显示各自的液体颜色。
+        fluidBucket("liquid_methane_bucket", TSFluids.LIQUID_METHANE.get());
+        fluidBucket("liquid_ammonia_bucket", TSFluids.LIQUID_AMMONIA.get());
 
         // 刷怪蛋（parent template_spawn_egg，无贴图）
         withExistingParent("aero_jelly_spawn_egg", mcLoc("item/template_spawn_egg"));
@@ -48,5 +53,17 @@ public class TSItemModelProvider extends ItemModelProvider {
 
     private void generated(String name, String texture) {
         withExistingParent(name, mcLoc("item/generated")).texture("layer0", new ResourceLocation(texture));
+    }
+
+    // Forge 动态流体容器模型：空桶轮廓 + 流体液面（液面为 tintindex 1，颜色由 RegisterColorHandlersEvent.Item
+    // 注册的 DynamicFluidContainerModel.Colors 按流体 getTintColor 提供，见 TitanClientEvents）。
+    // 父模型 forge:item/bucket 用 UncheckedModelFile 避免 datagen 的 ExistingFileHelper 校验报错。
+    // 注意：1.20.1 的 forge:fluid_container 加载器不读 apply_tint 字段，染色只能靠上面的 ItemColor。
+    private void fluidBucket(String name, Fluid fluid) {
+        getBuilder(name)
+                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation("forge", "item/bucket")))
+                .customLoader(DynamicFluidContainerModelBuilder::begin)
+                .fluid(fluid)
+                .end();
     }
 }

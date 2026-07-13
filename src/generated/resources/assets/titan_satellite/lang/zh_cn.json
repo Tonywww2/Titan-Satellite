@@ -38,6 +38,8 @@
   "entity.titan_satellite.methane_midge": "甲烷微浮群",
   "entity.titan_satellite.native_ice_worm": "原生冰虫",
   "entity.titan_satellite.tholin_weaver": "托林织体蛛",
+  "fluid_type.titan_satellite.liquid_ammonia": "液态氨",
+  "fluid_type.titan_satellite.liquid_methane": "液态甲烷",
   "item.titan_satellite.aero_jelly_spawn_egg": "甲烷浮游体刷怪蛋",
   "item.titan_satellite.aero_membrane": "浮游薄膜",
   "item.titan_satellite.ammonia_stalker_spawn_egg": "氨泉掉食者刷怪蛋",

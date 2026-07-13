@@ -1,5 +1,5 @@
 # 土卫六 (Titan) 维度 · 生态深化任务清单 (Ecosystem Deepening — Task List)
-*配套设计：[titan_ecosystem_design.md](titan_ecosystem_design.md)（生态与代谢扩展设计）*
+*配套设计：[titan_design.md](titan_design.md)（维度综合设计；§二–§八 为原「生态与代谢扩展设计」，已合并）*
 *工程约定：[titan_technical_design.md](titan_technical_design.md)；变更记录：[parallel-tasks.md](parallel-tasks.md) §7*
 
 > **范围声明 (Scope):** 本清单覆盖生态扩展设计中**标注为 🟡 部分实现 / ⬜ 规划中**的功能落地。

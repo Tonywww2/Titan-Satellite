@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "titan_satellite:block/abyss_crystal"
-    }
+    "": [
+      {
+        "model": "titan_satellite:block/abyss_crystal"
+      },
+      {
+        "model": "titan_satellite:block/abyss_crystal",
+        "y": 90
+      },
+      {
+        "model": "titan_satellite:block/abyss_crystal",
+        "y": 180
+      },
+      {
+        "model": "titan_satellite:block/abyss_crystal",
+        "y": 270
+      }
+    ]
   }
 }

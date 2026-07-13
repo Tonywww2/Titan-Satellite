@@ -44,6 +44,7 @@ public class FissureFeature extends Feature<NoneFeatureConfiguration> {
         BlockState air = Blocks.CAVE_AIR.defaultBlockState();
         BlockState methane = TSBlocks.LIQUID_METHANE_BLOCK.get().defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        int minY = level.getMinBuildHeight();                                      // 维度底部（基岩层从这里往上 0-4 格）
         boolean placed = false;
 
         // 嵌入地形深处：沿水平方向蜒蜒的深埋裂隙——下部积存液态甲烷 + 顶部封闭气腔，仅替换实心（不通地表、不外溢）
@@ -60,17 +61,39 @@ public class FissureFeature extends Feature<NoneFeatureConfiguration> {
                 if (localHeight < 2) {
                     continue;
                 }
-                for (int dy = 0; dy > -localHeight; dy--) {
-                    pos.set(Mth.floor(px), origin.getY() + dy, Mth.floor(pz));
-                    int tcx = pos.getX() >> 4;
-                    int tcz = pos.getZ() >> 4;
-                    if (tcx < minChunkX || tcx > maxChunkX || tcz < minChunkZ || tcz > maxChunkZ) {
-                        continue;                                                  // 越界丢弃，保持在安全写入区域
+                int wx = Mth.floor(px);
+                int wz = Mth.floor(pz);
+                int tcx = wx >> 4;
+                int tcz = wz >> 4;
+                if (tcx < minChunkX || tcx > maxChunkX || tcz < minChunkZ || tcz > maxChunkZ) {
+                    continue;                                                      // 越界丢弃，保持在安全写入区域
+                }
+                // 液体守卫：从裂隙顶往上探——若在遇到实心天花板之前先遇到液体（甲烷海/湖压顶）
+                // → 该列被液体覆盖，不在液体之中/之下生成裂隙，整列跳过。
+                // （直接读方块而非 _WG heightmap：后者在已加载世界不更新、无法验证）
+                boolean submerged = false;
+                for (int uy = origin.getY() + 1; uy <= origin.getY() + 8; uy++) {
+                    BlockState above = level.getBlockState(pos.set(wx, uy, wz));
+                    if (!above.getFluidState().isEmpty()) {
+                        submerged = true;
+                        break;
                     }
+                    if (!above.isAir()) {
+                        break;                                                     // 遇到实心天花板（干岩覆盖，非液体）→ 停
+                    }
+                }
+                if (submerged) {
+                    continue;
+                }
+                for (int dy = 0; dy > -localHeight; dy--) {
+                    int y = origin.getY() + dy;
+                    if (y < minY + 5) {
+                        break;                                                     // 基岩守卫：不下探到基岩层(Y 0-4)及以下（dy 只会更低，直接停）
+                    }
+                    pos.set(wx, y, wz);
                     BlockState existing = level.getBlockState(pos);
-                    if (existing.isAir() || !existing.getFluidState().isEmpty()) {
-                        continue;                                                  // 只替换实心岩体：跳过空气与既有液体
-                                                                                   // （否则气腔会替换甲烷海/湖的液面 → 覆盖液体）
+                    if (existing.isAir() || !existing.getFluidState().isEmpty() || existing.is(Blocks.BEDROCK)) {
+                        continue;                                                  // 只替换实心岩体：跳过空气/既有液体/基岩
                     }
                     if (dy > -2) {
                         setBlock(level, pos, air);       // 顶部封闭气腔
