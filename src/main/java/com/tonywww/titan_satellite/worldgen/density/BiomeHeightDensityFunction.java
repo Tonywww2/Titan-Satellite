@@ -22,33 +22,24 @@ public record BiomeHeightDensityFunction(double factor) implements DensityFuncti
 
     @Override
     public double compute(FunctionContext context) {
-        // 不读群系（SimpleFunction 无 seed/biomeSource）：按 X/Z 多尺度噪声 + 台地量化 +
-        // 陡边过渡 + 高频破碎，产出台地/陡崖/断层/孤峰的破碎地貌；输出乘 factor 作高度修正量。
+        // 不读群系（SimpleFunction 无 seed/biomeSource）：按 X/Z 多倍频平滑值噪声 (fBm) 产出
+        // 连续起伏的正常地形（无台地量化/无锐利断层/无高频走样）；输出乘 factor 作高度修正量。
         double x = context.blockX();
         double z = context.blockZ();
 
-        // 域扭曲：低+中频噪声偏移采样坐标，打破规整的同心台地/等高线轮廓，使台地与断层扭曲不规则
-        double warpX = valueNoise(x * 0.013D, z * 0.013D) * 16.0D + valueNoise(x * 0.047D, z * 0.047D) * 6.0D;
-        double warpZ = valueNoise((x + 4096.0D) * 0.013D, (z - 4096.0D) * 0.013D) * 16.0D
-                + valueNoise((x - 4096.0D) * 0.047D, (z + 4096.0D) * 0.047D) * 6.0D;
+        // 轻度域扭曲：低频低幅，仅让等高线自然弯曲，不产生台地/断层
+        double warpX = valueNoise(x * 0.006D, z * 0.006D) * 8.0D;
+        double warpZ = valueNoise((x + 4096.0D) * 0.006D, (z - 4096.0D) * 0.006D) * 8.0D;
         double wx = x + warpX;
         double wz = z + warpZ;
 
-        double base = valueNoise(wx * 0.0030D, wz * 0.0030D);      // 大尺度：台地/盆地大区（已扭曲）
-        double mid = valueNoise(wx * 0.0110D, wz * 0.0110D);       // 中尺度：丘陵/沙脊（已扭曲）
-        double detail = valueNoise(x * 0.0330D, z * 0.0330D);      // 细节起伏
-        double fracture = valueNoise(x * 0.0700D, z * 0.0700D);    // 中高频：少量断层/破碎（适度保留）
-
-        // 台地化弱化 + 更缓的边缘，避免 4x4 格锄齿；台阶输入叠加中频抖动
-        double terraced = terrace(base + mid * 0.12D, 4.0D, 0.35D);
-        double plateau = Mth.lerp(0.28D, base, terraced);
-
-        // 以平滑的 base/mid/detail 为主，仅保留少量 fracture 作粗糙感（移除更高频 weather，消除亚格锄齿）
+        // 多倍频平滑值噪声 (fBm)：连续起伏的正常地形，各频率波长均 >> 4 格噪声单元，无走样
         double relief =
-                  plateau * 0.48D                                 // 平缓台地大区（已扭曲）
-                + mid * 0.28D                                     // 中尺度丘陵/沙脊
-                + detail * 0.20D                                  // 细节起伏
-                + fracture * 0.04D;                               // 少量破碎（适度保留）
+                  valueNoise(wx * 0.0035D, wz * 0.0035D) * 1.00D   // 大尺度起伏（~285 格）
+                + valueNoise(wx * 0.0090D, wz * 0.0090D) * 0.50D   // 中尺度丘陵（~110 格）
+                + valueNoise(x * 0.0200D, z * 0.0200D) * 0.25D     // 小尺度细节（~50 格）
+                + valueNoise(x * 0.0450D, z * 0.0450D) * 0.12D;    // 精细起伏（~22 格）
+        relief /= 1.87D;                                          // 归一化到约 [-1,1]
 
         return Mth.clamp(relief * factor, -Math.abs(factor), Math.abs(factor));
     }
@@ -66,25 +57,6 @@ public record BiomeHeightDensityFunction(double factor) implements DensityFuncti
     @Override
     public KeyDispatchDataCodec<? extends DensityFunction> codec() {
         return CODEC;
-    }
-
-    // 台地量化：把 v∈[-1,1] 量化为 levels 级平台，edge∈[0,1] 控制平台间过渡陡度（越大越像陡崖）。
-    private static double terrace(double v, double levels, double edge) {
-        double scaled = (v * 0.5D + 0.5D) * levels;
-        double idx = Math.floor(scaled);
-        double frac = scaled - idx;
-        double lo = 0.5D - (1.0D - edge) * 0.5D;
-        double hi = 0.5D + (1.0D - edge) * 0.5D;
-        double sharp;
-        if (frac <= lo) {
-            sharp = 0.0D;
-        } else if (frac >= hi) {
-            sharp = 1.0D;
-        } else {
-            double t = (frac - lo) / (hi - lo);
-            sharp = t * t * (3.0D - 2.0D * t);
-        }
-        return ((idx + sharp) / levels) * 2.0D - 1.0D;
     }
 
     // 确定性 2D 值噪声：整点哈希 + 平滑插值，输出约 [-1, 1]。

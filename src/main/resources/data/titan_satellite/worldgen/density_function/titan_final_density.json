@@ -1,20 +1,24 @@
 {
-  "_comment": "Hard height filter: density = slope * (target_height - y). Solid below the biome's target band, air above; steep cliffs where adjacent biomes have different bands (simulated plate movement).",
-  "type": "minecraft:mul",
-  "argument1": 0.5,
-  "argument2": {
-    "type": "minecraft:add",
-    "argument1": "titan_satellite:titan_target_height",
+  "_comment": "Hard height filter carved by the cave system: min(height density, caves). Height density = 0.5*(target_height - y): solid below the biome band, air above, steep cliffs at biome borders. The min with titan_satellite:cave/caves subtracts the cave voids.",
+  "type": "minecraft:min",
+  "argument1": {
+    "type": "minecraft:mul",
+    "argument1": 0.5,
     "argument2": {
-      "type": "minecraft:mul",
-      "argument1": -1.0,
+      "type": "minecraft:add",
+      "argument1": "titan_satellite:titan_target_height",
       "argument2": {
-        "type": "minecraft:y_clamped_gradient",
-        "from_y": 0,
-        "to_y": 320,
-        "from_value": 0.0,
-        "to_value": 320.0
+        "type": "minecraft:mul",
+        "argument1": -1.0,
+        "argument2": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_y": 0,
+          "to_y": 320,
+          "from_value": 0.0,
+          "to_value": 320.0
+        }
       }
     }
-  }
+  },
+  "argument2": "titan_satellite:cave/caves"
 }

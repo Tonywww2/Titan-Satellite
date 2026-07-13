@@ -30,30 +30,36 @@ This design document combines Titan's real-world geological features with Minecr
 由**沉积泰坦石 (sedimentary_titan_stone)** 构成的陡峭峡谷地带。地表遍布**大量碎裂的裂隙**（形似缩小的老版本峡谷），裂隙底部积存着液态甲烷。
 Steep canyon terrain of sedimentary titan stone; the surface is riven with **numerous fractured fissures** (like smaller legacy ravines), with liquid methane pooling at their bottoms.
 *   **特异地貌 (Special Feature):** **甲烷海 (Methane Mare)**。大面积地表整体坡陷至海平面以下、被液态甲烷彻底淹没，形成开阔的甲烷之海（类似巨型天坑式的地表移除）。 / Vast stretches of surface collapse below sea level and are completely flooded by liquid methane (large sinkhole-like surface removal).
+*   **装饰地物 (Decorations):** 沉积巨石/玄武巨石、深渊晶簇 (abyss_crystal)、焦油洼 (tholin_tar)、沉积石柱、甲烷晶洞。 / Sediment & basalt boulders, abyss-crystal clusters, tholin-tar seeps, sediment columns, and methane geodes.
 
 ### 2. 土卫六·撞击陨坑荒原 (Titan · Cratered Wastelands) [Y: 64 - 80]
 由**风化泰坦石 (weathered_titan_stone)** 构成的冰冻荒原。地表零散分布着**树枝状结晶 (branch_crystal)** 丛，如冻结的枝杉。
 Frozen wastelands of weathered titan stone, dotted with **branching crystal (branch_crystal)** growths like frozen twigs.
 *   **特异地貌 (Special Feature):** **巨型陨石坑 (Giant Craters)**。带**凸起坑缘**的真实陨石坑轮廓（碗形凹陷 + 抬升的环形边缘）；坑底**小概率**露出微型甲烷湖。 / Realistic impact craters with **raised rims**; the crater floor **rarely** exposes a miniature methane lake.
+*   **装饰地物 (Decorations):** 霜枯灌木 (frost_bush)、冰/风化巨石、陨铁矿脉 (meteor_fragment)、碎冰碎屑场、陨坑晶洞。 / Frost bushes, ice & weathered boulders, meteor-fragment veins, crushed-ice regolith patches, and crater geodes.
 
 ### 3. 土卫六·托林沙海 (Titan · Tholin Dune Seas) [Y: 64 - 80]
 广阔的橙色托林沙丘区，表面覆盖着托林有机化合物粉末（**tholin_sand**）。
 Vast orange dune fields covered in powdery tholin organics.
 *   **特异地貌 (Special Feature):** **巨型沙脊 (Megayardangs)**。高墙般狭长的风蚀山脊，配合连绵起伏的沙丘。 / Wall-like, long, narrow wind-eroded ridges amid rolling dunes.
+*   **装饰地物 (Decorations):** 托林灌木 (tholin_shrub)、硬托林结壳 (hardened_tholin)、岩石露头、托林风柱、托林晶洞、沙丘小晶体。 / Tholin shrubs, hardened-tholin crust patches, rock boulders, tholin wind-spires, tholin geodes, and scattered dune crystals.
 
 ### 4. 土卫六·极地迷宫冰原 (Titan · Polar Labyrinths) [Y: 160 - 200]
 地势急剧抬升的甲烷浮冰（**packed_methane_ice**）迷宫。**地表向下数格后即化为巨型的破碎海绵**——密布空洞的多孔冰体。
 Sharply rising labyrinths of packed methane ice. **A few blocks below the surface it turns into a giant shattered sponge** — porous ice riddled with cavities.
 *   **特异地貌 (Special Feature):** **巨型冰层天坑 (Ice Sinkholes)**。巨大的冰窟竆直通下层地形。 / Massive ice sinkholes dropping straight to lower terrain.
+*   **装饰地物 (Decorations):** 冰刺、甲烷冰花 (methane_ice_bloom)、碎冰斑块、极地晶洞、寒冰巨石、地表晶簇。 / Ice spikes, methane ice-blooms, crushed-ice patches, polar geodes, cryo boulders, and surface crystal clusters.
 
 ### 5. 土卫六·冰火山断崖 (Titan · Cryovolcanic Cliffs) [Y: 280 - 320]
 由寒冰（**cryo_ice**）构成的极度险峭的垂直断崖，**仅生成于极地迷宫冰原的中心区域**、被极地群系环绕。
 Extremely steep vertical cliffs of cryo ice, generating **only at the center of the Polar Labyrinths**, encircled by the polar biome.
 *   **特异地貌 (Special Feature):** **冰火山喷泉群 (Cryovolcanic Geysers)** 与山巅的**氨水火山口 (Ammonia Calderas)**。 / Clusters of cryovolcanic geysers and ammonia calderas at the peaks.
+*   **装饰地物 (Decorations):** 氨泉 (liquid_ammonia)、氨晶簇 (ammonia_crystal)、氨晶洞、寒冰尖峰、寒冰巨石、稀疏霜枯灌木。 / Ammonia pools, ammonia-crystal clusters, ammonia geodes, cryo pinnacles, cryo boulders, and sparse frost bushes.
 
 ### 6. 土卫六·荒芜高原 (Titan · Barren Plateau) [Y: 150 - 200]（新增 / New）
 由**风化泰坦石 (weathered_titan_stone)** 构成的高耸台地。地质类似极地迷宫冰原，但**空洞区域极少出现**、地层坚实。与相邻群系之间以**极其陡峭的断崖**过渡。
 Towering plateaus of weathered titan stone. Geologically similar to the Polar Labyrinths but with **very few cavities** and solid strata; transitions to neighboring biomes are **extremely steep escarpments**.
+*   **装饰地物 (Decorations):** 风化巨石、风化石林、稀疏霜枯灌木、砾石场 (titan_gravel)、稀有结晶、稀疏矿脉。地表装饰为主、地下稀少，呼应“地层坚实”。 / Weathered boulders, weathered hoodoos, sparse frost bushes, titan-gravel pebble fields, rare crystals, and a sparse ore vein — surface-focused, keeping the solid strata.
 
 ---
 

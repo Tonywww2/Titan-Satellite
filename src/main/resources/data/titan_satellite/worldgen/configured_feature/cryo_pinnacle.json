@@ -1,0 +1,6 @@
+{
+  "type": "titan_satellite:spire",
+  "config": {
+    "state": { "Name": "titan_satellite:cryo_ice" }
+  }
+}

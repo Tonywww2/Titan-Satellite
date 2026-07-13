@@ -9,6 +9,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
@@ -58,11 +59,21 @@ public class SpecialMethanePumpBlock extends BaseEntityBlock {
     }
 
     @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean movedByPiston) {
+        super.neighborChanged(state, level, pos, neighborBlock, fromPos, movedByPiston);
+        if (level instanceof ServerLevel server
+                && server.getBlockEntity(pos) instanceof SpecialMethanePumpBlockEntity pump) {
+            pump.onNeighborSignalChanged(server, pos, level.hasNeighborSignal(pos));
+        }
+    }
+
+    @Override
     public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
             if (level instanceof ServerLevel server
                     && server.getBlockEntity(pos) instanceof SpecialMethanePumpBlockEntity pump) {
                 pump.onDestroyed(server, pos);
+                pump.dropContents(level, pos);
             }
             super.onRemove(state, level, pos, newState, movedByPiston);
         }

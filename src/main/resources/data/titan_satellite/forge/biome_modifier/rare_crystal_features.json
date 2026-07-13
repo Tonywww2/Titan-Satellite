@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_satellite:barren_plateau",
+  "features": "titan_satellite:rare_crystal",
+  "step": "vegetal_decoration"
+}

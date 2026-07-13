@@ -1,7 +1,6 @@
 package com.tonywww.titan_satellite.event;
 
 import com.tonywww.titan_satellite.registry.TSEntities;
-import com.tonywww.titan_satellite.registry.TSItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -10,9 +9,7 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraftforge.common.MinecraftForge;
@@ -44,6 +41,8 @@ public final class WaveController {
     private static final int SPAWN_RADIUS = 10;
     /** 波次怪的持久化标记键（用于终局退散、与自然生成怪区分）。 */
     public static final String WAVE_MOB_TAG = "TitanWaveMob";
+    /** 波次怪记忆的泵坐标键（用于增强其攻击泵的寻路欲望）。 */
+    public static final String PUMP_POS_TAG = "TitanPumpPos";
 
     /**
      * 尝试启动开采：抛可取消的 {@link MethaneExtractionEvents.Start}。
@@ -102,6 +101,7 @@ public final class WaveController {
         mob.moveTo(spawn.getX() + 0.5, spawn.getY(), spawn.getZ() + 0.5, level.random.nextFloat() * 360.0F, 0.0F);
         mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), MobSpawnType.EVENT, null, null);
         mob.getPersistentData().putBoolean(WAVE_MOB_TAG, true);
+        mob.getPersistentData().putLong(PUMP_POS_TAG, pumpPos.asLong());
         level.addFreshEntity(mob);
         level.sendParticles(ParticleTypes.LARGE_SMOKE,
                 spawn.getX() + 0.5, spawn.getY() + 0.5, spawn.getZ() + 0.5, 12, 0.3, 0.5, 0.3, 0.02);
@@ -122,12 +122,7 @@ public final class WaveController {
         level.playSound(null, pumpPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.8F, 1.2F);
         level.sendParticles(ParticleTypes.TOTEM_OF_UNDYING,
                 pumpPos.getX() + 0.5, pumpPos.getY() + 1.2, pumpPos.getZ() + 0.5, 60, 0.6, 0.8, 0.6, 0.15);
-        // 默认产出：终局精密组件。监听 Success 事件可追加 / 替换奖励。
-        ItemStack reward = new ItemStack(TSItems.PRECISION_COMPONENTS.get(), 2 + wavesSurvived);
-        ItemEntity drop = new ItemEntity(level,
-                pumpPos.getX() + 0.5, pumpPos.getY() + 1.0, pumpPos.getZ() + 0.5, reward);
-        drop.setDefaultPickUpDelay();
-        level.addFreshEntity(drop);
+        // 材料产出改由甲烷泵在运行期 / 终局填充至上方容器（见 SpecialMethanePumpBlockEntity），此处仅保留庆祝表现与退散。
         disperseWaveMobs(level, pumpPos);
     }
 

@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "titan_satellite:titan_stone",
+    "titan_satellite:titan_basalt",
+    "titan_satellite:weathered_titan_stone",
+    "titan_satellite:sedimentary_titan_stone"
+  ]
+}

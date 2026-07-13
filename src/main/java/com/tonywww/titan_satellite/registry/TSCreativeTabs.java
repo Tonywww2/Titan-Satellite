@@ -41,6 +41,16 @@ public final class TSCreativeTabs {
                         output.accept(TSBlocks.WEATHERED_TITAN_STONE.get());
                         output.accept(TSBlocks.SEDIMENTARY_TITAN_STONE.get());
                         output.accept(TSBlocks.BRANCH_CRYSTAL.get());
+                        // 装饰地物新增方块（CR-15）
+                        output.accept(TSBlocks.ABYSS_CRYSTAL.get());
+                        output.accept(TSBlocks.THOLIN_TAR.get());
+                        output.accept(TSBlocks.METEOR_FRAGMENT.get());
+                        output.accept(TSBlocks.HARDENED_THOLIN.get());
+                        output.accept(TSBlocks.THOLIN_SHRUB.get());
+                        output.accept(TSBlocks.METHANE_ICE_BLOOM.get());
+                        output.accept(TSBlocks.AMMONIA_CRYSTAL.get());
+                        output.accept(TSBlocks.TITAN_GRAVEL.get());
+                        output.accept(TSBlocks.FROST_BUSH.get());
                         // 流体桶
                         output.accept(TSItems.LIQUID_METHANE_BUCKET.get());
                         output.accept(TSItems.LIQUID_AMMONIA_BUCKET.get());

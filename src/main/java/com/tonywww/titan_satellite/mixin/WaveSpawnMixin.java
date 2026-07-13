@@ -1,6 +1,8 @@
 package com.tonywww.titan_satellite.mixin;
 
 import com.tonywww.titan_satellite.event.WaveController;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Mob;
@@ -32,6 +34,28 @@ public abstract class WaveSpawnMixin {
         if (self.getPersistentData().getBoolean(WaveController.WAVE_MOB_TAG)) {
             self.setPersistenceRequired();
             self.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 24000, 0, false, false));
+        }
+    }
+
+    @Inject(method = "aiStep", at = @At("TAIL"))
+    private void titan$driveToPump(CallbackInfo ci) {
+        Mob self = (Mob) (Object) this;
+        if (self.level().isClientSide) {
+            return;
+        }
+        CompoundTag data = self.getPersistentData();
+        if (!data.getBoolean(WaveController.WAVE_MOB_TAG) || !data.contains(WaveController.PUMP_POS_TAG)) {
+            return;
+        }
+        // 每 20 tick 强制朝泵寻路一次，增强「攻击泵」的欲望（远离泵时才重寻路，贴近时留给削减完整度）。
+        if (self.tickCount % 20 != 0) {
+            return;
+        }
+        BlockPos pump = BlockPos.of(data.getLong(WaveController.PUMP_POS_TAG));
+        double dx = pump.getX() + 0.5 - self.getX();
+        double dz = pump.getZ() + 0.5 - self.getZ();
+        if (dx * dx + dz * dz > 4.0) {
+            self.getNavigation().moveTo(pump.getX() + 0.5, pump.getY(), pump.getZ() + 0.5, 1.3D);
         }
     }
 }

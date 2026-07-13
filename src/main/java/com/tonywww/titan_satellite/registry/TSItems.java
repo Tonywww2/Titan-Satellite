@@ -46,6 +46,17 @@ public final class TSItems {
     public static final RegistryObject<Item> SEDIMENTARY_TITAN_STONE = blockItem("sedimentary_titan_stone", TSBlocks.SEDIMENTARY_TITAN_STONE);
     public static final RegistryObject<Item> BRANCH_CRYSTAL = blockItem("branch_crystal", TSBlocks.BRANCH_CRYSTAL);
 
+    // ---- 装饰地物新增方块物品（CR-15）----
+    public static final RegistryObject<Item> ABYSS_CRYSTAL = blockItem("abyss_crystal", TSBlocks.ABYSS_CRYSTAL);
+    public static final RegistryObject<Item> THOLIN_TAR = blockItem("tholin_tar", TSBlocks.THOLIN_TAR);
+    public static final RegistryObject<Item> METEOR_FRAGMENT = blockItem("meteor_fragment", TSBlocks.METEOR_FRAGMENT);
+    public static final RegistryObject<Item> HARDENED_THOLIN = blockItem("hardened_tholin", TSBlocks.HARDENED_THOLIN);
+    public static final RegistryObject<Item> THOLIN_SHRUB = blockItem("tholin_shrub", TSBlocks.THOLIN_SHRUB);
+    public static final RegistryObject<Item> METHANE_ICE_BLOOM = blockItem("methane_ice_bloom", TSBlocks.METHANE_ICE_BLOOM);
+    public static final RegistryObject<Item> AMMONIA_CRYSTAL = blockItem("ammonia_crystal", TSBlocks.AMMONIA_CRYSTAL);
+    public static final RegistryObject<Item> TITAN_GRAVEL = blockItem("titan_gravel", TSBlocks.TITAN_GRAVEL);
+    public static final RegistryObject<Item> FROST_BUSH = blockItem("frost_bush", TSBlocks.FROST_BUSH);
+
     // ---- 流体桶 ----
     public static final RegistryObject<Item> LIQUID_METHANE_BUCKET = register("liquid_methane_bucket",
             () -> new BucketItem(TSFluids.LIQUID_METHANE, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));

@@ -9,10 +9,12 @@ import com.tonywww.titan_satellite.worldgen.feature.IceSinkholeFeature;
 import com.tonywww.titan_satellite.worldgen.feature.MegayardangFeature;
 import com.tonywww.titan_satellite.worldgen.feature.MethaneLakeFeature;
 import com.tonywww.titan_satellite.worldgen.feature.MethaneMareFeature;
+import com.tonywww.titan_satellite.worldgen.feature.SpireFeature;
 import com.tonywww.titan_satellite.worldgen.feature.SpongeCaveFeature;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.DensityFunction;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -57,6 +59,10 @@ public final class TSWorldgenTypes {
             FEATURES.register("methane_mare", () -> new MethaneMareFeature(NoneFeatureConfiguration.CODEC));
     public static final RegistryObject<Feature<NoneFeatureConfiguration>> SPONGE_CAVE =
             FEATURES.register("sponge_cave", () -> new SpongeCaveFeature(NoneFeatureConfiguration.CODEC));
+
+    // 装饰地物（CR-15）：通用尖塔/石林，BlockStateConfiguration 指定方块，多群系复用。
+    public static final RegistryObject<Feature<BlockStateConfiguration>> SPIRE =
+            FEATURES.register("spire", () -> new SpireFeature(BlockStateConfiguration.CODEC));
 
     /** 由 {@link TSSystemsBootstrap} 在构造阶段调用，把本类的 DeferredRegister 挂到 mod 总线。 */
     public static void register(IEventBus modBus) {

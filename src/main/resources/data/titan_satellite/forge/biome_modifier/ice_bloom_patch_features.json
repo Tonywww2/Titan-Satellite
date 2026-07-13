@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_satellite:polar_labyrinth",
+  "features": "titan_satellite:ice_bloom_patch",
+  "step": "vegetal_decoration"
+}

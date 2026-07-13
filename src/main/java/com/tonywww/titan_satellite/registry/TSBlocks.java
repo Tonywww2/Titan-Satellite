@@ -79,6 +79,36 @@ public final class TSBlocks {
             new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.0F, 0.0F, SoundType.AMETHYST_CLUSTER)
                     .noCollission().noOcclusion().lightLevel(s -> 4)));
 
+    // ---- 装饰地物新增方块（CR-15，纯色占位贴图；附加不改现有）----
+    // 深渊晶体：液态甲烷深渊 暗紫发光矿物装饰。
+    public static final RegistryObject<Block> ABYSS_CRYSTAL = register("abyss_crystal", () ->
+            new Block(props(MapColor.COLOR_PURPLE, 1.5F, 1.5F, SoundType.AMETHYST).lightLevel(s -> 6)));
+    // 托林焦油：液态甲烷深渊 黑色焦油洼装饰。
+    public static final RegistryObject<Block> THOLIN_TAR = register("tholin_tar", () ->
+            new Block(props(MapColor.COLOR_BLACK, 0.5F, 0.5F, SoundType.HONEY_BLOCK)));
+    // 陨铁碎块：撞击陨坑荒原 金属陨石残片矿物。
+    public static final RegistryObject<Block> METEOR_FRAGMENT = register("meteor_fragment", () ->
+            new Block(props(MapColor.COLOR_GRAY, 3.0F, 6.0F, SoundType.METAL).requiresCorrectToolForDrops()));
+    // 硬化托林：托林沙海 结壳/风柱材料。
+    public static final RegistryObject<Block> HARDENED_THOLIN = register("hardened_tholin", () ->
+            new Block(props(MapColor.COLOR_ORANGE, 1.2F, 1.2F, SoundType.STONE).requiresCorrectToolForDrops()));
+    // 托林灌木：托林沙海 十字有机装饰（无碰撞）。
+    public static final RegistryObject<Block> THOLIN_SHRUB = register("tholin_shrub", () ->
+            new Block(props(MapColor.COLOR_ORANGE, 0.0F, 0.0F, SoundType.GRASS).noCollission().noOcclusion()));
+    // 甲烷冰花：极地迷宫冰原 十字发光冰晶装饰（无碰撞）。
+    public static final RegistryObject<Block> METHANE_ICE_BLOOM = register("methane_ice_bloom", () ->
+            new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.0F, 0.0F, SoundType.AMETHYST_CLUSTER)
+                    .noCollission().noOcclusion().lightLevel(s -> 5)));
+    // 氨晶体：冰火山断崖 青色发光晶体矿物。
+    public static final RegistryObject<Block> AMMONIA_CRYSTAL = register("ammonia_crystal", () ->
+            new Block(props(MapColor.COLOR_CYAN, 1.5F, 1.5F, SoundType.AMETHYST).lightLevel(s -> 7)));
+    // 泰坦砾石：荒芜高原 砾石场装饰（静态，不下落）。
+    public static final RegistryObject<Block> TITAN_GRAVEL = register("titan_gravel", () ->
+            new Block(props(MapColor.STONE, 0.6F, 0.6F, SoundType.GRAVEL)));
+    // 霜枯灌木：陨坑/荒原/冰火山 十字枯枝装饰（无碰撞）。
+    public static final RegistryObject<Block> FROST_BUSH = register("frost_bush", () ->
+            new Block(props(MapColor.COLOR_LIGHT_GRAY, 0.0F, 0.0F, SoundType.GRASS).noCollission().noOcclusion()));
+
     // ---- 流体方块（无 BlockItem，用桶交互；可作维度 default_fluid）----
     public static final RegistryObject<LiquidBlock> LIQUID_METHANE_BLOCK = REGISTER.register("liquid_methane", () ->
             new LiquidBlock(TSFluids.LIQUID_METHANE, liquidProps(MapColor.COLOR_BROWN)));

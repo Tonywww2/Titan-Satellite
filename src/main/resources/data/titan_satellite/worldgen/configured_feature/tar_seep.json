@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:disk",
+  "config": {
+    "state_provider": {
+      "fallback": {
+        "type": "minecraft:simple_state_provider",
+        "state": { "Name": "titan_satellite:tholin_tar" }
+      },
+      "rules": []
+    },
+    "target": {
+      "type": "minecraft:matching_blocks",
+      "blocks": [
+        "titan_satellite:sedimentary_titan_stone",
+        "titan_satellite:titan_stone",
+        "titan_satellite:titan_basalt"
+      ]
+    },
+    "radius": { "type": "minecraft:uniform", "value": { "min_inclusive": 2, "max_inclusive": 4 } },
+    "half_height": 1
+  }
+}
