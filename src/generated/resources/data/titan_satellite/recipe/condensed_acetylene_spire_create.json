@@ -1,7 +1,9 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    "titan_satellite:acetylene_spire"
+    {
+      "item": "titan_satellite:acetylene_spire"
+    }
   ],
   "neoforge:conditions": [
     {

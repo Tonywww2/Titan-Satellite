@@ -1,7 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "titan_satellite:hardened_tholin"
+    {
+      "item": "titan_satellite:hardened_tholin"
+    }
   ],
   "neoforge:conditions": [
     {

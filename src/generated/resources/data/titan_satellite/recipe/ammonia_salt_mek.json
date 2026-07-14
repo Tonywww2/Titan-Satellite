@@ -1,7 +1,8 @@
 {
   "type": "mekanism:crushing",
   "input": {
-    "ingredient": "titan_satellite:ammonia_crystal"
+    "count": 1,
+    "item": "titan_satellite:ammonia_crystal"
   },
   "neoforge:conditions": [
     {

@@ -1,7 +1,9 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "titan_satellite:ammonia_crystal"
+    {
+      "item": "titan_satellite:ammonia_crystal"
+    }
   ],
   "neoforge:conditions": [
     {

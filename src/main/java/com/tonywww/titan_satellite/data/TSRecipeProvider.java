@@ -142,8 +142,8 @@ public class TSRecipeProvider implements DataProvider {
         mekSingle("mekanism:crushing", "tholin_crystal_dust_mek", ts("tholin_crystal"), 1, ts("tholin_crystal_dust"), 2);
         mekCombining("azotosome_sheet_mek", ts("aero_membrane"), 1, ts("tholin_dust"), 2, ts("azotosome_sheet"), 1);
         mekCombining("cryo_alloy_ingot_mek", ts("cryo_carapace"), 2, ts("meteoric_iron_ingot"), 1, ts("cryo_alloy_ingot"), 1);
-        // 化学注入仓：凝乙炔 + 原生氢气 → 辅酶（乙炔氢化 §四）
-        mekInjecting("polyphosphazene_coenzyme_mek", ts("condensed_acetylene"), 2, "mekanism:hydrogen", 200,
+        // 组合机：凝乙炷 + 氢气瓶（物品）→ 辅酶（用物品氢而非气体，避开 chemical_input 的版本差异）
+        mekCombining("polyphosphazene_coenzyme_mek", ts("condensed_acetylene"), 2, ts("hydrogen_capsule"), 1,
                 ts("polyphosphazene_coenzyme"), 1);
 
         // ---- Farmer's Delight（mod_loaded:farmersdelight）----
@@ -207,21 +207,8 @@ public class TSRecipeProvider implements DataProvider {
     private void mekCombining(String name, String mainId, int mainAmt, String extraId, int extraAmt, String outId, int outCount) {
         JsonObject r = new JsonObject();
         r.addProperty("type", "mekanism:combining");
-        r.add("mainInput", mekItemInput(mainId, mainAmt));
-        r.add("extraInput", mekItemInput(extraId, extraAmt));
-        r.add("output", craftResult(outId, outCount));
-        addConds(r, modLoadedArr("mekanism"));
-        put(name, r);
-    }
-
-    private void mekInjecting(String name, String itemId, int itemAmt, String gas, int gasAmt, String outId, int outCount) {
-        JsonObject r = new JsonObject();
-        r.addProperty("type", "mekanism:injecting");
-        r.add("itemInput", mekItemInput(itemId, itemAmt));
-        JsonObject chem = new JsonObject();
-        chem.addProperty("gas", gas);
-        chem.addProperty("amount", gasAmt);
-        r.add("chemicalInput", chem);
+        r.add(neo ? "main_input" : "mainInput", mekItemInput(mainId, mainAmt));
+        r.add(neo ? "extra_input" : "extraInput", mekItemInput(extraId, extraAmt));
         r.add("output", craftResult(outId, outCount));
         addConds(r, modLoadedArr("mekanism"));
         put(name, r);
@@ -248,11 +235,17 @@ public class TSRecipeProvider implements DataProvider {
         return a;
     }
 
+    /** Mek 物品输入：1.20.1 {"ingredient":{"item":id},"amount":N?}；1.21.1 {"item":id,"count":N}。 */
     private JsonObject mekItemInput(String id, int amount) {
         JsonObject o = new JsonObject();
-        o.add("ingredient", ing(id));
-        if (amount != 1) {
-            o.addProperty("amount", amount);
+        if (neo) {
+            o.addProperty("item", id);
+            o.addProperty("count", amount);
+        } else {
+            o.add("ingredient", ing(id));
+            if (amount != 1) {
+                o.addProperty("amount", amount);
+            }
         }
         return o;
     }
@@ -308,11 +301,9 @@ public class TSRecipeProvider implements DataProvider {
     // ============================================================
     // 版本差异帮助方法
     // ============================================================
-    /** ingredient：1.20.1 对象 {"item":id}；1.21.1 字符串 "id"。 */
+    /** ingredient：1.20.1 与 1.21.1 单物品 ingredient 同为对象 {"item":id}（1.21.1 的 Ingredient codec
+     * 是 either(array,object)，不接受裸字符串）。 */
     private JsonElement ing(String id) {
-        if (neo) {
-            return new JsonPrimitive(id);
-        }
         JsonObject o = new JsonObject();
         o.addProperty("item", id);
         return o;
@@ -330,11 +321,12 @@ public class TSRecipeProvider implements DataProvider {
         return o;
     }
 
-    /** cooking result：1.20.1 字符串 "id"；1.21.1 对象 {"id":id}。 */
+    /** cooking result：1.20.1 字符串 "id"；1.21.1 对象 {"id":id,"count":1}。 */
     private JsonElement cookResult(String id) {
         if (neo) {
             JsonObject o = new JsonObject();
             o.addProperty("id", id);
+            o.addProperty("count", 1);
             return o;
         }
         return new JsonPrimitive(id);

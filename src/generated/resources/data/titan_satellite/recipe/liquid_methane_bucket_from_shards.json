@@ -1,11 +1,21 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "titan_satellite:methane_ice_shard",
-    "titan_satellite:methane_ice_shard",
-    "titan_satellite:methane_ice_shard",
-    "titan_satellite:methane_ice_shard",
-    "minecraft:bucket"
+    {
+      "item": "titan_satellite:methane_ice_shard"
+    },
+    {
+      "item": "titan_satellite:methane_ice_shard"
+    },
+    {
+      "item": "titan_satellite:methane_ice_shard"
+    },
+    {
+      "item": "titan_satellite:methane_ice_shard"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
   ],
   "result": {
     "count": 1,

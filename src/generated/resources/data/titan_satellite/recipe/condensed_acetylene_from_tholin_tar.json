@@ -2,8 +2,11 @@
   "type": "minecraft:smelting",
   "cookingtime": 200,
   "experience": 0.5,
-  "ingredient": "titan_satellite:tholin_tar",
+  "ingredient": {
+    "item": "titan_satellite:tholin_tar"
+  },
   "result": {
+    "count": 1,
     "id": "titan_satellite:condensed_acetylene"
   }
 }

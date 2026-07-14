@@ -1,12 +1,12 @@
 {
-  "type": "mekanism:injecting",
-  "chemicalInput": {
-    "amount": 200,
-    "gas": "mekanism:hydrogen"
+  "type": "mekanism:combining",
+  "extra_input": {
+    "count": 1,
+    "item": "titan_satellite:hydrogen_capsule"
   },
-  "itemInput": {
-    "amount": 2,
-    "ingredient": "titan_satellite:condensed_acetylene"
+  "main_input": {
+    "count": 2,
+    "item": "titan_satellite:condensed_acetylene"
   },
   "neoforge:conditions": [
     {

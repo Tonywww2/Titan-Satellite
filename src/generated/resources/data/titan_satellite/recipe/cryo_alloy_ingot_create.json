@@ -2,9 +2,15 @@
   "type": "create:mixing",
   "heatRequirement": "heated",
   "ingredients": [
-    "titan_satellite:cryo_carapace",
-    "titan_satellite:cryo_carapace",
-    "titan_satellite:meteoric_iron_ingot"
+    {
+      "item": "titan_satellite:cryo_carapace"
+    },
+    {
+      "item": "titan_satellite:cryo_carapace"
+    },
+    {
+      "item": "titan_satellite:meteoric_iron_ingot"
+    }
   ],
   "neoforge:conditions": [
     {

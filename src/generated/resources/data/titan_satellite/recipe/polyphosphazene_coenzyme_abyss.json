@@ -1,10 +1,18 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "titan_satellite:abyss_crystal_dust",
-    "titan_satellite:condensed_acetylene",
-    "titan_satellite:condensed_acetylene",
-    "titan_satellite:hydrogen_capsule"
+    {
+      "item": "titan_satellite:abyss_crystal_dust"
+    },
+    {
+      "item": "titan_satellite:condensed_acetylene"
+    },
+    {
+      "item": "titan_satellite:condensed_acetylene"
+    },
+    {
+      "item": "titan_satellite:hydrogen_capsule"
+    }
   ],
   "neoforge:conditions": [
     {

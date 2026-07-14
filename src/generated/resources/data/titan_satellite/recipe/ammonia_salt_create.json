@@ -1,7 +1,9 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    "titan_satellite:ammonia_crystal"
+    {
+      "item": "titan_satellite:ammonia_crystal"
+    }
   ],
   "neoforge:conditions": [
     {

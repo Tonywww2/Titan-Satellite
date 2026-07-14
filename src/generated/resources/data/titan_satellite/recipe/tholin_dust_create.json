@@ -1,7 +1,9 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    "titan_satellite:hardened_tholin"
+    {
+      "item": "titan_satellite:hardened_tholin"
+    }
   ],
   "neoforge:conditions": [
     {

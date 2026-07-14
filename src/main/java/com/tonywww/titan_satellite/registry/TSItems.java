@@ -6,6 +6,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
 //? if forge {
 import net.minecraftforge.common.ForgeSpawnEggItem;
@@ -30,8 +31,7 @@ public final class TSItems {
 
     // ---- 材料物品 ----
     // 浮游薄膜：甲烷浮游体掉落的轻量材料（占位，复用原版幻翼膜贴图）。
-    public static final Supplier<Item> AERO_MEMBRANE = register("aero_membrane",
-            () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> AERO_MEMBRANE = mat("aero_membrane", Rarity.COMMON);
 
     // ---- 方块物品（与 TSBlocks 一一对应，流体方块除外）----
     public static final Supplier<Item> TITAN_STONE = blockItem("titan_stone", TSBlocks.TITAN_STONE);
@@ -83,36 +83,36 @@ public final class TSItems {
             () -> new BucketItem(TSFluids.LIQUID_AMMONIA.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
     *///?}
 
-    // ---- 生物掉落材料（M2）----
-    public static final Supplier<Item> CRYO_CARAPACE = register("cryo_carapace", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> TOXIC_GLAND = register("toxic_gland", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> DEPLETED_BATTERY = register("depleted_battery", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> PRECISION_COMPONENTS = register("precision_components", () -> new Item(new Item.Properties()));
+    // ---- 生物掉落材料（M2；稀有度按获取复杂度）----
+    public static final Supplier<Item> CRYO_CARAPACE = mat("cryo_carapace", Rarity.COMMON);
+    public static final Supplier<Item> TOXIC_GLAND = mat("toxic_gland", Rarity.COMMON);
+    public static final Supplier<Item> DEPLETED_BATTERY = mat("depleted_battery", Rarity.UNCOMMON);
+    public static final Supplier<Item> PRECISION_COMPONENTS = mat("precision_components", Rarity.UNCOMMON);
 
-    // ---- 生态深化掉落材料（ECO；仅普通物品，无生化机制）----
-    public static final Supplier<Item> CRYSTALLINE_TWIG = register("crystalline_twig", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> THOLIN_FIBRE = register("tholin_fibre", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> TOUGH_NEURAL_GLAND = register("tough_neural_gland", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> THOLIN_SILK_SAC = register("tholin_silk_sac", () -> new Item(new Item.Properties()));
+    // ---- 生态深化掉落材料（ECO；稀有度按获取复杂度）----
+    public static final Supplier<Item> CRYSTALLINE_TWIG = mat("crystalline_twig", Rarity.COMMON);
+    public static final Supplier<Item> THOLIN_FIBRE = mat("tholin_fibre", Rarity.COMMON);
+    public static final Supplier<Item> TOUGH_NEURAL_GLAND = mat("tough_neural_gland", Rarity.UNCOMMON);
+    public static final Supplier<Item> THOLIN_SILK_SAC = mat("tholin_silk_sac", Rarity.UNCOMMON);
 
-    // ---- 材料加工链（MC1；均普通物品，加工由配方/方块行为驱动，无生化模拟）----
+    // ---- 材料加工链（MC1；稀有度按获取复杂度：直采→COMMON，1 步→UNCOMMON，多步组合/深层→RARE，终局→EPIC）----
     // 中间体
-    public static final Supplier<Item> THOLIN_DUST = register("tholin_dust", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> CONDENSED_ACETYLENE = register("condensed_acetylene", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> HYDROGEN_CAPSULE = register("hydrogen_capsule", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> METEORIC_IRON_INGOT = register("meteoric_iron_ingot", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> SILICON_DUST = register("silicon_dust", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> METHANE_ICE_SHARD = register("methane_ice_shard", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> THOLIN_DUST = mat("tholin_dust", Rarity.UNCOMMON);
+    public static final Supplier<Item> CONDENSED_ACETYLENE = mat("condensed_acetylene", Rarity.UNCOMMON);
+    public static final Supplier<Item> HYDROGEN_CAPSULE = mat("hydrogen_capsule", Rarity.COMMON);
+    public static final Supplier<Item> METEORIC_IRON_INGOT = mat("meteoric_iron_ingot", Rarity.UNCOMMON);
+    public static final Supplier<Item> SILICON_DUST = mat("silicon_dust", Rarity.UNCOMMON);
+    public static final Supplier<Item> METHANE_ICE_SHARD = mat("methane_ice_shard", Rarity.COMMON);
     // 三试剂（晶体粉碎）
-    public static final Supplier<Item> ABYSS_CRYSTAL_DUST = register("abyss_crystal_dust", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> AMMONIA_SALT = register("ammonia_salt", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> THOLIN_CRYSTAL_DUST = register("tholin_crystal_dust", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> ABYSS_CRYSTAL_DUST = mat("abyss_crystal_dust", Rarity.RARE);
+    public static final Supplier<Item> AMMONIA_SALT = mat("ammonia_salt", Rarity.UNCOMMON);
+    public static final Supplier<Item> THOLIN_CRYSTAL_DUST = mat("tholin_crystal_dust", Rarity.UNCOMMON);
     // 高级产物
-    public static final Supplier<Item> POLYPHOSPHAZENE_COENZYME = register("polyphosphazene_coenzyme", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> AZOTOSOME_SHEET = register("azotosome_sheet", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> CRYO_ALLOY_INGOT = register("cryo_alloy_ingot", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> BIO_BATTERY = register("bio_battery", () -> new Item(new Item.Properties()));
-    public static final Supplier<Item> TITAN_ANTIDOTE = register("titan_antidote", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> POLYPHOSPHAZENE_COENZYME = mat("polyphosphazene_coenzyme", Rarity.RARE);
+    public static final Supplier<Item> AZOTOSOME_SHEET = mat("azotosome_sheet", Rarity.RARE);
+    public static final Supplier<Item> CRYO_ALLOY_INGOT = mat("cryo_alloy_ingot", Rarity.RARE);
+    public static final Supplier<Item> BIO_BATTERY = mat("bio_battery", Rarity.EPIC);
+    public static final Supplier<Item> TITAN_ANTIDOTE = mat("titan_antidote", Rarity.RARE);
 
     // ---- 刷怪蛋 ----
     //? if forge {
@@ -153,6 +153,11 @@ public final class TSItems {
 
     private static Supplier<Item> register(String name, Supplier<Item> supplier) {
         return REGISTER.register(name, supplier);
+    }
+
+    /** 材料物品：按获取复杂度设稀有度（COMMON/UNCOMMON/RARE/EPIC 影响物品名颜色）。 */
+    private static Supplier<Item> mat(String name, Rarity rarity) {
+        return REGISTER.register(name, () -> new Item(new Item.Properties().rarity(rarity)));
     }
 
     private static Supplier<Item> blockItem(String name, Supplier<Block> block) {

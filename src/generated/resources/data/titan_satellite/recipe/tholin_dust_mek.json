@@ -1,7 +1,8 @@
 {
   "type": "mekanism:enriching",
   "input": {
-    "ingredient": "titan_satellite:hardened_tholin"
+    "count": 1,
+    "item": "titan_satellite:hardened_tholin"
   },
   "neoforge:conditions": [
     {

@@ -1,11 +1,12 @@
 {
   "type": "mekanism:combining",
-  "extraInput": {
-    "ingredient": "titan_satellite:meteoric_iron_ingot"
+  "extra_input": {
+    "count": 1,
+    "item": "titan_satellite:meteoric_iron_ingot"
   },
-  "mainInput": {
-    "amount": 2,
-    "ingredient": "titan_satellite:cryo_carapace"
+  "main_input": {
+    "count": 2,
+    "item": "titan_satellite:cryo_carapace"
   },
   "neoforge:conditions": [
     {

@@ -2,8 +2,11 @@
   "type": "minecraft:blasting",
   "cookingtime": 100,
   "experience": 0.7,
-  "ingredient": "titan_satellite:meteor_fragment",
+  "ingredient": {
+    "item": "titan_satellite:meteor_fragment"
+  },
   "result": {
+    "count": 1,
     "id": "titan_satellite:meteoric_iron_ingot"
   }
 }

@@ -80,12 +80,16 @@ dependencies {
     if (loader == "neoforge") {
         "neoForge"("net.neoforged:neoforge:${property("vers.deps.fml")}")
 
-        // 可选前置（编译期访问；modCompileOnly=不进发布产物、不上 dev 运行期）。
-        // 运行期联动由 mods.toml 可选依赖 + mod_loaded 门控的数据配方保证（用户装了就生效）。
+        // 可选前置（编译期 + dev 运行期）。modCompileOnly=编译期访问；modLocalRuntime=仅 dev 运行期
+        // （不进发布产物、不强制用户装）。Mek/FD 的 NeoForge 包自包含（无 JiJ、仅需 minecraft+neoforge），
+        // dev 运行期可用；Create 保持 compileOnly（同 Forge：client mixin 在 Loom dev 重映射崩溃）。
+        // 发布版运行期联动由 mods.toml 可选依赖 + mod_loaded 门控的数据配方保证。
         // 用 Modrinth 版本 ID 锁定具体文件，避开 Fabric/Forge 同号包命中的坑。
         "modCompileOnly"("maven.modrinth:create:UjX6dr61")          // Create 6.0.10 (NeoForge 1.21.1)
         "modCompileOnly"("maven.modrinth:mekanism:5KzzycBT")        // Mekanism 10.7.19.85 (NeoForge 1.21.1)
         "modCompileOnly"("maven.modrinth:farmers-delight:GbNuOZ4S") // Farmer's Delight 1.21.1-1.3.2 (NeoForge)
+        "modLocalRuntime"("maven.modrinth:mekanism:5KzzycBT")
+        "modLocalRuntime"("maven.modrinth:farmers-delight:GbNuOZ4S")
     } else {
         "forge"("net.minecraftforge:forge:$mcVersion-${property("vers.deps.fml")}")
 
@@ -121,16 +125,23 @@ dependencies {
         "modImplementation"("maven.modrinth:resourceful-config:DERs8u7v") // Ad Astra 前置（Forge 2.1.3）
         "modImplementation"("maven.modrinth:botarium:2.3.4")             // Ad Astra 前置（≥2.3.0）
         // 以下 JiJ 内嵌库 Loom dev 不解压，需显式补齐到 Forge 运行库。
-        "forgeRuntimeLibrary"("io.github.llamalad7:mixinextras-common:0.3.2") // Ad Astra mixin @WrapOperation
+        "forgeRuntimeLibrary"("io.github.llamalad7:mixinextras-common:0.4.1") // Ad Astra + Farmer's Delight mixin（FD 内嵌 0.3.6，0.4.1 向下兼容 Ad Astra 的 ≥0.3.2）
         "forgeRuntimeLibrary"("com.teamresourceful:bytecodecs:1.0.2")   // resourceful-lib 内嵌
         "forgeRuntimeLibrary"("com.teamresourceful:yabn:1.0.3")         // resourceful-lib 内嵌
 
-        // 可选前置（编译期访问；modCompileOnly=不进发布产物、不上 dev 运行期）。
-        // 运行期联动由 mods.toml 可选依赖 + mod_loaded 门控的数据配方保证（用户装了就生效）。
+        // 可选前置（编译期 + dev 运行期，供联动配方实测）。modCompileOnly=编译期访问；
+        // modLocalRuntime=仅 dev 运行期（不进发布产物、不强制用户装）。发布版运行期联动由
+        // mods.toml 可选依赖 + mod_loaded 门控的数据配方保证。
         // 用 Modrinth 版本 ID 锁定具体文件，避开 Fabric/Forge 同号包命中的坑。
         "modCompileOnly"("maven.modrinth:create:8amzvn9x")          // Create 6.0.8 (Forge 1.20.1)
         "modCompileOnly"("maven.modrinth:mekanism:uxe1WQp4")        // Mekanism 10.4.16.80 (Forge 1.20.1)
         "modCompileOnly"("maven.modrinth:farmers-delight:CsjS7EkP") // Farmer's Delight 1.20.1-1.3.2 (Forge)
+        // Mekanism / FD 自包含（无级联 JiJ mod 依赖），dev 运行期可用。
+        // Create 不上 dev 运行期：其 client mixin（HumanoidArmorLayerMixin）在 Loom dev 重映射环境下
+        // 描述符不匹配崩溃（同 Jade/FTB/Xaero 的 dev-mixin 坑）；datagen 走 client 环境故一并被拖崩。
+        // Create 联动配方仍对发布版用户生效（mods.toml 可选依赖 + mod_loaded 数据配方）。
+        "modLocalRuntime"("maven.modrinth:mekanism:uxe1WQp4")
+        "modLocalRuntime"("maven.modrinth:farmers-delight:CsjS7EkP")
     }
 }
 

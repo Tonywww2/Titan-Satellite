@@ -1,7 +1,9 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    "titan_satellite:abyss_crystal"
+    {
+      "item": "titan_satellite:abyss_crystal"
+    }
   ],
   "neoforge:conditions": [
     {

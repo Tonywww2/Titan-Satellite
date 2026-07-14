@@ -3,9 +3,15 @@
   "cookingtime": 200,
   "experience": 0.5,
   "ingredients": [
-    "titan_satellite:tough_neural_gland",
-    "titan_satellite:toxic_gland",
-    "titan_satellite:ammonia_salt"
+    {
+      "item": "titan_satellite:tough_neural_gland"
+    },
+    {
+      "item": "titan_satellite:toxic_gland"
+    },
+    {
+      "item": "titan_satellite:ammonia_salt"
+    }
   ],
   "neoforge:conditions": [
     {

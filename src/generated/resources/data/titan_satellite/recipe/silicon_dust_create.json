@@ -1,7 +1,9 @@
 {
   "type": "create:crushing",
   "ingredients": [
-    "titan_satellite:crystalline_twig"
+    {
+      "item": "titan_satellite:crystalline_twig"
+    }
   ],
   "neoforge:conditions": [
     {

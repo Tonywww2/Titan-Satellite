@@ -2,9 +2,15 @@
   "type": "create:mixing",
   "heatRequirement": "heated",
   "ingredients": [
-    "titan_satellite:condensed_acetylene",
-    "titan_satellite:condensed_acetylene",
-    "titan_satellite:hydrogen_capsule"
+    {
+      "item": "titan_satellite:condensed_acetylene"
+    },
+    {
+      "item": "titan_satellite:condensed_acetylene"
+    },
+    {
+      "item": "titan_satellite:hydrogen_capsule"
+    }
   ],
   "neoforge:conditions": [
     {

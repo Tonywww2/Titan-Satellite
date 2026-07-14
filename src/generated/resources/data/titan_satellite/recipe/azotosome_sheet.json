@@ -1,9 +1,15 @@
 {
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
-    "titan_satellite:aero_membrane",
-    "titan_satellite:tholin_dust",
-    "titan_satellite:tholin_dust"
+    {
+      "item": "titan_satellite:aero_membrane"
+    },
+    {
+      "item": "titan_satellite:tholin_dust"
+    },
+    {
+      "item": "titan_satellite:tholin_dust"
+    }
   ],
   "neoforge:conditions": [
     {

@@ -1,16 +1,17 @@
 {
-  "type": "mekanism:injecting",
-  "chemicalInput": {
-    "amount": 200,
-    "gas": "mekanism:hydrogen"
-  },
+  "type": "mekanism:combining",
   "conditions": [
     {
       "type": "forge:mod_loaded",
       "modid": "mekanism"
     }
   ],
-  "itemInput": {
+  "extraInput": {
+    "ingredient": {
+      "item": "titan_satellite:hydrogen_capsule"
+    }
+  },
+  "mainInput": {
     "amount": 2,
     "ingredient": {
       "item": "titan_satellite:condensed_acetylene"

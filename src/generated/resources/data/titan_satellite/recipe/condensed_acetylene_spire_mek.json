@@ -1,7 +1,8 @@
 {
   "type": "mekanism:crushing",
   "input": {
-    "ingredient": "titan_satellite:acetylene_spire"
+    "count": 1,
+    "item": "titan_satellite:acetylene_spire"
   },
   "neoforge:conditions": [
     {
