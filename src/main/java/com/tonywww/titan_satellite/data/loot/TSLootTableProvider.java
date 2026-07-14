@@ -3,6 +3,10 @@ package com.tonywww.titan_satellite.data.loot;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+//? if neoforge {
+/*import net.minecraft.core.HolderLookup;
+import java.util.concurrent.CompletableFuture;
+*///?}
 
 import java.util.List;
 import java.util.Set;
@@ -12,6 +16,7 @@ import java.util.Set;
  */
 public class TSLootTableProvider extends LootTableProvider {
 
+    //? if forge {
     public TSLootTableProvider(PackOutput output) {
         super(output, Set.of(), List.of(
                 new SubProviderEntry(TSBlockLoot::new, LootContextParamSets.BLOCK),
@@ -19,4 +24,13 @@ public class TSLootTableProvider extends LootTableProvider {
                 new SubProviderEntry(TSChestLoot::new, LootContextParamSets.CHEST)
         ));
     }
+    //?} else {
+    /*public TSLootTableProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) {
+        super(output, Set.of(), List.of(
+                new SubProviderEntry(TSBlockLoot::new, LootContextParamSets.BLOCK),
+                new SubProviderEntry(TSEntityLoot::new, LootContextParamSets.ENTITY),
+                new SubProviderEntry(TSChestLoot::new, LootContextParamSets.CHEST)
+        ), lookup);
+    }
+    *///?}
 }

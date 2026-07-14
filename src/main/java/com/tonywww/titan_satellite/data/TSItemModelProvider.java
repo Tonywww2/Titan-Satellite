@@ -5,10 +5,17 @@ import com.tonywww.titan_satellite.registry.TSFluids;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.material.Fluid;
+//? if forge {
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+//?} else {
+/*import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.client.model.generators.loaders.DynamicFluidContainerModelBuilder;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+*///?}
 
 /**
  * 非方块物品的模型 datagen（材料/桶/刷怪蛋）。方块物品模型在 {@link TSBlockStateProvider} 生成。
@@ -52,7 +59,7 @@ public class TSItemModelProvider extends ItemModelProvider {
     }
 
     private void generated(String name, String texture) {
-        withExistingParent(name, mcLoc("item/generated")).texture("layer0", new ResourceLocation(texture));
+        withExistingParent(name, mcLoc("item/generated")).texture("layer0", TitanSatellite.parse(texture));
     }
 
     // Forge 动态流体容器模型：空桶轮廓 + 流体液面（液面为 tintindex 1，颜色由 RegisterColorHandlersEvent.Item
@@ -60,10 +67,18 @@ public class TSItemModelProvider extends ItemModelProvider {
     // 父模型 forge:item/bucket 用 UncheckedModelFile 避免 datagen 的 ExistingFileHelper 校验报错。
     // 注意：1.20.1 的 forge:fluid_container 加载器不读 apply_tint 字段，染色只能靠上面的 ItemColor。
     private void fluidBucket(String name, Fluid fluid) {
+        //? if forge {
         getBuilder(name)
                 .parent(new ModelFile.UncheckedModelFile(new ResourceLocation("forge", "item/bucket")))
                 .customLoader(DynamicFluidContainerModelBuilder::begin)
                 .fluid(fluid)
                 .end();
+        //?} else {
+        /*getBuilder(name)
+                .parent(new ModelFile.UncheckedModelFile(ResourceLocation.fromNamespaceAndPath("neoforge", "item/bucket")))
+                .customLoader(DynamicFluidContainerModelBuilder::begin)
+                .fluid(fluid)
+                .end();
+        *///?}
     }
 }

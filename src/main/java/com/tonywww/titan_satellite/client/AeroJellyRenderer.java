@@ -1,5 +1,6 @@
 package com.tonywww.titan_satellite.client;
 
+import com.tonywww.titan_satellite.TitanSatellite;
 import com.tonywww.titan_satellite.entity.AeroJelly;
 import net.minecraft.client.model.SlimeModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class AeroJellyRenderer extends MobRenderer<AeroJelly, SlimeModel<AeroJelly>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/aero_jelly.png");
+    private static final ResourceLocation TEXTURE = TitanSatellite.rl("textures/entity/aero_jelly.png");
 
     public AeroJellyRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.5F);

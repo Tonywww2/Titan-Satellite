@@ -1,6 +1,9 @@
 package com.tonywww.titan_satellite.worldgen.structure;
 
 import com.mojang.serialization.Codec;
+//? if neoforge {
+/*import com.mojang.serialization.MapCodec;
+*///?}
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -22,11 +25,19 @@ import java.util.Optional;
  */
 public class TitanStructure extends Structure {
 
+    //? if forge {
     public static final Codec<TitanStructure> CODEC = RecordCodecBuilder.create(instance ->
             instance.group(
                     settingsCodec(instance),
                     Variant.CODEC.fieldOf("variant").forGetter(s -> s.variant)
             ).apply(instance, TitanStructure::new));
+    //?} else {
+    /*public static final MapCodec<TitanStructure> CODEC = RecordCodecBuilder.mapCodec(instance ->
+            instance.group(
+                    settingsCodec(instance),
+                    Variant.CODEC.fieldOf("variant").forGetter(s -> s.variant)
+            ).apply(instance, TitanStructure::new));
+    *///?}
 
     private final Variant variant;
 
@@ -44,7 +55,7 @@ public class TitanStructure extends Structure {
                 x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
 
         int y;
-        if (variant == Variant.GEODE) {
+        if (variant == Variant.GEODE || variant == Variant.GREAT_HIVE) {
             int minY = context.heightAccessor().getMinBuildHeight() + 12;
             int maxY = surfaceY - 12;
             if (maxY <= minY) {
@@ -69,7 +80,11 @@ public class TitanStructure extends Structure {
     /** 结构变体，写在 {@code worldgen/structure/*.json} 的 {@code "variant"} 字段。 */
     public enum Variant implements StringRepresentable {
         GEODE("geode"),
-        OUTPOST("outpost");
+        OUTPOST("outpost"),
+        DERRICK("derrick"),
+        CRASHED_PROBE("crashed_probe"),
+        GREAT_HIVE("great_hive"),
+        BEACON("beacon");
 
         public static final Codec<Variant> CODEC = StringRepresentable.fromEnum(Variant::values);
 

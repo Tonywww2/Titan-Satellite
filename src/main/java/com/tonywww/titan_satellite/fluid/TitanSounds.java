@@ -1,11 +1,14 @@
 package com.tonywww.titan_satellite.fluid;
 
 import com.tonywww.titan_satellite.TitanSatellite;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
+//? if forge {
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+//?} else {
+/*import net.neoforged.neoforge.registries.DeferredRegister;
+*///?}
+import java.util.function.Supplier;
 
 /**
  * PF-3 音效注册表：土卫六流体相关的自定义音效事件。
@@ -18,10 +21,10 @@ public final class TitanSounds {
     }
 
     public static final DeferredRegister<SoundEvent> REGISTER =
-            DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, TitanSatellite.MODID);
+            DeferredRegister.create(Registries.SOUND_EVENT, TitanSatellite.MODID);
 
     /** 流体接触速冻成冰时的音效。 */
-    public static final RegistryObject<SoundEvent> FLUID_SOLIDIFY = REGISTER.register("block.titan_fluid.solidify",
+    public static final Supplier<SoundEvent> FLUID_SOLIDIFY = REGISTER.register("block.titan_fluid.solidify",
             () -> SoundEvent.createVariableRangeEvent(
-                    new ResourceLocation(TitanSatellite.MODID, "block.titan_fluid.solidify")));
+                    TitanSatellite.rl("block.titan_fluid.solidify")));
 }

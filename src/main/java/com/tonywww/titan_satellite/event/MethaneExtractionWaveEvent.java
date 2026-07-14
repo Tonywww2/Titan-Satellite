@@ -2,7 +2,11 @@ package com.tonywww.titan_satellite.event;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+//? if forge {
 import net.minecraftforge.eventbus.api.Event;
+//?} else {
+/*import net.neoforged.bus.api.Event;
+*///?}
 
 /**
  * 甲烷开采塔防波次事件（PA-2 冻结签名）。

@@ -29,6 +29,13 @@ public class SpecialMethanePumpBlock extends BaseEntityBlock {
         super(properties);
     }
 
+    //? if neoforge {
+    /*@Override
+    public com.mojang.serialization.MapCodec<SpecialMethanePumpBlock> codec() {
+        return simpleCodec(SpecialMethanePumpBlock::new);
+    }
+    *///?}
+
     @Override
     public RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
@@ -49,6 +56,7 @@ public class SpecialMethanePumpBlock extends BaseEntityBlock {
         return createTickerHelper(type, TSBlockEntities.METHANE_PUMP.get(), SpecialMethanePumpBlockEntity::serverTick);
     }
 
+    //? if forge {
     @Override
     public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level instanceof ServerLevel server
@@ -57,6 +65,16 @@ public class SpecialMethanePumpBlock extends BaseEntityBlock {
         }
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
+    //?} else {
+    /*@Override
+    public InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hit) {
+        if (level instanceof ServerLevel server
+                && server.getBlockEntity(pos) instanceof SpecialMethanePumpBlockEntity pump) {
+            pump.onActivatedBy(server, pos, player);
+        }
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+    *///?}
 
     @Override
     public void neighborChanged(BlockState state, Level level, BlockPos pos, Block neighborBlock, BlockPos fromPos, boolean movedByPiston) {

@@ -5,8 +5,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
+//? if forge {
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
+//?} else {
+/*import net.neoforged.neoforge.registries.DeferredRegister;
+*///?}
+import java.util.function.Supplier;
 
 /**
  * 创造模式物品栏：聚合本 mod 的方块与物品。
@@ -19,7 +23,7 @@ public final class TSCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> REGISTER =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, TitanSatellite.MODID);
 
-    public static final RegistryObject<CreativeModeTab> TITAN = REGISTER.register("titan", () ->
+    public static final Supplier<CreativeModeTab> TITAN = REGISTER.register("titan", () ->
             CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup." + TitanSatellite.MODID + ".titan"))
                     .icon(() -> new ItemStack(TSItems.AERO_MEMBRANE.get()))
@@ -51,6 +55,9 @@ public final class TSCreativeTabs {
                         output.accept(TSBlocks.AMMONIA_CRYSTAL.get());
                         output.accept(TSBlocks.TITAN_GRAVEL.get());
                         output.accept(TSBlocks.FROST_BUSH.get());
+                        // M7 宏伟地物构成方块
+                        output.accept(TSBlocks.ACETYLENE_SPIRE.get());
+                        output.accept(TSBlocks.THOLIN_MYCELIUM.get());
                         // 流体桶
                         output.accept(TSItems.LIQUID_METHANE_BUCKET.get());
                         output.accept(TSItems.LIQUID_AMMONIA_BUCKET.get());

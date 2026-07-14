@@ -5,8 +5,13 @@ import javax.annotation.Nullable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+//? if forge {
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
+//?} else {
+/*import net.neoforged.bus.api.Event;
+import net.neoforged.bus.api.ICancellableEvent;
+*///?}
 
 /**
  * 托林晶体「晶洞惊扰」事件（可取消）。{@link com.tonywww.titan_satellite.block.TholinCrystalBlock}
@@ -21,8 +26,12 @@ import net.minecraftforge.eventbus.api.Event;
  *   <li>{@link #setWakeRadius(double)} 调整惊醒潜伏敌对的半径。</li>
  * </ul>
  */
+//? if forge {
 @Cancelable
 public class TholinCrystalDisturbedEvent extends Event {
+//?} else {
+/*public class TholinCrystalDisturbedEvent extends Event implements ICancellableEvent {
+*///?}
 
     private final ServerLevel level;
     private final BlockPos pos;

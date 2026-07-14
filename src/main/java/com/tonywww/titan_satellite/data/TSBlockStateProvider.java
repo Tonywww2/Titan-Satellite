@@ -4,11 +4,19 @@ import com.tonywww.titan_satellite.TitanSatellite;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+//? if forge {
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.ForgeRegistries;
+//?} else {
+/*import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraft.core.registries.BuiltInRegistries;
+*///?}
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -67,6 +75,8 @@ public class TSBlockStateProvider extends BlockStateProvider {
         CUBE.put("hardened_tholin", "hardened_tholin");
         CUBE.put("ammonia_crystal", "ammonia_crystal");
         CUBE.put("titan_gravel", "titan_gravel");
+        CUBE.put("acetylene_spire", "acetylene_spire");
+        CUBE.put("tholin_mycelium", "tholin_mycelium");
 
         CROSS.put("tholin_shrub", "titan_satellite:block/tholin_shrub");
         CROSS.put("methane_ice_bloom", "titan_satellite:block/methane_ice_bloom");
@@ -89,7 +99,7 @@ public class TSBlockStateProvider extends BlockStateProvider {
         });
 
         CROSS.forEach((name, texture) -> {
-            ResourceLocation textureRL = new ResourceLocation(texture);
+            ResourceLocation textureRL = TitanSatellite.parse(texture);
             ModelFile model = models().cross(name, textureRL).renderType("cutout");
             simpleBlock(block(name), model);
             // cross 物品：generated + layer0 = cross 贴图（cross 模型作为手持物品渲染不佳）
@@ -104,6 +114,10 @@ public class TSBlockStateProvider extends BlockStateProvider {
     }
 
     private static Block block(String name) {
+        //? if forge {
         return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(TitanSatellite.MODID, name));
+        //?} else {
+        /*return BuiltInRegistries.BLOCK.get(TitanSatellite.rl(name));
+        *///?}
     }
 }

@@ -1,0 +1,8 @@
+{
+  "type": "titan_satellite:titan_structure",
+  "variant": "crashed_probe",
+  "biomes": "#titan_satellite:has_structure/crashed_probe",
+  "step": "surface_structures",
+  "terrain_adaptation": "beard_thin",
+  "spawn_overrides": {}
+}

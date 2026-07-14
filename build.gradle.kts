@@ -19,10 +19,11 @@ val javaVersion = if (stonecutter.eval(mcVersion, ">=1.20.6")) 21 else 17
 
 loom {
     silentMojangMappingsLicense()
-    // Mixin（Loom 内建），两版共用同一配置；Loom 生成 refmap
-    mixin { 
+    // Mixin（Loom 内建），两版共用同一配置；Loom 生成 refmap。
+    // useLegacyMixinAp = true 是 Loom 配置 defaultRefmapName 的前置（两版都需要）。
+    mixin {
         useLegacyMixinAp = true
-        defaultRefmapName = "${property("mod.id")}.refmap.json" 
+        defaultRefmapName = "${property("mod.id")}.refmap.json"
     }
     // Forge 开发环境需显式注册 mixin 配置——Architectury Loom 的 runServer/runClient 不会
     // 自动识别 mods.toml 的 [[mixins]]，缺了这行 mixin 在 dev 下静默不加载（NeoForge 原生识别）
@@ -137,9 +138,13 @@ tasks {
             "authors" to project.property("mod.authors"),
             "description" to project.property("mod.description"),
             "license" to project.property("mod.license"),
+            "pack_format" to project.property("vers.packFormat"),
         )
         inputs.properties(props)
-        filesMatching("META-INF/mods.toml") { expand(props) }
+        // Forge 读 META-INF/mods.toml，NeoForge 读 META-INF/neoforge.mods.toml；两者都做占位展开，
+        // 再按当前加载器排除另一个，避免多余元数据进包。
+        filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta")) { expand(props) }
+        exclude(if (loader == "neoforge") "META-INF/mods.toml" else "META-INF/neoforge.mods.toml")
     }
     withType<JavaCompile> { options.release = javaVersion }
 }

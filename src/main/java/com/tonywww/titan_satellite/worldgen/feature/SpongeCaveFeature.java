@@ -26,7 +26,7 @@ public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
 
     /** 极地迷宫冰原群系键——破碎海绵仅在此群系“内部”生成。 */
     private static final ResourceKey<Biome> POLAR_LABYRINTH =
-            ResourceKey.create(Registries.BIOME, new ResourceLocation(TitanSatellite.MODID, "polar_labyrinth"));
+            ResourceKey.create(Registries.BIOME, TitanSatellite.rl("polar_labyrinth"));
     /** 洞体半径之外再向外要求的实心边距（格）：中心与该半径环上须全为极地群系，否则跳过。
      *  取值偏大以抵消群系采样按 4 格量化的误差、并为过渡断崖留足实心冰壁。 */
     private static final int EDGE_BUFFER = 8;

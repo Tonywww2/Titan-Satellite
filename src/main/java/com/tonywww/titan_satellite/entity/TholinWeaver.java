@@ -69,7 +69,7 @@ public class TholinWeaver extends Monster {
                 default -> 80;
             };
             living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, duration, 1), this);
-            living.addEffect(new MobEffectInstance(TSMobEffects.THOLIN_TOXIN.get(), duration, 0), this);
+            living.addEffect(TSMobEffects.tholinToxin(duration, 0), this);
         }
         return hurt;
     }
@@ -101,7 +101,7 @@ public class TholinWeaver extends Monster {
         web.setRadiusOnUse(-0.2F);
         web.setRadiusPerTick(-2.0F / 120.0F);
         web.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 100, 1));
-        web.addEffect(new MobEffectInstance(TSMobEffects.THOLIN_TOXIN.get(), 100, 0));
+        web.addEffect(TSMobEffects.tholinToxin(100, 0));
         level.addFreshEntity(web);
         this.playSound(SoundEvents.SPIDER_HURT, 1.0F, 0.7F);
     }

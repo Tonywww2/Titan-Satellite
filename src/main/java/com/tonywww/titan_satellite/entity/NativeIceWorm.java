@@ -63,7 +63,7 @@ public class NativeIceWorm extends Monster {
                 case NORMAL -> 200;
                 default -> 120;
             };
-            living.addEffect(new MobEffectInstance(TSMobEffects.THOLIN_TOXIN.get(), duration, 1), this);
+            living.addEffect(TSMobEffects.tholinToxin(duration, 1), this);
         }
         return hurt;
     }

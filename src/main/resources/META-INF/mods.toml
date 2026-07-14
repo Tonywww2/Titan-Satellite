@@ -14,14 +14,14 @@ ${description}
 [[mixins]]
 config = "titan_satellite.mixins.json"
 
-[[dependencies.${id}]]
+[[dependencies.titan_satellite]]
 modId = "forge"
 mandatory = true
 versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${id}]]
+[[dependencies.titan_satellite]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.1,1.21)"

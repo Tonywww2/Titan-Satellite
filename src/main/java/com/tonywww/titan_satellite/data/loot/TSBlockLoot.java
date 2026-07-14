@@ -10,7 +10,12 @@ import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+//? if forge {
 import net.minecraftforge.registries.ForgeRegistries;
+//?} else {
+/*import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
+*///?}
 
 import java.util.List;
 import java.util.Map;
@@ -24,6 +29,7 @@ public class TSBlockLoot extends BlockLootSubProvider {
 
     private final List<Block> blocks;
 
+    //? if forge {
     public TSBlockLoot() {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags());
         this.blocks = ForgeRegistries.BLOCKS.getEntries().stream()
@@ -32,6 +38,16 @@ public class TSBlockLoot extends BlockLootSubProvider {
                 .filter(b -> !(b instanceof LiquidBlock))
                 .toList();
     }
+    //?} else {
+    /*public TSBlockLoot(HolderLookup.Provider provider) {
+        super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
+        this.blocks = BuiltInRegistries.BLOCK.entrySet().stream()
+                .filter(e -> e.getKey().location().getNamespace().equals(TitanSatellite.MODID))
+                .map(Map.Entry::getValue)
+                .filter(b -> !(b instanceof LiquidBlock))
+                .toList();
+    }
+    *///?}
 
     @Override
     protected void generate() {

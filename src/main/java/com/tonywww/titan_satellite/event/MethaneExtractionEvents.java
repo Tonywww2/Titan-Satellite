@@ -3,8 +3,13 @@ package com.tonywww.titan_satellite.event;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Player;
+//? if forge {
 import net.minecraftforge.eventbus.api.Cancelable;
 import net.minecraftforge.eventbus.api.Event;
+//?} else {
+/*import net.neoforged.bus.api.Event;
+import net.neoforged.bus.api.ICancellableEvent;
+*///?}
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -48,8 +53,12 @@ public final class MethaneExtractionEvents {
      * 玩家激活泵、开采即将开始时触发。{@link Cancelable}：取消则拒绝启动，
      * 附属可据此加前置条件（如需要钥匙物品、限定维度、限定时间等）。
      */
+    //? if forge {
     @Cancelable
     public static class Start extends PumpEvent {
+    //?} else {
+    /*public static class Start extends PumpEvent implements ICancellableEvent {
+    *///?}
         @Nullable
         private final Player activator;
 

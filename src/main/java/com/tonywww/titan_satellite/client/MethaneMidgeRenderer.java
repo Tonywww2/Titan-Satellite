@@ -1,5 +1,6 @@
 package com.tonywww.titan_satellite.client;
 
+import com.tonywww.titan_satellite.TitanSatellite;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tonywww.titan_satellite.entity.MethaneMidge;
 import net.minecraft.client.model.SlimeModel;
@@ -13,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class MethaneMidgeRenderer extends MobRenderer<MethaneMidge, SlimeModel<MethaneMidge>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/methane_midge.png");
+    private static final ResourceLocation TEXTURE = TitanSatellite.rl("textures/entity/methane_midge.png");
 
     public MethaneMidgeRenderer(EntityRendererProvider.Context context) {
         super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.15F);

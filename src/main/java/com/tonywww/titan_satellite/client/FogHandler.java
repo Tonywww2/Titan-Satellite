@@ -7,10 +7,17 @@ import net.minecraft.client.renderer.FogRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+//? if forge {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ViewportEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+//?} else {
+/*import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ViewportEvent;
+*///?}
 
 /**
  * 土卫六维度雾特效（客户端 <b>Forge 总线</b> {@link ViewportEvent}）：维度内统一橙黄雾色；
@@ -18,7 +25,11 @@ import net.minecraftforge.fml.common.Mod;
  *
  * <p>天空类型 / 无星空 / 基础雾色见 {@link TitanDimensionEffects}；本类负责逐帧的雾色与浓度。
  */
+//? if forge {
 @Mod.EventBusSubscriber(modid = TitanSatellite.MODID, value = Dist.CLIENT)
+//?} else {
+/*@EventBusSubscriber(modid = TitanSatellite.MODID, value = Dist.CLIENT)
+*///?}
 public final class FogHandler {
 
     private FogHandler() {
@@ -31,8 +42,7 @@ public final class FogHandler {
     private static final float FOG_START = 224.0F;
     private static final float FOG_END = 256.0F;
     /** 液态甲烷深渊群系 id（仅此群系维持浓雾）。 */
-    private static final ResourceLocation METHANE_ABYSS =
-            new ResourceLocation(TitanSatellite.MODID, "methane_abyss");
+    private static final ResourceLocation METHANE_ABYSS = TitanSatellite.rl("methane_abyss");
 
     @SubscribeEvent
     public static void onComputeFogColor(ViewportEvent.ComputeFogColor event) {

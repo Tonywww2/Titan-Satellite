@@ -1,5 +1,6 @@
 package com.tonywww.titan_satellite.client;
 
+import com.tonywww.titan_satellite.TitanSatellite;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.tonywww.titan_satellite.entity.NativeIceWorm;
 import net.minecraft.client.model.SilverfishModel;
@@ -13,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class NativeIceWormRenderer extends MobRenderer<NativeIceWorm, SilverfishModel<NativeIceWorm>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/native_ice_worm.png");
+    private static final ResourceLocation TEXTURE = TitanSatellite.rl("textures/entity/native_ice_worm.png");
 
     public NativeIceWormRenderer(EntityRendererProvider.Context context) {
         super(context, new SilverfishModel<>(context.bakeLayer(ModelLayers.SILVERFISH)), 0.6F);

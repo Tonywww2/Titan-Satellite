@@ -1,12 +1,17 @@
 package com.tonywww.titan_satellite.registry;
 
 import com.tonywww.titan_satellite.TitanSatellite;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
+//? if forge {
 import net.minecraftforge.fluids.ForgeFlowingFluid;
 import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
+//?} else {
+/*import net.neoforged.neoforge.fluids.BaseFlowingFluid;
+import net.neoforged.neoforge.registries.DeferredRegister;
+*///?}
+import java.util.function.Supplier;
 
 /**
  * 流体（Fluid）注册表：每种液体有 Source + Flowing 两个 Fluid。
@@ -19,16 +24,17 @@ public final class TSFluids {
     }
 
     public static final DeferredRegister<Fluid> REGISTER =
-            DeferredRegister.create(ForgeRegistries.FLUIDS, TitanSatellite.MODID);
+            DeferredRegister.create(Registries.FLUID, TitanSatellite.MODID);
 
-    public static final RegistryObject<FlowingFluid> LIQUID_METHANE =
+    //? if forge {
+    public static final Supplier<FlowingFluid> LIQUID_METHANE =
             REGISTER.register("liquid_methane", () -> new ForgeFlowingFluid.Source(methaneProperties()));
-    public static final RegistryObject<FlowingFluid> FLOWING_LIQUID_METHANE =
+    public static final Supplier<FlowingFluid> FLOWING_LIQUID_METHANE =
             REGISTER.register("flowing_liquid_methane", () -> new ForgeFlowingFluid.Flowing(methaneProperties()));
 
-    public static final RegistryObject<FlowingFluid> LIQUID_AMMONIA =
+    public static final Supplier<FlowingFluid> LIQUID_AMMONIA =
             REGISTER.register("liquid_ammonia", () -> new ForgeFlowingFluid.Source(ammoniaProperties()));
-    public static final RegistryObject<FlowingFluid> FLOWING_LIQUID_AMMONIA =
+    public static final Supplier<FlowingFluid> FLOWING_LIQUID_AMMONIA =
             REGISTER.register("flowing_liquid_ammonia", () -> new ForgeFlowingFluid.Flowing(ammoniaProperties()));
 
     private static ForgeFlowingFluid.Properties methaneProperties() {
@@ -46,4 +52,31 @@ public final class TSFluids {
                 .block(TSBlocks.LIQUID_AMMONIA_BLOCK)
                 .bucket(TSItems.LIQUID_AMMONIA_BUCKET);
     }
+    //?} else {
+    /*public static final Supplier<FlowingFluid> LIQUID_METHANE =
+            REGISTER.register("liquid_methane", () -> new BaseFlowingFluid.Source(methaneProperties()));
+    public static final Supplier<FlowingFluid> FLOWING_LIQUID_METHANE =
+            REGISTER.register("flowing_liquid_methane", () -> new BaseFlowingFluid.Flowing(methaneProperties()));
+
+    public static final Supplier<FlowingFluid> LIQUID_AMMONIA =
+            REGISTER.register("liquid_ammonia", () -> new BaseFlowingFluid.Source(ammoniaProperties()));
+    public static final Supplier<FlowingFluid> FLOWING_LIQUID_AMMONIA =
+            REGISTER.register("flowing_liquid_ammonia", () -> new BaseFlowingFluid.Flowing(ammoniaProperties()));
+
+    private static BaseFlowingFluid.Properties methaneProperties() {
+        return new BaseFlowingFluid.Properties(TSFluidTypes.LIQUID_METHANE, LIQUID_METHANE, FLOWING_LIQUID_METHANE)
+                .slopeFindDistance(3)
+                .levelDecreasePerBlock(2)
+                .block(TSBlocks.LIQUID_METHANE_BLOCK)
+                .bucket(TSItems.LIQUID_METHANE_BUCKET);
+    }
+
+    private static BaseFlowingFluid.Properties ammoniaProperties() {
+        return new BaseFlowingFluid.Properties(TSFluidTypes.LIQUID_AMMONIA, LIQUID_AMMONIA, FLOWING_LIQUID_AMMONIA)
+                .slopeFindDistance(2)
+                .levelDecreasePerBlock(1)
+                .block(TSBlocks.LIQUID_AMMONIA_BLOCK)
+                .bucket(TSItems.LIQUID_AMMONIA_BUCKET);
+    }
+    *///?}
 }

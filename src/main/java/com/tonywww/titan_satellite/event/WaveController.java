@@ -12,7 +12,11 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
+//? if forge {
 import net.minecraftforge.common.MinecraftForge;
+//?} else {
+/*import net.neoforged.neoforge.common.NeoForge;
+*///?}
 
 import java.util.List;
 
@@ -50,7 +54,11 @@ public final class WaveController {
      * @return 是否成功启动（{@code false} 表示被监听者取消）。
      */
     public static boolean tryStart(ServerLevel level, BlockPos pumpPos, BlockPos corePos, Player activator) {
+        //? if forge {
         if (MinecraftForge.EVENT_BUS.post(new MethaneExtractionEvents.Start(level, pumpPos, corePos, activator))) {
+        //?} else {
+        /*if (NeoForge.EVENT_BUS.post(new MethaneExtractionEvents.Start(level, pumpPos, corePos, activator)).isCanceled()) {
+        *///?}
             return false;
         }
         level.playSound(null, pumpPos, SoundEvents.BEACON_ACTIVATE, SoundSource.BLOCKS, 1.0F, 0.8F);
@@ -63,7 +71,11 @@ public final class WaveController {
      * 开始一波：先抛<b>冻结</b>的 {@link MethaneExtractionWaveEvent}（对外通知），再执行默认刷怪。
      */
     public static void beginWave(ServerLevel level, BlockPos pumpPos, int waveIndex, int intensity) {
+        //? if forge {
         MinecraftForge.EVENT_BUS.post(new MethaneExtractionWaveEvent(level, pumpPos, waveIndex, intensity));
+        //?} else {
+        /*NeoForge.EVENT_BUS.post(new MethaneExtractionWaveEvent(level, pumpPos, waveIndex, intensity));
+        *///?}
         level.playSound(null, pumpPos, SoundEvents.RAVAGER_ROAR, SoundSource.HOSTILE, 1.2F, 0.7F);
         int count = baseWaveMobCount(waveIndex, intensity);
         for (int i = 0; i < count; i++) {
@@ -99,7 +111,11 @@ public final class WaveController {
             return;
         }
         mob.moveTo(spawn.getX() + 0.5, spawn.getY(), spawn.getZ() + 0.5, level.random.nextFloat() * 360.0F, 0.0F);
+        //? if forge {
         mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), MobSpawnType.EVENT, null, null);
+        //?} else {
+        /*mob.finalizeSpawn(level, level.getCurrentDifficultyAt(spawn), MobSpawnType.EVENT, null);
+        *///?}
         mob.getPersistentData().putBoolean(WAVE_MOB_TAG, true);
         mob.getPersistentData().putLong(PUMP_POS_TAG, pumpPos.asLong());
         level.addFreshEntity(mob);
@@ -116,7 +132,11 @@ public final class WaveController {
      * 开采成功：抛 {@link MethaneExtractionEvents.Success}、产出默认奖励、退散残余波次怪。
      */
     public static void succeed(ServerLevel level, BlockPos pumpPos, BlockPos corePos, int wavesSurvived) {
+        //? if forge {
         MinecraftForge.EVENT_BUS.post(new MethaneExtractionEvents.Success(level, pumpPos, corePos, wavesSurvived));
+        //?} else {
+        /*NeoForge.EVENT_BUS.post(new MethaneExtractionEvents.Success(level, pumpPos, corePos, wavesSurvived));
+        *///?}
         level.playSound(null, pumpPos, SoundEvents.BEACON_POWER_SELECT, SoundSource.BLOCKS, 1.0F, 1.0F);
         level.playSound(null, pumpPos, SoundEvents.PLAYER_LEVELUP, SoundSource.BLOCKS, 0.8F, 1.2F);
         level.sendParticles(ParticleTypes.TOTEM_OF_UNDYING,
@@ -129,7 +149,11 @@ public final class WaveController {
      * 开采失败：抛 {@link MethaneExtractionEvents.Fail}、退散残余波次怪。
      */
     public static void fail(ServerLevel level, BlockPos pumpPos, BlockPos corePos, MethaneExtractionEvents.Fail.Reason reason) {
+        //? if forge {
         MinecraftForge.EVENT_BUS.post(new MethaneExtractionEvents.Fail(level, pumpPos, corePos, reason));
+        //?} else {
+        /*NeoForge.EVENT_BUS.post(new MethaneExtractionEvents.Fail(level, pumpPos, corePos, reason));
+        *///?}
         level.playSound(null, pumpPos, SoundEvents.BEACON_DEACTIVATE, SoundSource.BLOCKS, 1.0F, 0.6F);
         level.sendParticles(ParticleTypes.LARGE_SMOKE,
                 pumpPos.getX() + 0.5, pumpPos.getY() + 0.8, pumpPos.getZ() + 0.5, 40, 0.4, 0.6, 0.4, 0.05);

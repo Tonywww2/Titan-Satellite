@@ -4,10 +4,17 @@ import com.tonywww.titan_satellite.TitanSatellite;
 import net.minecraft.client.renderer.DimensionSpecialEffects;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.phys.Vec3;
+//? if forge {
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+//?} else {
+/*import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterDimensionSpecialEffectsEvent;
+*///?}
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -18,11 +25,15 @@ import org.jetbrains.annotations.Nullable;
  *
  * <p>雾的具体颜色与浓度（可见距离）由 {@link FogHandler}（{@code ViewportEvent}）进一步细化。
  */
+//? if forge {
 @Mod.EventBusSubscriber(modid = TitanSatellite.MODID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+//?} else {
+/*@EventBusSubscriber(modid = TitanSatellite.MODID, value = Dist.CLIENT)
+*///?}
 public class TitanDimensionEffects extends DimensionSpecialEffects {
 
     /** 注册键，须与 dimension_type/titan.json 的 {@code "effects"} 一致。 */
-    public static final ResourceLocation KEY = new ResourceLocation(TitanSatellite.MODID, "titan");
+    public static final ResourceLocation KEY = TitanSatellite.rl("titan");
 
     /** 托林大气橙黄基调（线性 RGB）。 */
     private static final Vec3 FOG_TONE = new Vec3(0.65D, 0.45D, 0.19D);

@@ -1,11 +1,15 @@
 package com.tonywww.titan_satellite.worldgen;
 
 import com.tonywww.titan_satellite.TitanSatellite;
+//? if forge {
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+//?} else {
+/*import net.neoforged.fml.common.EventBusSubscriber;
+*///?}
 
 /**
  * PA-2 系统自装配：在 mod 构造阶段（{@link FMLConstructModEvent}，早于 RegisterEvent）
@@ -15,15 +19,21 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
  * 这正是 PA-2 与 PA-1 文件不相交的关键。Capability 的注册/附加各自用 @EventBusSubscriber，
  * 同理不改主类。
  */
+//? if forge {
 @Mod.EventBusSubscriber(modid = TitanSatellite.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+//?} else {
+/*@EventBusSubscriber(modid = TitanSatellite.MODID)
+*///?}
 public final class TSSystemsBootstrap {
 
     private TSSystemsBootstrap() {
     }
 
+    //? if forge {
     @SubscribeEvent
     public static void onConstruct(FMLConstructModEvent event) {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         TSWorldgenTypes.register(modBus);
     }
+    //?}
 }

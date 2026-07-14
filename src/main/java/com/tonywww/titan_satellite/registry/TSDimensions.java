@@ -3,7 +3,6 @@ package com.tonywww.titan_satellite.registry;
 import com.tonywww.titan_satellite.TitanSatellite;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.dimension.DimensionType;
 
@@ -18,8 +17,8 @@ public final class TSDimensions {
     }
 
     public static final ResourceKey<Level> TITAN_LEVEL =
-            ResourceKey.create(Registries.DIMENSION, new ResourceLocation(TitanSatellite.MODID, "titan"));
+            ResourceKey.create(Registries.DIMENSION, TitanSatellite.rl("titan"));
 
     public static final ResourceKey<DimensionType> TITAN_DIM_TYPE =
-            ResourceKey.create(Registries.DIMENSION_TYPE, new ResourceLocation(TitanSatellite.MODID, "titan"));
+            ResourceKey.create(Registries.DIMENSION_TYPE, TitanSatellite.rl("titan"));
 }

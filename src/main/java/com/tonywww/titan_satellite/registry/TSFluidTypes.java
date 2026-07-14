@@ -1,17 +1,22 @@
 package com.tonywww.titan_satellite.registry;
 
 import com.tonywww.titan_satellite.TitanSatellite;
-import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
+//? if forge {
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraftforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.minecraftforge.fluids.FluidType;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-
 import java.util.function.Consumer;
+//?} else {
+/*import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+*///?}
+import java.util.function.Supplier;
 
 /**
  * 流体类型（FluidType）注册表：定义液态甲烷、液态氨的物理与客户端渲染属性。
@@ -23,20 +28,25 @@ public final class TSFluidTypes {
     private TSFluidTypes() {
     }
 
+    //? if forge {
     public static final DeferredRegister<FluidType> REGISTER =
             DeferredRegister.create(ForgeRegistries.Keys.FLUID_TYPES, TitanSatellite.MODID);
+    //?} else {
+    /*public static final DeferredRegister<FluidType> REGISTER =
+            DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, TitanSatellite.MODID);
+    *///?}
 
-    private static final ResourceLocation STILL_TEXTURE = new ResourceLocation("block/water_still");
-    private static final ResourceLocation FLOWING_TEXTURE = new ResourceLocation("block/water_flow");
+    private static final ResourceLocation STILL_TEXTURE = TitanSatellite.mcRl("block/water_still");
+    private static final ResourceLocation FLOWING_TEXTURE = TitanSatellite.mcRl("block/water_flow");
 
     // 液态甲烷（CH₄，现实中几乎无色透明/LNG）：极寒、密度低于水；极淡暖黄色 + 半透明液面（贴近无色的液态烃）。
-    public static final RegistryObject<FluidType> LIQUID_METHANE = REGISTER.register("liquid_methane",
+    public static final Supplier<FluidType> LIQUID_METHANE = REGISTER.register("liquid_methane",
             () -> tinted(0xE7E3B8, 0x99, FluidType.Properties.create()
                     .density(450).viscosity(1200).temperature(90)
                     .canSwim(true).canDrown(true)));
 
     // 液态氨（NH₃，现实中几乎无色）：极淡冷青色 + 半透明液面（贴近无色的冷冽液体）。
-    public static final RegistryObject<FluidType> LIQUID_AMMONIA = REGISTER.register("liquid_ammonia",
+    public static final Supplier<FluidType> LIQUID_AMMONIA = REGISTER.register("liquid_ammonia",
             () -> tinted(0xBAE8E4, 0x99, FluidType.Properties.create()
                     .density(680).viscosity(1100).temperature(240)
                     .canSwim(true).canDrown(true)));
@@ -48,6 +58,7 @@ public final class TSFluidTypes {
     private static FluidType tinted(int rgb, int fluidAlpha, FluidType.Properties properties) {
         final int worldColor = (fluidAlpha << 24) | (rgb & 0xFFFFFF); // 世界里半透明液面
         final int itemColor = 0xFF000000 | (rgb & 0xFFFFFF);          // 桶物品用不透明色，看得清
+        //? if forge {
         return new FluidType(properties) {
             @Override
             public void initializeClient(Consumer<IClientFluidTypeExtensions> consumer) {
@@ -76,5 +87,9 @@ public final class TSFluidTypes {
                 });
             }
         };
+        //?} else {
+        /*// NeoForge：FluidType 无 initializeClient；客户端染色由 RegisterClientExtensionsEvent 注册（阶段4）。
+        return new FluidType(properties);
+        *///?}
     }
 }

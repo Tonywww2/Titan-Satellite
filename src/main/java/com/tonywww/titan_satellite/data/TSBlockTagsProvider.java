@@ -8,8 +8,13 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+//? if forge {
 import net.minecraftforge.common.data.BlockTagsProvider;
 import net.minecraftforge.common.data.ExistingFileHelper;
+//?} else {
+/*import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+*///?}
 
 import java.util.concurrent.CompletableFuture;
 
@@ -20,7 +25,7 @@ import java.util.concurrent.CompletableFuture;
 public class TSBlockTagsProvider extends BlockTagsProvider {
 
     private static final TagKey<Block> BASE_STONE =
-            TagKey.create(Registries.BLOCK, new ResourceLocation(TitanSatellite.MODID, "base_stone"));
+            TagKey.create(Registries.BLOCK, TitanSatellite.rl("base_stone"));
 
     public TSBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider,
                                ExistingFileHelper existingFileHelper) {

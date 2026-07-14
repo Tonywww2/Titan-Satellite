@@ -1,5 +1,6 @@
 package com.tonywww.titan_satellite.client;
 
+import com.tonywww.titan_satellite.TitanSatellite;
 import com.tonywww.titan_satellite.entity.AmmoniaStalker;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class AmmoniaStalkerRenderer extends MobRenderer<AmmoniaStalker, HumanoidModel<AmmoniaStalker>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/ammonia_stalker.png");
+    private static final ResourceLocation TEXTURE = TitanSatellite.rl("textures/entity/ammonia_stalker.png");
 
     public AmmoniaStalkerRenderer(EntityRendererProvider.Context context) {
         super(context, new HumanoidModel<>(context.bakeLayer(ModelLayers.ZOMBIE)), 0.5F);

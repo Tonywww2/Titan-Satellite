@@ -5,10 +5,17 @@ import com.tonywww.titan_satellite.data.loot.TSLootTableProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
+//? if forge {
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+//?} else {
+/*import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+*///?}
 
 import java.util.concurrent.CompletableFuture;
 
@@ -22,7 +29,11 @@ import java.util.concurrent.CompletableFuture;
  * features/biomes/biome_modifier/structure/dimension；<b>保留手写 JSON</b>：密度函数/噪声/noise_settings、
  * planets/*（Ad Astra 自定义）。
  */
+//? if forge {
 @Mod.EventBusSubscriber(modid = TitanSatellite.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+//?} else {
+/*@EventBusSubscriber(modid = TitanSatellite.MODID)
+*///?}
 public final class TSDataGenerators {
 
     private TSDataGenerators() {
@@ -43,7 +54,11 @@ public final class TSDataGenerators {
         generator.addProvider(event.includeClient(), new TSSoundDefinitionsProvider(output, existing));
 
         // ---- 服务端数据 ----
+        //? if forge {
         generator.addProvider(event.includeServer(), new TSLootTableProvider(output));
+        //?} else {
+        /*generator.addProvider(event.includeServer(), new TSLootTableProvider(output, lookup));
+        *///?}
         generator.addProvider(event.includeServer(), new TSBlockTagsProvider(output, lookup, existing));
     }
 }

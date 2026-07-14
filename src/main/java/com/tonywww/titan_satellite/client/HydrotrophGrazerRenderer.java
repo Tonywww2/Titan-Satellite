@@ -1,5 +1,6 @@
 package com.tonywww.titan_satellite.client;
 
+import com.tonywww.titan_satellite.TitanSatellite;
 import com.tonywww.titan_satellite.entity.HydrotrophGrazer;
 import net.minecraft.client.model.PigModel;
 import net.minecraft.client.model.geom.ModelLayers;
@@ -12,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 public class HydrotrophGrazerRenderer extends MobRenderer<HydrotrophGrazer, PigModel<HydrotrophGrazer>> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation("titan_satellite", "textures/entity/hydrotroph_grazer.png");
+    private static final ResourceLocation TEXTURE = TitanSatellite.rl("textures/entity/hydrotroph_grazer.png");
 
     public HydrotrophGrazerRenderer(EntityRendererProvider.Context context) {
         super(context, new PigModel<>(context.bakeLayer(ModelLayers.PIG)), 0.7F);

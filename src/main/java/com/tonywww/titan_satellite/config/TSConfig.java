@@ -6,6 +6,7 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+//? if forge {
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
@@ -14,6 +15,16 @@ import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
+//?} else {
+/*import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
+*///?}
 
 import java.util.UUID;
 
@@ -28,24 +39,44 @@ import java.util.UUID;
  * 自订阅注册配置并挂 Forge 总线监听（不改主类）。其余系统的平衡数值见 {@code docs/test-matrix.md}
  * 的「平衡参考」一节（当前硬编码在各自 Owns 文件内）。
  */
+//? if forge {
 @Mod.EventBusSubscriber(modid = TitanSatellite.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
+//?} else {
+/*@EventBusSubscriber(modid = TitanSatellite.MODID)
+*///?}
 public final class TSConfig {
 
     private TSConfig() {
     }
 
+    //? if forge {
     public static final ForgeConfigSpec SPEC;
     public static final ForgeConfigSpec.BooleanValue WAVE_MOB_SCALING_ENABLED;
     public static final ForgeConfigSpec.DoubleValue WAVE_MOB_HEALTH_MULTIPLIER;
     public static final ForgeConfigSpec.DoubleValue WAVE_MOB_DAMAGE_BONUS;
+    //?} else {
+    /*public static final ModConfigSpec SPEC;
+    public static final ModConfigSpec.BooleanValue WAVE_MOB_SCALING_ENABLED;
+    public static final ModConfigSpec.DoubleValue WAVE_MOB_HEALTH_MULTIPLIER;
+    public static final ModConfigSpec.DoubleValue WAVE_MOB_DAMAGE_BONUS;
+    *///?}
 
+    //? if forge {
     private static final UUID HEALTH_MOD_UUID = UUID.fromString("6f2a1c9e-2d1b-4a7c-9d3e-8b1a2c3d4e5f");
     private static final UUID DAMAGE_MOD_UUID = UUID.fromString("7a3b2d0f-3e2c-4b8d-8e4f-9c2b3d4e5f60");
+    //?} else {
+    /*private static final net.minecraft.resources.ResourceLocation HEALTH_MOD_RL = TitanSatellite.rl("wave_health");
+    private static final net.minecraft.resources.ResourceLocation DAMAGE_MOD_RL = TitanSatellite.rl("wave_damage");
+    *///?}
     /** 持久标记，避免存档重载后二次施加属性修饰。 */
     private static final String APPLIED_TAG = "TitanWaveScaled";
 
     static {
+        //? if forge {
         ForgeConfigSpec.Builder builder = new ForgeConfigSpec.Builder();
+        //?} else {
+        /*ModConfigSpec.Builder builder = new ModConfigSpec.Builder();
+        *///?}
         builder.comment("Titan Satellite — 甲烷开采塔防（Methane Extraction Defense）平衡").push("methane_extraction_defense");
         WAVE_MOB_SCALING_ENABLED = builder
                 .comment("是否启用对塔防波次怪的难度缩放（下面两项）。")
@@ -62,9 +93,14 @@ public final class TSConfig {
 
     @SubscribeEvent
     public static void onConstruct(FMLConstructModEvent event) {
+        //? if forge {
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, SPEC);
         // EntityJoinLevelEvent 在 Forge 总线；构造阶段手动挂监听（本类注解绑 MOD 总线）。
         MinecraftForge.EVENT_BUS.addListener(TSConfig::onEntityJoinLevel);
+        //?} else {
+        /*ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, SPEC);
+        NeoForge.EVENT_BUS.addListener(TSConfig::onEntityJoinLevel);
+        *///?}
     }
 
     private static void onEntityJoinLevel(EntityJoinLevelEvent event) {
@@ -81,15 +117,25 @@ public final class TSConfig {
         double healthMult = WAVE_MOB_HEALTH_MULTIPLIER.get();
         AttributeInstance maxHealth = mob.getAttribute(Attributes.MAX_HEALTH);
         if (maxHealth != null && healthMult != 1.0D) {
+            //? if forge {
             maxHealth.addPermanentModifier(new AttributeModifier(
                     HEALTH_MOD_UUID, "titan_wave_health", healthMult - 1.0D, AttributeModifier.Operation.MULTIPLY_TOTAL));
+            //?} else {
+            /*maxHealth.addPermanentModifier(new AttributeModifier(
+                    HEALTH_MOD_RL, healthMult - 1.0D, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
+            *///?}
             mob.setHealth(mob.getMaxHealth());
         }
         double damageBonus = WAVE_MOB_DAMAGE_BONUS.get();
         AttributeInstance attack = mob.getAttribute(Attributes.ATTACK_DAMAGE);
         if (attack != null && damageBonus > 0.0D) {
+            //? if forge {
             attack.addPermanentModifier(new AttributeModifier(
                     DAMAGE_MOD_UUID, "titan_wave_damage", damageBonus, AttributeModifier.Operation.ADDITION));
+            //?} else {
+            /*attack.addPermanentModifier(new AttributeModifier(
+                    DAMAGE_MOD_RL, damageBonus, AttributeModifier.Operation.ADD_VALUE));
+            *///?}
         }
         mob.getPersistentData().putBoolean(APPLIED_TAG, true);
     }

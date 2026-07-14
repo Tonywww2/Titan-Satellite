@@ -8,7 +8,14 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+//? if forge {
 import net.minecraft.world.level.storage.loot.functions.LootingEnchantFunction;
+//?} else {
+/*import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+*///?}
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -22,8 +29,21 @@ import java.util.function.BiConsumer;
  */
 public class TSEntityLoot implements LootTableSubProvider {
 
+    //? if neoforge {
+    /*private final HolderLookup.Provider provider;
+
+    public TSEntityLoot(HolderLookup.Provider provider) {
+        this.provider = provider;
+    }
+    *///?}
+
+    //? if forge {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
+    //?} else {
+    /*@Override
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer) {
+    *///?}
         consumer.accept(entity("cryo_scavenger"), LootTable.lootTable()
                 .withPool(singleDrop(TSItems.CRYO_CARAPACE.get(), 0, 2)));
 
@@ -50,15 +70,29 @@ public class TSEntityLoot implements LootTableSubProvider {
     }
 
     /** 单物品掉落池：uniform(min,max) 数量 + looting_enchant(0-1)。 */
-    private static LootPool.Builder singleDrop(Item item, float min, float max) {
+    private LootPool.Builder singleDrop(Item item, float min, float max) {
+        //? if forge {
         return LootPool.lootPool()
                 .setRolls(ConstantValue.exactly(1))
                 .add(LootItem.lootTableItem(item)
                         .apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)))
                         .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0.0F, 1.0F))));
+        //?} else {
+        /*return LootPool.lootPool()
+                .setRolls(ConstantValue.exactly(1))
+                .add(LootItem.lootTableItem(item)
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)))
+                        .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.provider, UniformGenerator.between(0.0F, 1.0F))));
+        *///?}
     }
 
+    //? if forge {
     private static ResourceLocation entity(String name) {
         return new ResourceLocation(TitanSatellite.MODID, "entities/" + name);
     }
+    //?} else {
+    /*private static ResourceKey<LootTable> entity(String name) {
+        return ResourceKey.create(Registries.LOOT_TABLE, TitanSatellite.rl("entities/" + name));
+    }
+    *///?}
 }

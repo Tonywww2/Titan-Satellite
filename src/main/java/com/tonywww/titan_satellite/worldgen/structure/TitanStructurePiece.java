@@ -6,6 +6,11 @@ import com.tonywww.titan_satellite.registry.TSEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+//? if neoforge {
+/*import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.LootTable;
+*///?}
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
@@ -27,8 +32,13 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
  */
 public class TitanStructurePiece extends StructurePiece {
 
-    private static final ResourceLocation GEODE_LOOT = new ResourceLocation(TitanSatellite.MODID, "chests/tholin_geode");
-    private static final ResourceLocation OUTPOST_LOOT = new ResourceLocation(TitanSatellite.MODID, "chests/pioneer_outpost");
+    //? if forge {
+    private static final ResourceLocation GEODE_LOOT = TitanSatellite.rl("chests/tholin_geode");
+    private static final ResourceLocation OUTPOST_LOOT = TitanSatellite.rl("chests/pioneer_outpost");
+    //?} else {
+    /*private static final ResourceKey<LootTable> GEODE_LOOT = ResourceKey.create(Registries.LOOT_TABLE, TitanSatellite.rl("chests/tholin_geode"));
+    private static final ResourceKey<LootTable> OUTPOST_LOOT = ResourceKey.create(Registries.LOOT_TABLE, TitanSatellite.rl("chests/pioneer_outpost"));
+    *///?}
 
     private final TitanStructure.Variant variant;
     private final BlockPos origin;
@@ -46,11 +56,14 @@ public class TitanStructurePiece extends StructurePiece {
     }
 
     private static BoundingBox makeBox(BlockPos o, TitanStructure.Variant v) {
-        if (v == TitanStructure.Variant.GEODE) {
-            int r = 6;
-            return new BoundingBox(o.getX() - r, o.getY() - r, o.getZ() - r, o.getX() + r, o.getY() + r, o.getZ() + r);
-        }
-        return new BoundingBox(o.getX() - 4, o.getY() - 2, o.getZ() - 4, o.getX() + 4, o.getY() + 5, o.getZ() + 4);
+        return switch (v) {
+            case GEODE -> new BoundingBox(o.getX() - 6, o.getY() - 6, o.getZ() - 6, o.getX() + 6, o.getY() + 6, o.getZ() + 6);
+            case GREAT_HIVE -> new BoundingBox(o.getX() - 9, o.getY() - 9, o.getZ() - 9, o.getX() + 9, o.getY() + 9, o.getZ() + 9);
+            case DERRICK -> new BoundingBox(o.getX() - 5, o.getY() - 8, o.getZ() - 5, o.getX() + 5, o.getY() + 14, o.getZ() + 5);
+            case CRASHED_PROBE -> new BoundingBox(o.getX() - 4, o.getY() - 3, o.getZ() - 4, o.getX() + 4, o.getY() + 4, o.getZ() + 4);
+            case BEACON -> new BoundingBox(o.getX() - 6, o.getY() - 2, o.getZ() - 6, o.getX() + 6, o.getY() + 16, o.getZ() + 6);
+            default -> new BoundingBox(o.getX() - 4, o.getY() - 2, o.getZ() - 4, o.getX() + 4, o.getY() + 5, o.getZ() + 4);
+        };
     }
 
     @Override
@@ -64,10 +77,13 @@ public class TitanStructurePiece extends StructurePiece {
     @Override
     public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator,
                             RandomSource random, BoundingBox box, ChunkPos chunkPos, BlockPos pos) {
-        if (variant == TitanStructure.Variant.GEODE) {
-            buildGeode(level, box, random);
-        } else {
-            buildOutpost(level, box, random);
+        switch (variant) {
+            case GEODE -> buildGeode(level, box, random);
+            case GREAT_HIVE -> buildGreatHive(level, box, random);
+            case DERRICK -> buildDerrick(level, box, random);
+            case CRASHED_PROBE -> buildCrashedProbe(level, box, random);
+            case BEACON -> buildBeacon(level, box, random);
+            default -> buildOutpost(level, box, random);
         }
     }
 
@@ -159,13 +175,167 @@ public class TitanStructurePiece extends StructurePiece {
         spawnProbe(level, new BlockPos(origin.getX() + 1, fy + 1, origin.getZ() + 1), box, random);
     }
 
+    // ---- 深钻者：半沉甲烷海的工业钻井平台（T7.4）----
+    private void buildDerrick(WorldGenLevel level, BoundingBox box, RandomSource random) {
+        BlockState frame = TSBlocks.TITAN_BASALT.get().defaultBlockState();
+        BlockState deck = TSBlocks.WEATHERED_TITAN_STONE.get().defaultBlockState();
+        BlockState core = TSBlocks.METHANE_POOL_CORE.get().defaultBlockState();
+        BlockState air = Blocks.AIR.defaultBlockState();
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        int fy = origin.getY();
+        int half = 3;
+        int deckY = fy + 6;
+        int[][] corners = {{-half, -half}, {half, -half}, {-half, half}, {half, half}};
+        for (int[] c : corners) {
+            for (int y = deckY; y >= fy - 6; y--) {
+                put(level, frame, m.set(origin.getX() + c[0], y, origin.getZ() + c[1]), box);
+            }
+        }
+        for (int dx = -half; dx <= half; dx++) {
+            for (int dz = -half; dz <= half; dz++) {
+                put(level, deck, m.set(origin.getX() + dx, deckY, origin.getZ() + dz), box);
+            }
+        }
+        for (int wy = 1; wy <= 3; wy++) {
+            for (int dx = -half; dx <= half; dx++) {
+                for (int dz = -half; dz <= half; dz++) {
+                    boolean edge = Math.abs(dx) == half || Math.abs(dz) == half;
+                    m.set(origin.getX() + dx, deckY + wy, origin.getZ() + dz);
+                    if (edge) {
+                        if (!(dz == half && dx == 0 && wy <= 2)) {
+                            put(level, frame, m, box);
+                        }
+                    } else {
+                        put(level, air, m, box);
+                    }
+                }
+            }
+        }
+        for (int dx = -half; dx <= half; dx++) {
+            for (int dz = -half; dz <= half; dz++) {
+                put(level, deck, m.set(origin.getX() + dx, deckY + 4, origin.getZ() + dz), box);
+            }
+        }
+        for (int y = deckY + 5; y <= deckY + 8; y++) {
+            put(level, frame, m.set(origin.getX(), y, origin.getZ()), box);
+        }
+        put(level, core, m.set(origin.getX(), fy - 6, origin.getZ()), box);
+        placeChest(level, new BlockPos(origin.getX() - 1, deckY + 1, origin.getZ() - 1), box, random, OUTPOST_LOOT);
+        spawnProbe(level, new BlockPos(origin.getX() + 1, deckY + 1, origin.getZ() + 1), box, random);
+    }
+
+    // ---- 坠毁研究探测器残骸（T7.4）----
+    private void buildCrashedProbe(WorldGenLevel level, BoundingBox box, RandomSource random) {
+        BlockState debris = TSBlocks.TITAN_BASALT.get().defaultBlockState();
+        BlockState metal = TSBlocks.METEOR_FRAGMENT.get().defaultBlockState();
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        int fy = origin.getY();
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dz = -2; dz <= 2; dz++) {
+                if (dx * dx + dz * dz <= 5) {
+                    put(level, debris, m.set(origin.getX() + dx, fy - 1, origin.getZ() + dz), box);
+                    if (random.nextInt(3) == 0) {
+                        put(level, metal, m.set(origin.getX() + dx, fy, origin.getZ() + dz), box);
+                    }
+                }
+            }
+        }
+        put(level, metal, m.set(origin.getX(), fy, origin.getZ()), box);
+        put(level, metal, m.set(origin.getX(), fy + 1, origin.getZ()), box);
+        put(level, metal, m.set(origin.getX() + 1, fy, origin.getZ()), box);
+        placeChest(level, new BlockPos(origin.getX() + 1, fy, origin.getZ() + 1), box, random, OUTPOST_LOOT);
+        spawnProbe(level, new BlockPos(origin.getX() - 1, fy, origin.getZ() - 1), box, random);
+    }
+
+    // ---- 大巢：极地多腔体冰虫 Boss 地牢（扩展 tholin_geode）----
+    private void buildGreatHive(WorldGenLevel level, BoundingBox box, RandomSource random) {
+        int r = 8;
+        BlockState shell = TSBlocks.THOLIN_MYCELIUM.get().defaultBlockState();
+        BlockState crystal = TSBlocks.THOLIN_CRYSTAL.get().defaultBlockState();
+        BlockState hollow = Blocks.CAVE_AIR.defaultBlockState();
+        BlockState floor = TSBlocks.HARDENED_THOLIN.get().defaultBlockState();
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        for (int dx = -r; dx <= r; dx++) {
+            for (int dy = -r; dy <= r; dy++) {
+                for (int dz = -r; dz <= r; dz++) {
+                    double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                    if (dist > r + 0.5) {
+                        continue;
+                    }
+                    m.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
+                    if (dist > r - 0.9) {
+                        put(level, shell, m, box);
+                    } else if (dist > r - 1.9) {
+                        put(level, random.nextInt(3) == 0 ? crystal : shell, m, box);
+                    } else {
+                        put(level, hollow, m, box);
+                    }
+                }
+            }
+        }
+        int floorY = origin.getY() - (r - 2);
+        for (int dx = -3; dx <= 3; dx++) {
+            for (int dz = -3; dz <= 3; dz++) {
+                if (dx * dx + dz * dz <= 9) {
+                    put(level, floor, m.set(origin.getX() + dx, floorY, origin.getZ() + dz), box);
+                }
+            }
+        }
+        for (int i = 0; i < 6; i++) {
+            int ox = random.nextInt(9) - 4;
+            int oz = random.nextInt(9) - 4;
+            if (ox * ox + oz * oz <= 12) {
+                put(level, crystal, m.set(origin.getX() + ox, floorY + 1, origin.getZ() + oz), box);
+            }
+        }
+        placeChest(level, new BlockPos(origin.getX(), floorY + 1, origin.getZ()), box, random, GEODE_LOOT);
+        spawnIceWorm(level, new BlockPos(origin.getX() + 2, floorY + 1, origin.getZ()), box, random);
+    }
+
+    // ---- 深空信标阵：荒原废弃射电天线阵（T7.4）----
+    private void buildBeacon(WorldGenLevel level, BoundingBox box, RandomSource random) {
+        BlockState platform = TSBlocks.WEATHERED_TITAN_STONE.get().defaultBlockState();
+        BlockState mast = TSBlocks.TITAN_STONE.get().defaultBlockState();
+        BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
+        int fy = origin.getY();
+        for (int dx = -3; dx <= 3; dx++) {
+            for (int dz = -3; dz <= 3; dz++) {
+                put(level, platform, m.set(origin.getX() + dx, fy, origin.getZ() + dz), box);
+                put(level, platform, m.set(origin.getX() + dx, fy - 1, origin.getZ() + dz), box);
+            }
+        }
+        int topY = fy + 12;
+        for (int y = fy + 1; y <= topY; y++) {
+            put(level, mast, m.set(origin.getX(), y, origin.getZ()), box);
+        }
+        for (int dx = -3; dx <= 3; dx++) {
+            for (int dz = -3; dz <= 3; dz++) {
+                if (dx * dx + dz * dz <= 9) {
+                    put(level, platform, m.set(origin.getX() + dx, topY, origin.getZ() + dz), box);
+                }
+            }
+        }
+        for (int[] c : new int[][]{{-2, -2}, {2, -2}, {-2, 2}, {2, 2}}) {
+            for (int k = 1; k <= 4; k++) {
+                put(level, mast, m.set(origin.getX() + c[0] * k / 4, fy + k * 2, origin.getZ() + c[1] * k / 4), box);
+            }
+        }
+        placeChest(level, new BlockPos(origin.getX() + 2, fy + 1, origin.getZ()), box, random, OUTPOST_LOOT);
+        spawnProbe(level, new BlockPos(origin.getX() - 2, fy + 1, origin.getZ() + 2), box, random);
+        spawnProbe(level, new BlockPos(origin.getX() + 2, fy + 1, origin.getZ() - 2), box, random);
+    }
+
     private void put(WorldGenLevel level, BlockState state, BlockPos pos, BoundingBox box) {
         if (box.isInside(pos)) {
             level.setBlock(pos, state, 2);
         }
     }
 
+    //? if forge {
     private void placeChest(WorldGenLevel level, BlockPos pos, BoundingBox box, RandomSource random, ResourceLocation loot) {
+    //?} else {
+    /*private void placeChest(WorldGenLevel level, BlockPos pos, BoundingBox box, RandomSource random, ResourceKey<LootTable> loot) {
+    *///?}
         if (!box.isInside(pos)) {
             return;
         }
@@ -183,7 +353,11 @@ public class TitanStructurePiece extends StructurePiece {
         if (probe != null) {
             probe.setPersistenceRequired();
             probe.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
+            //? if forge {
             probe.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
+            //?} else {
+            /*probe.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null);
+            *///?}
             level.addFreshEntity(probe);
         }
     }
@@ -197,7 +371,11 @@ public class TitanStructurePiece extends StructurePiece {
         if (worm != null) {
             worm.setPersistenceRequired();
             worm.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, random.nextFloat() * 360.0F, 0.0F);
+            //? if forge {
             worm.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
+            //?} else {
+            /*worm.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null);
+            *///?}
             level.addFreshEntity(worm);
         }
     }

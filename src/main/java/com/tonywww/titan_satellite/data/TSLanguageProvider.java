@@ -2,7 +2,11 @@ package com.tonywww.titan_satellite.data;
 
 import com.tonywww.titan_satellite.TitanSatellite;
 import net.minecraft.data.PackOutput;
+//? if forge {
 import net.minecraftforge.common.data.LanguageProvider;
+//?} else {
+/*import net.neoforged.neoforge.common.data.LanguageProvider;
+*///?}
 
 /**
  * 语言文件 datagen（en_us + zh_cn）。一个类按 locale 生成两份，复刻现有 lang 全部键
@@ -53,6 +57,8 @@ public class TSLanguageProvider extends LanguageProvider {
         t("block.titan_satellite.ammonia_crystal", "Ammonia Crystal", "氨晶体");
         t("block.titan_satellite.titan_gravel", "Titan Gravel", "泰坦砾石");
         t("block.titan_satellite.frost_bush", "Frost Bush", "霜枯灌木");
+        t("block.titan_satellite.acetylene_spire", "Acetylene Ice Spire", "乙炔冰笋");
+        t("block.titan_satellite.tholin_mycelium", "Tholin Mycelium", "托林菌网");
 
         // 物品
         t("item.titan_satellite.aero_membrane", "Aero-Membrane", "浮游薄膜");

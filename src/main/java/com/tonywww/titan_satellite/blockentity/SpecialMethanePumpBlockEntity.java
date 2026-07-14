@@ -20,6 +20,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+//? if forge {
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -29,6 +30,17 @@ import net.minecraftforge.fluids.capability.templates.FluidTank;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
+//?} else {
+/*import net.minecraft.core.HolderLookup;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemStackHandler;
+*///?}
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -70,7 +82,9 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
     /** 产出液体槽：只出不进（外部只能抽取，产出经 {@link OutputOnlyTank#fillInternal}）。 */
     private final OutputOnlyTank methaneTank = new OutputOnlyTank(TANK_CAPACITY,
             fs -> fs.getFluid() == TSFluids.LIQUID_METHANE.get());
+    //? if forge {
     private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> methaneTank);
+    //?}
     /** 材料产出缓冲：先入此处，再推送至正上方容器。 */
     private final ItemStackHandler outputBuffer = new ItemStackHandler(6);
 
@@ -247,7 +261,11 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         if (above == null) {
             return;
         }
+        //? if forge {
         IItemHandler dest = above.getCapability(ForgeCapabilities.ITEM_HANDLER, Direction.DOWN).orElse(null);
+        //?} else {
+        /*IItemHandler dest = Capabilities.ItemHandler.BLOCK.getCapability(level, pos.above(), null, above, Direction.DOWN);
+        *///?}
         if (dest == null) {
             return;
         }
@@ -271,6 +289,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         }
     }
 
+    //? if forge {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
         if (cap == ForgeCapabilities.FLUID_HANDLER) {
@@ -284,7 +303,15 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         super.invalidateCaps();
         fluidCap.invalidate();
     }
+    //?} else {
+    /*// NeoForge 能力系统：经 mod 总线 RegisterCapabilitiesEvent 登记流体处理器（由主类 addListener 挂接）。
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                TSBlockEntities.METHANE_PUMP.get(), (be, side) -> be.methaneTank);
+    }
+    *///?}
 
+    //? if forge {
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
@@ -316,6 +343,39 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
             outputBuffer.deserializeNBT(tag.getCompound("Output"));
         }
     }
+    //?} else {
+    /*@Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.putString("Phase", phase.name());
+        tag.putInt("Progress", progress);
+        tag.putInt("WaveIndex", waveIndex);
+        tag.putInt("Integrity", integrity);
+        tag.putInt("Extracted", extractedTotal);
+        tag.putBoolean("Powered", powered);
+        tag.put("Tank", methaneTank.writeToNBT(registries, new CompoundTag()));
+        tag.put("Output", outputBuffer.serializeNBT(registries));
+    }
+
+    @Override
+    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        try {
+            phase = Phase.valueOf(tag.getString("Phase"));
+        } catch (IllegalArgumentException e) {
+            phase = Phase.IDLE;
+        }
+        progress = tag.getInt("Progress");
+        waveIndex = tag.getInt("WaveIndex");
+        integrity = tag.contains("Integrity") ? tag.getInt("Integrity") : MAX_INTEGRITY;
+        powered = tag.getBoolean("Powered");
+        extractedTotal = tag.getInt("Extracted");
+        methaneTank.readFromNBT(registries, tag.getCompound("Tank"));
+        if (tag.contains("Output")) {
+            outputBuffer.deserializeNBT(registries, tag.getCompound("Output"));
+        }
+    }
+    *///?}
 
     /** 只出不进的流体槽：外部 {@code fill} 被拒，产出经 {@link #fillInternal}。 */
     public static class OutputOnlyTank extends FluidTank {

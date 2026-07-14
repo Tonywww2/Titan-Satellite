@@ -23,7 +23,11 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+//? if forge {
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
+//?} else {
+/*import net.minecraft.world.level.pathfinder.PathType;
+*///?}
 
 import java.util.EnumSet;
 
@@ -34,7 +38,11 @@ public class AmmoniaStalker extends Monster {
 
     public AmmoniaStalker(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        //? if forge {
         this.setPathfindingMalus(BlockPathTypes.WATER, 0.0F);
+        //?} else {
+        /*this.setPathfindingMalus(PathType.WATER, 0.0F);
+        *///?}
     }
 
     @Override
@@ -42,10 +50,17 @@ public class AmmoniaStalker extends Monster {
         return new AmphibiousPathNavigation(this, level);
     }
 
+    //? if forge {
     @Override
     public boolean canBreatheUnderwater() {
         return true;
     }
+    //?} else {
+    /*@Override
+    public boolean canDrownInFluidType(net.neoforged.neoforge.fluids.FluidType type) {
+        return false;
+    }
+    *///?}
 
     @Override
     public boolean doHurtTarget(Entity target) {
@@ -56,7 +71,7 @@ public class AmmoniaStalker extends Monster {
                 case NORMAL -> 140;
                 default -> 80;
             };
-            living.addEffect(new MobEffectInstance(TSMobEffects.THOLIN_TOXIN.get(), duration, 0), this);
+            living.addEffect(TSMobEffects.tholinToxin(duration, 0), this);
             living.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, duration, 0), this);
         }
         return hurt;

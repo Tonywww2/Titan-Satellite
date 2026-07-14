@@ -20,7 +20,11 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
+//? if forge {
 import net.minecraftforge.common.MinecraftForge;
+//?} else {
+/*import net.neoforged.neoforge.common.NeoForge;
+*///?}
 
 /**
  * 托林晶体方块。玩家破坏时有概率「惊扰晶洞」：释放毒气云（托林毒素 + 中毒）并惊醒附近潜伏的敌对生物。
@@ -41,6 +45,7 @@ public class TholinCrystalBlock extends Block {
         super(properties);
     }
 
+    //? if forge {
     @Override
     public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (level instanceof ServerLevel serverLevel
@@ -50,14 +55,31 @@ public class TholinCrystalBlock extends Block {
         }
         super.playerWillDestroy(level, pos, state, player);
     }
+    //?} else {
+    /*@Override
+    public BlockState playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
+        if (level instanceof ServerLevel serverLevel
+                && !player.getAbilities().instabuild
+                && serverLevel.random.nextFloat() < DISTURB_CHANCE) {
+            disturb(serverLevel, pos, player);
+        }
+        return super.playerWillDestroy(level, pos, state, player);
+    }
+    *///?}
 
     /** 组织一次晶洞惊扰：先 post 可取消 / 可自定义事件，未被取消则按（可能被调整的）参数放毒气 + 惊怪。 */
     private void disturb(ServerLevel level, BlockPos pos, Player breaker) {
         TholinCrystalDisturbedEvent event = new TholinCrystalDisturbedEvent(
                 level, pos, breaker, GAS_RADIUS, GAS_DURATION_TICKS, WAKE_RADIUS);
+        //? if forge {
         if (MinecraftForge.EVENT_BUS.post(event)) {
             return; // 监听者取消了本次惊扰
         }
+        //?} else {
+        /*if (NeoForge.EVENT_BUS.post(event).isCanceled()) {
+            return; // 监听者取消了本次惊扰
+        }
+        *///?}
         if (event.isReleaseGas()) {
             releaseGas(level, pos, event.getGasRadius(), event.getGasDurationTicks());
         }
@@ -78,7 +100,7 @@ public class TholinCrystalBlock extends Block {
         cloud.setWaitTime(0);
         cloud.setRadiusOnUse(-0.5F);
         cloud.setRadiusPerTick(-radius / (float) durationTicks);
-        cloud.addEffect(new MobEffectInstance(TSMobEffects.THOLIN_TOXIN.get(), durationTicks, 0));
+        cloud.addEffect(TSMobEffects.tholinToxin(durationTicks, 0));
         cloud.addEffect(new MobEffectInstance(MobEffects.POISON, 140, 0));
         level.addFreshEntity(cloud);
     }

@@ -4,6 +4,11 @@ import com.tonywww.titan_satellite.TitanSatellite;
 import com.tonywww.titan_satellite.registry.TSItems;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
+//? if neoforge {
+/*import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+*///?}
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -19,8 +24,18 @@ import java.util.function.BiConsumer;
  */
 public class TSChestLoot implements LootTableSubProvider {
 
+    //? if neoforge {
+    /*public TSChestLoot(HolderLookup.Provider provider) {
+    }
+    *///?}
+
+    //? if forge {
     @Override
     public void generate(BiConsumer<ResourceLocation, LootTable.Builder> consumer) {
+    //?} else {
+    /*@Override
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> consumer) {
+    *///?}
         consumer.accept(chest("pioneer_outpost"), LootTable.lootTable()
                 .withPool(LootPool.lootPool()
                         .setRolls(UniformGenerator.between(3.0F, 6.0F))
@@ -49,7 +64,13 @@ public class TSChestLoot implements LootTableSubProvider {
                         .add(LootItem.lootTableItem(Items.DIAMOND).setWeight(2))));
     }
 
+    //? if forge {
     private static ResourceLocation chest(String name) {
         return new ResourceLocation(TitanSatellite.MODID, "chests/" + name);
     }
+    //?} else {
+    /*private static ResourceKey<LootTable> chest(String name) {
+        return ResourceKey.create(Registries.LOOT_TABLE, TitanSatellite.rl("chests/" + name));
+    }
+    *///?}
 }

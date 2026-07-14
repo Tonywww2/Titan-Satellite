@@ -1,0 +1,11 @@
+{
+  "structures": [
+    { "structure": "titan_satellite:derrick", "weight": 1 }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 40,
+    "separation": 16,
+    "salt": 815273941
+  }
+}
