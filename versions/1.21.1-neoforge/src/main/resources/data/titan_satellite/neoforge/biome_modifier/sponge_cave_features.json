@@ -1,0 +1,6 @@
+{
+    "type":  "neoforge:add_features",
+    "biomes":  "titan_satellite:polar_labyrinth",
+    "features":  "titan_satellite:sponge_cave",
+    "step":  "underground_decoration"
+}

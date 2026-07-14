@@ -1,5 +1,6 @@
 plugins {
     id("dev.architectury.loom") version "1.11-SNAPSHOT"
+    id("me.modmuss50.mod-publish-plugin") version "2.1.1"
 }
 
 // 加载器由节点 gradle.properties 的 loom.platform 决定（当前节点为 forge）
@@ -139,11 +140,12 @@ tasks {
             "description" to project.property("mod.description"),
             "license" to project.property("mod.license"),
             "pack_format" to project.property("vers.packFormat"),
+            "fluid_loader" to project.property("vers.fluidLoader"),
         )
         inputs.properties(props)
         // Forge 读 META-INF/mods.toml，NeoForge 读 META-INF/neoforge.mods.toml；两者都做占位展开，
         // 再按当前加载器排除另一个，避免多余元数据进包。
-        filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta")) { expand(props) }
+        filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta", "assets/titan_satellite/models/item/liquid_methane_bucket.json", "assets/titan_satellite/models/item/liquid_ammonia_bucket.json")) { expand(props) }
         exclude(if (loader == "neoforge") "META-INF/mods.toml" else "META-INF/neoforge.mods.toml")
     }
     withType<JavaCompile> { options.release = javaVersion }
@@ -157,3 +159,41 @@ java {
 // 将 datagen 生成的资源（根 src/generated/resources）并入主源集，随构建打包。
 // 生成目录与手写 src/main/resources 分开；两者不得有同名文件（否则 processResources 重复）。
 sourceSets["main"].resources.srcDir(rootProject.file("src/generated/resources"))
+
+// ---------------------------------------------------------------------------------------------------
+// CurseForge 自动发布（me.modmuss50.mod-publish-plugin）。
+// 上传当前加载器节点的 remap 产物；根 stonecutter.gradle.kts 的 `publishAllVersions` 一次发布所有加载器。
+// 机密/id 惰性读取（仅发布任务执行时），普通 build 不受影响：
+//   - CURSEFORGE_TOKEN 环境变量（CI 首选），或用户级 ~/.gradle/gradle.properties 的 curseforge.token（切勿提交）；
+//   - curseforge.projectId 数字 id 来自 CurseForge 项目页「About Project」（非机密，放 gradle.properties；暂留空待填）。
+// 用法：
+//   ./gradlew publishAllVersions                         # 所有加载器
+//   ./gradlew :1.20.1-forge:publishMods                  # 单个加载器
+//   ./gradlew publishAllVersions -Ppublish.dryRun=true   # 走完整流程但不上传（见 scripts/dryrun.ps1）
+// ---------------------------------------------------------------------------------------------------
+publishMods {
+    // Architectury Loom 的最终（remap 后）产物——不是原始 jar 任务输出。
+    file = tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar").flatMap { it.archiveFile }
+    version = project.version.toString() // 如 0.1.0+1.20.1——各加载器经 mcVersion 唯一
+    displayName = "${property("mod.name")} ${property("mod.version")} - MC $mcVersion ($loader)"
+    modLoaders.add(loader)
+    type = STABLE
+
+    // 校验整条流程但不上传：-Ppublish.dryRun=true
+    dryRun = providers.gradleProperty("publish.dryRun").map { it.toBoolean() }.orElse(false)
+
+    changelog = providers.environmentVariable("CHANGELOG")
+        .orElse(providers.provider { rootProject.file("CHANGELOG.md").takeIf { it.exists() }?.readText() })
+        .orElse("See the GitHub releases page.")
+
+    curseforge {
+        projectId = providers.gradleProperty("curseforge.projectId")
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+            .orElse(providers.gradleProperty("curseforge.token"))
+        minecraftVersions.add(mcVersion)
+        javaVersions.add(JavaVersion.toVersion(javaVersion))
+        // 维度内容 mod：客户端 + 服务端都需要（插件要求至少一个环境）。
+        client = true
+        server = true
+    }
+}

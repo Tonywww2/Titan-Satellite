@@ -1,0 +1,14 @@
+{
+    "type":  "neoforge:add_spawns",
+    "biomes":  [
+                   "titan_satellite:polar_labyrinth"
+               ],
+    "spawners":  [
+                     {
+                         "type":  "titan_satellite:native_ice_worm",
+                         "weight":  3,
+                         "minCount":  1,
+                         "maxCount":  1
+                     }
+                 ]
+}

@@ -28,7 +28,10 @@ public class MethaneMareFeature extends Feature<NoneFeatureConfiguration> {
         BlockPos origin = context.origin();
         RandomSource random = context.random();
 
-        int radius = 12 + random.nextInt(9);           // 大半径 12-20
+        // 半径上限 16：feature 写入边界≈以装饰区块为中心的 3x3(Chebyshev≤1)，radius≤16 时任意 origin 局部坐标
+        // 都不会写到 2 个区块外，杜绝 1.21 的 "Detected setBlock in a far chunk" 截断/刷屏。甲烷海主体已由地形层
+        // (blend_cont base 落液面下 + default_fluid)生成，mare 仅作局部加深点缀。
+        int radius = 12 + random.nextInt(5);           // 半径 12-16（原 12-20，超 16 会越界写）
         int sinkDepth = 5 + random.nextInt(4);         // 中心下沉深度 5-8
         int clearAbove = 4;                            // 上方清空高度
 

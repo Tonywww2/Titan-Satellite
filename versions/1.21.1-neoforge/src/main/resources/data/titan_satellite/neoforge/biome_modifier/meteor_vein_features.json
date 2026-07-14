@@ -1,0 +1,6 @@
+{
+    "type":  "neoforge:add_features",
+    "biomes":  "titan_satellite:cratered_wastelands",
+    "features":  "titan_satellite:meteor_vein",
+    "step":  "underground_ores"
+}

@@ -13,7 +13,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 //?} else {
 /*import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.registries.DeferredRegister;
 *///?}
 
@@ -29,9 +28,7 @@ import java.util.function.Supplier;
  */
 //? if forge {
 @Mod.EventBusSubscriber(modid = TitanSatellite.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-//?} else {
-/*@EventBusSubscriber(modid = TitanSatellite.MODID)
-*///?}
+//?}
 public final class TSStructures {
 
     private TSStructures() {

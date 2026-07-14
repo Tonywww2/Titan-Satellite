@@ -60,5 +60,6 @@ public final class TSDataGenerators {
         /*generator.addProvider(event.includeServer(), new TSLootTableProvider(output, lookup));
         *///?}
         generator.addProvider(event.includeServer(), new TSBlockTagsProvider(output, lookup, existing));
+        generator.addProvider(event.includeServer(), new TSEntityTypeTagsProvider(output, lookup, existing));
     }
 }

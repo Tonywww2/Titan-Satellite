@@ -1,0 +1,15 @@
+{
+    "type":  "neoforge:add_spawns",
+    "biomes":  [
+                   "titan_satellite:tholin_dune_sea",
+                   "titan_satellite:barren_plateau"
+               ],
+    "spawners":  [
+                     {
+                         "type":  "titan_satellite:tholin_weaver",
+                         "weight":  14,
+                         "minCount":  1,
+                         "maxCount":  2
+                     }
+                 ]
+}

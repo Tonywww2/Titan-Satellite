@@ -1,5 +1,5 @@
 {
-  "parent": "forge:item/bucket",
+  "parent": "${fluid_loader}:item/bucket",
   "fluid": "titan_satellite:liquid_methane",
-  "loader": "forge:fluid_container"
+  "loader": "${fluid_loader}:fluid_container"
 }

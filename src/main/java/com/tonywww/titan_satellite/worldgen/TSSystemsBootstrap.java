@@ -7,9 +7,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLConstructModEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-//?} else {
-/*import net.neoforged.fml.common.EventBusSubscriber;
-*///?}
+//?}
 
 /**
  * PA-2 系统自装配：在 mod 构造阶段（{@link FMLConstructModEvent}，早于 RegisterEvent）
@@ -21,9 +19,7 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
  */
 //? if forge {
 @Mod.EventBusSubscriber(modid = TitanSatellite.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
-//?} else {
-/*@EventBusSubscriber(modid = TitanSatellite.MODID)
-*///?}
+//?}
 public final class TSSystemsBootstrap {
 
     private TSSystemsBootstrap() {

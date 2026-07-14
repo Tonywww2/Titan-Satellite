@@ -1,9 +1,9 @@
 {
-  "_comment": "Transition weight for methane (continentalness < -0.3). 0.5 + 15*(-0.3 - continents), clamped 0..1 -> ramp over continents in [-0.333,-0.267] (2x original width).",
+  "_comment": "methane 权重: -3.5 + (-15)*continents, clamp 0..1 -> w=1 当 continents<=-0.3(整个 methane_abyss 群系边界, [-1,-0.3]) 全权重=1, 使整片深渊(含边缘)都落到 methane 海底高度而非仅深内部; 从 -0.3 起向邻域侧 ramp 到 0 over [-0.3,-0.233](过渡坡/断崖落在邻域一侧, 邻域临海处下沉入海). 原 -4.0 令 w 在边界只 0.5, 边缘半混到高邻域=不淹没(甲烷海显小).",
   "type": "minecraft:clamp",
   "input": {
     "type": "minecraft:add",
-    "argument1": -4.0,
+    "argument1": -3.5,
     "argument2": { "type": "minecraft:mul", "argument1": -15.0, "argument2": "titan_satellite:climate/continents" }
   },
   "min": 0.0,

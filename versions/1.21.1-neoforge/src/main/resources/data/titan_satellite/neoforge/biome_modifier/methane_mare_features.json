@@ -1,0 +1,6 @@
+{
+    "type":  "neoforge:add_features",
+    "biomes":  "titan_satellite:methane_abyss",
+    "features":  "titan_satellite:methane_mare",
+    "step":  "local_modifications"
+}

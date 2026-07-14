@@ -122,7 +122,24 @@ public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
     }
 
     private static boolean isPolar(WorldGenLevel level, int x, int y, int z) {
+        //? if forge {
         return level.getBiome(new BlockPos(x, y, z)).is(POLAR_LABYRINTH);
+        //?} else {
+        /*// 参考原版 LevelReader#getNoiseBiome：特征生成期用 require=false 的 getChunk 取块，
+        // 越出 WorldGenRegion（以中心块 Chebyshev 距离为界）时返回 null → 视为边缘并跳过；
+        // 再直接从该块读 noise biome，避开 level.getBiome 的生物群系模糊缩放跨块访问——那正是
+        // 越界读抛 "Requested chunk unavailable during world generation" 的根因（hasChunk 只查
+        // 边界、挡不住缩放偏移到的相邻块）。isSafeInterior 里每个 getHeight 前都先 isPolar 同点，
+        // 故此处返回 false / 保证块可用即同时护住后续 getHeight。
+        net.minecraft.world.level.chunk.ChunkAccess chunk = level.getChunk(
+                x >> 4, z >> 4, net.minecraft.world.level.chunk.status.ChunkStatus.BIOMES, false);
+        if (chunk == null) {
+            return false;
+        }
+        return chunk.getNoiseBiome(net.minecraft.core.QuartPos.fromBlock(x),
+                net.minecraft.core.QuartPos.fromBlock(y),
+                net.minecraft.core.QuartPos.fromBlock(z)).is(POLAR_LABYRINTH);
+        *///?}
     }
 
     // 确定性 3D 值噪声：整点哈希 + 三线性平滑插值，输出约 [0, 1]。

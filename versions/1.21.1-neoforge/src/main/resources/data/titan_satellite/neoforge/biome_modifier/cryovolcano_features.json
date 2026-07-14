@@ -1,0 +1,6 @@
+{
+    "type":  "neoforge:add_features",
+    "biomes":  "titan_satellite:cryovolcanic_cliff",
+    "features":  "titan_satellite:cryovolcano",
+    "step":  "local_modifications"
+}

@@ -1,0 +1,6 @@
+{
+    "type":  "neoforge:add_features",
+    "biomes":  "titan_satellite:tholin_dune_sea",
+    "features":  "titan_satellite:tholin_crust_patch",
+    "step":  "top_layer_modification"
+}

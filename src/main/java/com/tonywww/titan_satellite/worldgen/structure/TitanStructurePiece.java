@@ -356,7 +356,7 @@ public class TitanStructurePiece extends StructurePiece {
             //? if forge {
             probe.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
             //?} else {
-            /*probe.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null);
+            /*probe.finalizeSpawn(level, new net.minecraft.world.DifficultyInstance(level.getLevel().getDifficulty(), level.getLevel().getDayTime(), 0L, 0.0F), MobSpawnType.STRUCTURE, null);
             *///?}
             level.addFreshEntity(probe);
         }
@@ -374,7 +374,7 @@ public class TitanStructurePiece extends StructurePiece {
             //? if forge {
             worm.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null, null);
             //?} else {
-            /*worm.finalizeSpawn(level, level.getLevel().getCurrentDifficultyAt(pos), MobSpawnType.STRUCTURE, null);
+            /*worm.finalizeSpawn(level, new net.minecraft.world.DifficultyInstance(level.getLevel().getDifficulty(), level.getLevel().getDayTime(), 0L, 0.0F), MobSpawnType.STRUCTURE, null);
             *///?}
             level.addFreshEntity(worm);
         }

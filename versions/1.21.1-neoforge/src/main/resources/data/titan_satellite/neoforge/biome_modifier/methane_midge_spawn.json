@@ -1,0 +1,12 @@
+{
+    "type":  "neoforge:add_spawns",
+    "biomes":  "#titan_satellite:is_titan",
+    "spawners":  [
+                     {
+                         "type":  "titan_satellite:methane_midge",
+                         "weight":  8,
+                         "minCount":  3,
+                         "maxCount":  6
+                     }
+                 ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:disk",
+  "config": {
+    "state_provider": {
+      "fallback": { "type": "minecraft:simple_state_provider", "state": { "Name": "titan_satellite:hardened_tholin" } },
+      "rules": []
+    },
+    "target": { "type": "minecraft:matching_blocks", "blocks": ["titan_satellite:tholin_sand"] },
+    "radius": { "type": "minecraft:uniform", "min_inclusive": 2, "max_inclusive": 5 },
+    "half_height": 1
+  }
+}

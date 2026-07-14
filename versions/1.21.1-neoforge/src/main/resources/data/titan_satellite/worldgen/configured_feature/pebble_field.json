@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:disk",
+  "config": {
+    "state_provider": {
+      "fallback": { "type": "minecraft:simple_state_provider", "state": { "Name": "titan_satellite:titan_gravel" } },
+      "rules": []
+    },
+    "target": { "type": "minecraft:matching_blocks", "blocks": ["titan_satellite:weathered_titan_stone"] },
+    "radius": { "type": "minecraft:uniform", "min_inclusive": 2, "max_inclusive": 4 },
+    "half_height": 1
+  }
+}
