@@ -79,6 +79,13 @@ dependencies {
 
     if (loader == "neoforge") {
         "neoForge"("net.neoforged:neoforge:${property("vers.deps.fml")}")
+
+        // 可选前置（编译期访问；modCompileOnly=不进发布产物、不上 dev 运行期）。
+        // 运行期联动由 mods.toml 可选依赖 + mod_loaded 门控的数据配方保证（用户装了就生效）。
+        // 用 Modrinth 版本 ID 锁定具体文件，避开 Fabric/Forge 同号包命中的坑。
+        "modCompileOnly"("maven.modrinth:create:UjX6dr61")          // Create 6.0.10 (NeoForge 1.21.1)
+        "modCompileOnly"("maven.modrinth:mekanism:5KzzycBT")        // Mekanism 10.7.19.85 (NeoForge 1.21.1)
+        "modCompileOnly"("maven.modrinth:farmers-delight:GbNuOZ4S") // Farmer's Delight 1.21.1-1.3.2 (NeoForge)
     } else {
         "forge"("net.minecraftforge:forge:$mcVersion-${property("vers.deps.fml")}")
 
@@ -117,6 +124,13 @@ dependencies {
         "forgeRuntimeLibrary"("io.github.llamalad7:mixinextras-common:0.3.2") // Ad Astra mixin @WrapOperation
         "forgeRuntimeLibrary"("com.teamresourceful:bytecodecs:1.0.2")   // resourceful-lib 内嵌
         "forgeRuntimeLibrary"("com.teamresourceful:yabn:1.0.3")         // resourceful-lib 内嵌
+
+        // 可选前置（编译期访问；modCompileOnly=不进发布产物、不上 dev 运行期）。
+        // 运行期联动由 mods.toml 可选依赖 + mod_loaded 门控的数据配方保证（用户装了就生效）。
+        // 用 Modrinth 版本 ID 锁定具体文件，避开 Fabric/Forge 同号包命中的坑。
+        "modCompileOnly"("maven.modrinth:create:8amzvn9x")          // Create 6.0.8 (Forge 1.20.1)
+        "modCompileOnly"("maven.modrinth:mekanism:uxe1WQp4")        // Mekanism 10.4.16.80 (Forge 1.20.1)
+        "modCompileOnly"("maven.modrinth:farmers-delight:CsjS7EkP") // Farmer's Delight 1.20.1-1.3.2 (Forge)
     }
 }
 
@@ -141,11 +155,12 @@ tasks {
             "license" to project.property("mod.license"),
             "pack_format" to project.property("vers.packFormat"),
             "fluid_loader" to project.property("vers.fluidLoader"),
+            "loader" to loader,
         )
         inputs.properties(props)
         // Forge 读 META-INF/mods.toml，NeoForge 读 META-INF/neoforge.mods.toml；两者都做占位展开，
         // 再按当前加载器排除另一个，避免多余元数据进包。
-        filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta", "assets/titan_satellite/models/item/liquid_methane_bucket.json", "assets/titan_satellite/models/item/liquid_ammonia_bucket.json")) { expand(props) }
+        filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta", "assets/titan_satellite/models/item/liquid_methane_bucket.json", "assets/titan_satellite/models/item/liquid_ammonia_bucket.json", "data/titan_satellite/dimension/titan_orbit.json")) { expand(props) }
         exclude(if (loader == "neoforge") "META-INF/mods.toml" else "META-INF/neoforge.mods.toml")
     }
     withType<JavaCompile> { options.release = javaVersion }

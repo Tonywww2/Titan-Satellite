@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "farmersdelight"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "titan_satellite:tough_neural_gland"
+    },
+    {
+      "item": "titan_satellite:toxic_gland"
+    },
+    {
+      "item": "titan_satellite:ammonia_salt"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "titan_satellite:titan_antidote"
+  }
+}

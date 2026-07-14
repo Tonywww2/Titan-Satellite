@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "titan_satellite:item/cryo_alloy_ingot"
+  }
+}

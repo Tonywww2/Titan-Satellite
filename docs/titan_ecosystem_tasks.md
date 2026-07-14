@@ -42,8 +42,10 @@
 | **E3** | 事件 | 氨泉掠食者借冰火山喷泉弹射 AI | P3 | M | — | ✅ |
 | **E4** | 事件 | 冰虫巢穴 Boss 化 + 生物有机壁方块 | P3 | L | D2 | ✅ |
 | **D3** | 新生物 | 微浮群 / 化能食草兽（充实营养级） | P3 | M | — | ✅ |
-| **E5** | 事件 | 托林潮汐 / 甲烷退潮 周期事件 | P3 | L | E2 | ⬜ |
-| **G1** | 收尾 | lang/创造栏/loot 全量补齐 + runClient 目视 + CR 回写 | P1 | S | 各项 | ⬜ |
+| **H1** | 生产者 | 生产者方块行为（氢泡菌毯 / 乙烔冰笋 / 托林菌网） | P2 | M | — | ✅ |
+| **H2** | 捕食 | 捕食者锁定下位物种 AI（食物网） | P2 | M | D1,D3 | ✅ |
+| **H3** | 摄食 | 初级消费者摄食 / 逃逸 AI（浮游体 / 蹒兽） | P2 | M | D3,H1 | ✅ |
+| **G1** | 收尾 | lang/创造栏/loot 全量补齐 + runClient 目视 + CR 回写 | P1 | S | 各项 | ✅ |
 
 ---
 
@@ -170,10 +172,6 @@
 - **验收：** `/place` 结构含有机壁 + 惊扰生成冰虫。
 - **✅ 完成（CR-23）：** `TitanStructurePiece.buildGeode` 地板改 `HARDENED_THOLIN`（生物有机壁）+ 新增 `spawnIceWorm` 在 `tholin_geode` 内生成精英冰虫 Boss；破坏托林晶体经既有 `TholinCrystalBlock.disturb` 惊醒附近 `Enemy`（冰虫为 Monster 自动满足）。无头验证：`/place structure titan_satellite:tholin_geode`→ 结构生成 + 冰虫已在巢穴内 ✓。
 
-#### E5 — 托林潮汐 / 甲烷退潮（可选）〔P3 · L〕 ⬜ （依赖 E2）
-- **目标：** 设计 §5.4 周期事件；甲烷退潮需把局部流体/`sea_level` 与开采量挂钩（进阶）。
-- **状态：** 系统性大改，最后考虑。
-
 ---
 
 ### F · 失控探测器处置 (Corrupted Probe Disposition)
@@ -190,10 +188,32 @@
 
 ### G · 收尾与校验 (Finalize)
 
-#### G1 — 全量补齐 + 目视 + 回写 〔P1 · S〕 ⬜
+#### G1 — 全量补齐 + 目视 + 回写 〔P1 · S〕 ✅
 - lang（中英）、创造栏、loot、models 对**所有新增**方块/物品/实体补齐，无缺失警告。
-- `runClient` 目视：冰花爆炸、织体蛛吐丝、甲虫滚球、浮游体漂浮。
+- `runClient` 目视：冰花爆炸、织体蜉吐丝、甲虫滚球、浮游体漂浮。〔headless 无法目视，留用户在 `runClient` 复核视觉表现。〕
 - 每落地一组，在 [parallel-tasks.md](parallel-tasks.md) §7 追加 CR 并回写本表与设计总览表状态（⬜→✅）。
+- **✅ 完成：** 新增方块/物品经 `runData` 全量生成 lang/创造栏/loot/models（`hydrogen_bubble_mat` 等）；修 `ammonia_stalker` 中文名 `氨泉掠食者`；`compileJava --rerun-tasks` + `runData` 均 BUILD SUCCESSFUL。
+
+---
+
+### H · 生态闭环补完 (Predation / Feeding / Producers) ✅
+
+> 依用户指令，移除 E5（托林潮汐 / 甲烷退潮）后，把设计 §3.1 食物网从「Lore + 刷怪」深化为运行时行为，并补齐 §2.4 生产者方块行为。
+
+#### H1 — 生产者方块行为 〔P2 · M〕 ✅（设计 §2.4）
+- `HydrogenBubbleMatBlock`：`randomTick` 释 H₂ 气泡粒子；近火（火焰标签方块/着火实体）**轻微轰燃**当量 1.0 + `scheduleTick` 链爆；陨坑荒原 / 荒芜高原 `random_patch` 自然生成。
+- `AcetyleneSpireBlock`：近火**剧烈连锁爆炸**当量 2.4（高于甲烷冰花）。
+- `TholinMyceliumBlock`：`randomTick` 散孢子 + 消解上方 1 格内本维度生物残渣掉落物（重整回托林，不吞玩家工具/战利品）。
+
+#### H2 — 捕食 AI 〔P2 · M〕 ✅（设计 §3.1）
+- `TholinWeaver` targetSelector += `NearestAttackableTargetGoal<AeroJelly>` + `<CryoScavenger>`（伏击捕食下位）。
+- `AmmoniaStalker` targetSelector += `NearestAttackableTargetGoal<TholinWeaver>` + `<CryoScavenger>`（顶级捕食）。
+
+#### H3 — 摄食 / 逃逸 AI 〔P2 · M〕 ✅（设计 §3.2/§3.7）
+- `AeroJelly` `FilterFeedGoal`（游向并吸收甲烷微浮群 → `heal` + 粒子）+ `AvoidEntityGoal<TholinWeaver>` 逃逸捕食者。
+- `HydrotrophGrazer` `GrazeMatGoal`（`MoveToBlockGoal` 走向氢泡菌毯 → 周期进食：`heal` + 孢子粒子，30% 概率消耗一格）。
+
+- **验证：** `compileJava --rerun-tasks` + `runData` 均 BUILD SUCCESSFUL；mat worldgen 4 JSON 结构对照已知可用的 `frost_bush` 链校验通过。运行时 AI / 摄食表现待 `runClient` 目视。
 
 ---
 
@@ -231,7 +251,7 @@ flowchart LR
 - **第一批（快赢，先做）：** `A1 异星毒素`、`C1 冰花爆炸`、`A2 材料`、`F1 探测器决策`。
 - **第二批（核心）：** `B1`、`D1 织体蛛`、`E1 波次纯生物化`、`C2/C3 采集`。
 - **第三批（深化）：** `B2`、`B3`、`E2`、`D2`。
-- **第四批（可选）：** `E3`、`E4`、`D3`、`E5`。
+- **第四批（可选）：** `E3`、`E4`、`D3`。
 
 ## 文件所有权提示 (Ownership — 避免冲突)
 | 文件/域 | 相关任务 |

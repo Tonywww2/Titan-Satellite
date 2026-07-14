@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "create"
+      }
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "titan_satellite:condensed_acetylene"
+    },
+    {
+      "item": "titan_satellite:condensed_acetylene"
+    },
+    {
+      "item": "titan_satellite:hydrogen_capsule"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "titan_satellite:polyphosphazene_coenzyme"
+  }
+}

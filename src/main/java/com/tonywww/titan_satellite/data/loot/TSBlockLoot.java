@@ -60,6 +60,8 @@ public class TSBlockLoot extends BlockLootSubProvider {
         // C2：灌木剑刀采→托林纤维（否则无掉落）
         this.add(TSBlocks.THOLIN_SHRUB.get(), createShearsOnlyDrop(TSItems.THOLIN_FIBRE.get()));
         this.add(TSBlocks.FROST_BUSH.get(), createShearsOnlyDrop(TSItems.THOLIN_FIBRE.get()));
+        // MC4：甲烷冰花 剪采→甲烷冰晶（否则无掉落；保留其连锁爆炸行为不受影响）
+        this.add(TSBlocks.METHANE_ICE_BLOOM.get(), createShearsOnlyDrop(TSItems.METHANE_ICE_SHARD.get()));
     }
 
     @Override

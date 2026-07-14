@@ -1,0 +1,23 @@
+{
+  "type": "mekanism:injecting",
+  "chemicalInput": {
+    "amount": 200,
+    "gas": "mekanism:hydrogen"
+  },
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "itemInput": {
+    "amount": 2,
+    "ingredient": {
+      "item": "titan_satellite:condensed_acetylene"
+    }
+  },
+  "output": {
+    "count": 1,
+    "item": "titan_satellite:polyphosphazene_coenzyme"
+  }
+}

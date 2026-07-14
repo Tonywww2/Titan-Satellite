@@ -1,9 +1,9 @@
 {
-  "feature": "titan_satellite:tholin_crust_patch",
+  "feature": "titan_satellite:hydrogen_bubble_mat",
   "placement": [
     { "type": "minecraft:count", "count": 3 },
     { "type": "minecraft:in_square" },
-    { "type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG" },
+    { "type": "minecraft:heightmap", "heightmap": "MOTION_BLOCKING" },
     { "type": "minecraft:biome" }
   ]
 }

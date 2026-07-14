@@ -1,0 +1,21 @@
+{
+  "type": "mekanism:injecting",
+  "chemicalInput": {
+    "amount": 200,
+    "gas": "mekanism:hydrogen"
+  },
+  "itemInput": {
+    "amount": 2,
+    "ingredient": "titan_satellite:condensed_acetylene"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "titan_satellite:polyphosphazene_coenzyme"
+  }
+}

@@ -1,7 +1,10 @@
 package com.tonywww.titan_satellite.entity;
 
 import com.tonywww.titan_satellite.registry.TSMobEffects;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -45,10 +48,18 @@ public class NativeIceWorm extends Monster {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new LeapAtTargetGoal(this, 0.3F));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, true));
-        this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.6D));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        // 远程：喷射冰晶碎屑（伤害随攻击力，并附异星毒素 + 短暂缓慢）；5~16 格时启用，贴近改用近战。
+        this.goalSelector.addGoal(2, new RangedHitscan.AttackGoal(this, 5.0D, 16.0D, 30, 80, target -> {
+            RangedHitscan.beam(this, target,
+                    (float) (this.getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.75D),
+                    ParticleTypes.SNOWFLAKE, SoundEvents.SNOW_GOLEM_SHOOT, 0.8F);
+            target.addEffect(TSMobEffects.tholinToxin(160, 0), this);
+            target.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 60, 0), this);
+        }));
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, true));
+        this.goalSelector.addGoal(4, new WaterAvoidingRandomStrollGoal(this, 0.6D));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
     }

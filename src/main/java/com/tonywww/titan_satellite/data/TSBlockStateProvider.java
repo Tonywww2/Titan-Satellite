@@ -77,6 +77,9 @@ public class TSBlockStateProvider extends BlockStateProvider {
         CUBE.put("titan_gravel", "titan_gravel");
         CUBE.put("acetylene_spire", "acetylene_spire");
         CUBE.put("tholin_mycelium", "tholin_mycelium");
+        CUBE.put("hydrogen_bubble_mat", "hydrogen_bubble_mat");
+        CUBE.put("hydrogen_collector", "hydrogen_collector");
+        CUBE.put("tholin_composter", "tholin_composter");
 
         CROSS.put("tholin_shrub", "titan_satellite:block/tholin_shrub");
         CROSS.put("methane_ice_bloom", "titan_satellite:block/methane_ice_bloom");

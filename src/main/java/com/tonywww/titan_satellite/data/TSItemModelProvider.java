@@ -42,6 +42,22 @@ public class TSItemModelProvider extends ItemModelProvider {
         generated("tough_neural_gland", "titan_satellite:item/tough_neural_gland");
         generated("tholin_silk_sac", "titan_satellite:item/tholin_silk_sac");
 
+        // 材料加工链（MC1；generated + 纯色占位贴图）
+        generated("tholin_dust", "titan_satellite:item/tholin_dust");
+        generated("condensed_acetylene", "titan_satellite:item/condensed_acetylene");
+        generated("hydrogen_capsule", "titan_satellite:item/hydrogen_capsule");
+        generated("meteoric_iron_ingot", "titan_satellite:item/meteoric_iron_ingot");
+        generated("silicon_dust", "titan_satellite:item/silicon_dust");
+        generated("methane_ice_shard", "titan_satellite:item/methane_ice_shard");
+        generated("abyss_crystal_dust", "titan_satellite:item/abyss_crystal_dust");
+        generated("ammonia_salt", "titan_satellite:item/ammonia_salt");
+        generated("tholin_crystal_dust", "titan_satellite:item/tholin_crystal_dust");
+        generated("polyphosphazene_coenzyme", "titan_satellite:item/polyphosphazene_coenzyme");
+        generated("azotosome_sheet", "titan_satellite:item/azotosome_sheet");
+        generated("cryo_alloy_ingot", "titan_satellite:item/cryo_alloy_ingot");
+        generated("bio_battery", "titan_satellite:item/bio_battery");
+        generated("titan_antidote", "titan_satellite:item/titan_antidote");
+
         // 流体桶：forge:fluid_container 动态模型（空桶轮廓 + 按流体 FluidType.getTintColor 染色的液面），
         // 不再复用固定蓝色的 water_bucket 贴图，故每种流体的桶显示各自的液体颜色。
         fluidBucket("liquid_methane_bucket", TSFluids.LIQUID_METHANE.get());

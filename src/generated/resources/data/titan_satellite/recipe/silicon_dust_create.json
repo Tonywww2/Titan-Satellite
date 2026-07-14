@@ -1,0 +1,19 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    "titan_satellite:crystalline_twig"
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "processingTime": 150,
+  "results": [
+    {
+      "count": 1,
+      "id": "titan_satellite:silicon_dust"
+    }
+  ]
+}

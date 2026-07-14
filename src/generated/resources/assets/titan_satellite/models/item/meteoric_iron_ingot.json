@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "titan_satellite:item/meteoric_iron_ingot"
+  }
+}

@@ -1,12 +1,17 @@
 package com.tonywww.titan_satellite.registry;
 
 import com.tonywww.titan_satellite.TitanSatellite;
+import com.tonywww.titan_satellite.block.AcetyleneSpireBlock;
 import com.tonywww.titan_satellite.block.CryovolcanicGeyserBlock;
+import com.tonywww.titan_satellite.block.HydrogenBubbleMatBlock;
+import com.tonywww.titan_satellite.block.HydrogenCollectorBlock;
 import com.tonywww.titan_satellite.block.MethaneIceBloomBlock;
 import com.tonywww.titan_satellite.block.MethanePoolCoreBlock;
 import com.tonywww.titan_satellite.block.SpecialMethanePumpBlock;
 import com.tonywww.titan_satellite.block.SlowingBushBlock;
+import com.tonywww.titan_satellite.block.TholinComposterBlock;
 import com.tonywww.titan_satellite.block.TholinCrystalBlock;
+import com.tonywww.titan_satellite.block.TholinMyceliumBlock;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlock;
@@ -114,13 +119,24 @@ public final class TSBlocks {
     public static final Supplier<Block> FROST_BUSH = register("frost_bush", () ->
             new SlowingBushBlock(props(MapColor.COLOR_LIGHT_GRAY, 0.0F, 0.0F, SoundType.GRASS).noCollission().noOcclusion()));
 
-    // ---- M7 宏伟地物构成方块（T7.1 冻结；行为/生成由后续任务实现）----
-    // 乙炔冰笋：液态甲烷深渊「乙炔大晶洞」的高能乙炔晶柱（发光；近火连锁爆炸行为后续实现）。
+    // ---- M7 宏伟地物构成方块（T7.1）----
+    // 乙炔冰笋：液态甲烷深渊「乙炔大晶洞」的高能乙炔晶柱（发光；近火连锁爆炸，见 AcetyleneSpireBlock）。
     public static final Supplier<Block> ACETYLENE_SPIRE = register("acetylene_spire", () ->
-            new Block(props(MapColor.SAND, 1.0F, 1.0F, SoundType.AMETHYST).lightLevel(s -> 8)));
-    // 托林菌网：巢穴/大巢的分解者有机壁（把生物残渣重整回托林）。
+            new AcetyleneSpireBlock(props(MapColor.SAND, 1.0F, 1.0F, SoundType.AMETHYST).lightLevel(s -> 8).randomTicks()));
+    // 托林菌网：巢穴/大巢的分解者有机壁（分解生物残渣重整回托林，见 TholinMyceliumBlock）。
     public static final Supplier<Block> THOLIN_MYCELIUM = register("tholin_mycelium", () ->
-            new Block(props(MapColor.COLOR_BROWN, 0.6F, 0.6F, SoundType.MOSS)));
+            new TholinMyceliumBlock(props(MapColor.COLOR_BROWN, 0.6F, 0.6F, SoundType.MOSS).randomTicks()));
+    // 氢泡菌毯：荒原低洼化能菌毯（缓释 H₂ 气泡，浮游体/蹒兽食源；近火轻微轰燃，见 HydrogenBubbleMatBlock）。
+    public static final Supplier<Block> HYDROGEN_BUBBLE_MAT = register("hydrogen_bubble_mat", () ->
+            new HydrogenBubbleMatBlock(props(MapColor.COLOR_GREEN, 0.4F, 0.4F, SoundType.MOSS_CARPET).randomTicks()));
+
+    // ---- 材料加工链被动生产方块（MC2/MC3，带方块实体）----
+    // 集氢罩：架在氢泡菌毯上被动产氢（见 HydrogenCollectorBlock）。不要求正确工具，确保掉落。
+    public static final Supplier<Block> HYDROGEN_COLLECTOR = register("hydrogen_collector", () ->
+            new HydrogenCollectorBlock(props(MapColor.METAL, 2.0F, 3.0F, SoundType.METAL)));
+    // 托林堆肥槽：架在托林菌网上，吞生物残渣产托林粉末（见 TholinComposterBlock）。
+    public static final Supplier<Block> THOLIN_COMPOSTER = register("tholin_composter", () ->
+            new TholinComposterBlock(props(MapColor.COLOR_BROWN, 1.2F, 2.0F, SoundType.WOOD)));
 
     // ---- 流体方块（无 BlockItem，用桶交互；可作维度 default_fluid）----
     //? if forge {

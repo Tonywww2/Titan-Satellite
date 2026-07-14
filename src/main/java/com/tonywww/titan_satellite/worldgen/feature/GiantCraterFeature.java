@@ -71,6 +71,10 @@ public class GiantCraterFeature extends Feature<NoneFeatureConfiguration> {
                     if (hasPool && horiz < (radius - 2) * 0.35D) {
                         pos.set(wx, floorY + 1, wz);
                         setBlock(level, pos, methane);     // 坑底微型甲烷湖
+                        // worldgen 的 setBlock 不触发 onPlace/邻居更新 → LiquidBlock 的自动调度不发生，
+                        // 甲烷源会冻结不流动（要等玩家扰动邻居才评估流动）。手动调度流体 tick 使其自然流动铺平。
+                        level.scheduleTick(pos.immutable(), methane.getFluidState().getType(),
+                                methane.getFluidState().getType().getTickDelay(level));
                     }
                 } else {
                     // 凸起坑缘环：贴合该列真实地表垒一圈矮唇（始终连地、不悬浮）

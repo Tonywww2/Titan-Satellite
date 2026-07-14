@@ -51,8 +51,11 @@ public class TitanStructure extends Structure {
         ChunkPos chunkPos = context.chunkPos();
         int x = chunkPos.getMiddleBlockX();
         int z = chunkPos.getMiddleBlockZ();
+        // 用 OCEAN_FLOOR_WG（实心顶）而非 WORLD_SURFACE_WG：后者把 default_fluid（液态甲烷）
+        // 液面也算作地表，低海拔柱上常覆 1-2 格薄甲烷 → 结构会锚在甲烷面上系统性悬空 1-2 格。
+        // 全 mod 的 feature 一律用 OCEAN_FLOOR_WG（实心顶），此处对齐。
         int surfaceY = context.chunkGenerator().getFirstOccupiedHeight(
-                x, z, Heightmap.Types.WORLD_SURFACE_WG, context.heightAccessor(), context.randomState());
+                x, z, Heightmap.Types.OCEAN_FLOOR_WG, context.heightAccessor(), context.randomState());
 
         int y;
         if (variant == Variant.GEODE || variant == Variant.GREAT_HIVE) {

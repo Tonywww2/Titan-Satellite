@@ -29,6 +29,7 @@ public class MethaneLakeFeature extends Feature<NoneFeatureConfiguration> {
         int depth = 2 + random.nextInt(3);             // 2-4
         BlockState methane = TSBlocks.LIQUID_METHANE_BLOCK.get().defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        int minY = level.getMinBuildHeight();
         boolean placed = false;
         // 嵌入地形深处：仅把实心方块替换为液态甲烷，形成被岩体包裹的封闭甲烷囊（不开口、不外溢）
         for (int dx = -radius; dx <= radius; dx++) {
@@ -39,8 +40,13 @@ public class MethaneLakeFeature extends Feature<NoneFeatureConfiguration> {
                 }
                 int localDepth = distSq <= (radius - 1) * (radius - 1) ? depth : Math.max(1, depth - 1);
                 for (int dy = 0; dy > -localDepth; dy--) {
-                    pos.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
-                    if (!level.getBlockState(pos).isAir()) {
+                    int y = origin.getY() + dy;
+                    if (y < minY + 5) {
+                        break;                                   // 基岩守卫：不下探到基岩层(Y 0-4)
+                    }
+                    pos.set(origin.getX() + dx, y, origin.getZ() + dz);
+                    BlockState existing = level.getBlockState(pos);
+                    if (!existing.isAir() && !existing.is(Blocks.BEDROCK)) {
                         setBlock(level, pos, methane);
                         level.scheduleTick(pos.immutable(), methane.getFluidState().getType(), 5);
                         placed = true;

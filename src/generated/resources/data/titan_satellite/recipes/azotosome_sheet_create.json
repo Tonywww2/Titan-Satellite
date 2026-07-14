@@ -1,0 +1,26 @@
+{
+  "type": "create:compacting",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "titan_satellite:aero_membrane"
+    },
+    {
+      "item": "titan_satellite:tholin_dust"
+    },
+    {
+      "item": "titan_satellite:tholin_dust"
+    }
+  ],
+  "results": [
+    {
+      "count": 1,
+      "item": "titan_satellite:azotosome_sheet"
+    }
+  ]
+}

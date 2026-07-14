@@ -5,13 +5,18 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
-          "condition": "minecraft:survives_explosion"
+          "condition": "minecraft:match_tool",
+          "predicate": {
+            "items": [
+              "minecraft:shears"
+            ]
+          }
         }
       ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "titan_satellite:methane_ice_bloom"
+          "name": "titan_satellite:methane_ice_shard"
         }
       ],
       "rolls": 1.0

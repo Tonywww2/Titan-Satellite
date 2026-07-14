@@ -27,3 +27,25 @@ mandatory = true
 versionRange = "[1.20.1,1.21)"
 ordering = "NONE"
 side = "BOTH"
+
+# 可选前置（联动配方用；缺省不影响加载）
+[[dependencies.titan_satellite]]
+modId = "create"
+mandatory = false
+versionRange = "[0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.titan_satellite]]
+modId = "mekanism"
+mandatory = false
+versionRange = "[0,)"
+ordering = "AFTER"
+side = "BOTH"
+
+[[dependencies.titan_satellite]]
+modId = "farmersdelight"
+mandatory = false
+versionRange = "[0,)"
+ordering = "AFTER"
+side = "BOTH"

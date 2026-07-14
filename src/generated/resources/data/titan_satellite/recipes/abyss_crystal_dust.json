@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "create"
+      }
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "titan_satellite:abyss_crystal"
+    }
+  ],
+  "result": {
+    "count": 2,
+    "item": "titan_satellite:abyss_crystal_dust"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    "titan_satellite:hardened_tholin"
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "count": 4,
+      "id": "titan_satellite:tholin_dust"
+    }
+  ]
+}

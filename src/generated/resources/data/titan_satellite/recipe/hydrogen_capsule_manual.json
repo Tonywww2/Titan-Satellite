@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "titan_satellite:hydrogen_bubble_mat"
+  ],
+  "result": {
+    "count": 1,
+    "id": "titan_satellite:hydrogen_capsule"
+  }
+}

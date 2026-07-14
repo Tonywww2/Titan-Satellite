@@ -59,6 +59,7 @@ public final class TSDataGenerators {
         //?} else {
         /*generator.addProvider(event.includeServer(), new TSLootTableProvider(output, lookup));
         *///?}
+        generator.addProvider(event.includeServer(), new TSRecipeProvider(output));
         generator.addProvider(event.includeServer(), new TSBlockTagsProvider(output, lookup, existing));
         generator.addProvider(event.includeServer(), new TSEntityTypeTagsProvider(output, lookup, existing));
     }

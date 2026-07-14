@@ -1,0 +1,21 @@
+{
+  "type": "create:mixing",
+  "heatRequirement": "heated",
+  "ingredients": [
+    "titan_satellite:condensed_acetylene",
+    "titan_satellite:condensed_acetylene",
+    "titan_satellite:hydrogen_capsule"
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "results": [
+    {
+      "count": 1,
+      "id": "titan_satellite:polyphosphazene_coenzyme"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "type": "mekanism:crushing",
+  "input": {
+    "ingredient": "titan_satellite:tholin_crystal"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "output": {
+    "count": 2,
+    "id": "titan_satellite:tholin_crystal_dust"
+  }
+}

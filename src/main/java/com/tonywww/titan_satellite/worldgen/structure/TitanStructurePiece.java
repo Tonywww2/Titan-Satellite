@@ -41,7 +41,7 @@ public class TitanStructurePiece extends StructurePiece {
     *///?}
 
     private final TitanStructure.Variant variant;
-    private final BlockPos origin;
+    private BlockPos origin;
 
     public TitanStructurePiece(BlockPos origin, TitanStructure.Variant variant) {
         super(TSStructures.TITAN_PIECE.get(), 0, makeBox(origin, variant));
@@ -77,14 +77,44 @@ public class TitanStructurePiece extends StructurePiece {
     @Override
     public void postProcess(WorldGenLevel level, StructureManager structureManager, ChunkGenerator generator,
                             RandomSource random, BoundingBox box, ChunkPos chunkPos, BlockPos pos) {
+        BoundingBox useBox = box;
+        // 地表建筑：findGenerationPoint 只能用 noise 估算高度（结构定位早于地形 feature），会被
+        // local_modifications 地形改造（陨石坑等）+ 估算精度偏差顶到半空。此处已是 surface_structures 步、
+        // 该区块地形（含地形改造）已完全生成，直接向下扫描该列真实实心地表把整座建筑重锚下去，消除悬浮。
+        // 用扫描而非 level.getHeight(*_WG)：_WG heightmap 在已加载区块（/place）未 prime 会报错；直接读方块两处都稳。
+        // 地表建筑均在单区块内（box ≤13 宽、origin 居区块中心），origin 列恒在当前区块内可读。
+        if (variant != TitanStructure.Variant.GEODE && variant != TitanStructure.Variant.GREAT_HIVE) {
+            int actualTop = findSolidTop(level, origin.getX(), origin.getZ(), origin.getY());
+            if (actualTop != Integer.MIN_VALUE && actualTop != origin.getY()) {
+                this.origin = new BlockPos(origin.getX(), actualTop, origin.getZ());
+                useBox = makeBox(this.origin, variant);
+            }
+        }
         switch (variant) {
             case GEODE -> buildGeode(level, box, random);
             case GREAT_HIVE -> buildGreatHive(level, box, random);
-            case DERRICK -> buildDerrick(level, box, random);
-            case CRASHED_PROBE -> buildCrashedProbe(level, box, random);
-            case BEACON -> buildBeacon(level, box, random);
-            default -> buildOutpost(level, box, random);
+            case DERRICK -> buildDerrick(level, useBox, random);
+            case CRASHED_PROBE -> buildCrashedProbe(level, useBox, random);
+            case BEACON -> buildBeacon(level, useBox, random);
+            default -> buildOutpost(level, useBox, random);
         }
+    }
+
+    /** 从估算高度上方向下扫描，返回该列最高实心（非空气非流体）方块 Y——即真实地表顶，
+     *  含 local_modifications 的挖/填改造。不依赖 heightmap 是否 prime，worldgen 与 /place 均可靠。
+     *  找不到（越出底部）返回 {@link Integer#MIN_VALUE}。 */
+    private static int findSolidTop(WorldGenLevel level, int x, int z, int estimateY) {
+        BlockPos.MutableBlockPos mp = new BlockPos.MutableBlockPos();
+        int top = estimateY + 32;
+        int bottom = level.getMinBuildHeight();
+        for (int y = top; y > bottom; y--) {
+            mp.set(x, y, z);
+            BlockState s = level.getBlockState(mp);
+            if (!s.isAir() && s.getFluidState().isEmpty()) {
+                return y;
+            }
+        }
+        return Integer.MIN_VALUE;
     }
 
     // ---- 托林晶洞：地下中空晶球 ----

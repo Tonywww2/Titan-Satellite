@@ -29,8 +29,9 @@ public class SpireFeature extends Feature<BlockStateConfiguration> {
         RandomSource random = context.random();
         BlockState state = context.config().state;
 
-        // 基座须踩在实心地面上（origin 下方实心），且 origin 处为空气（地表之上）
-        if (level.getBlockState(origin.below()).isAir() || !level.getBlockState(origin).isAir()) {
+        // 基座须踩在实心地面上（origin 下方非空气非流体），origin 处须可被替换（空气或流体）——甲烷海中亦可生长
+        BlockState below = level.getBlockState(origin.below());
+        if (below.isAir() || !below.getFluidState().isEmpty() || !isReplaceable(level.getBlockState(origin))) {
             return false;
         }
 
@@ -49,7 +50,7 @@ public class SpireFeature extends Feature<BlockStateConfiguration> {
                         continue;
                     }
                     pos.set(origin.getX() + dx, wy, origin.getZ() + dz);
-                    if (level.getBlockState(pos).isAir()) {
+                    if (isReplaceable(level.getBlockState(pos))) {
                         setBlock(level, pos, state);
                         placed = true;
                     }
@@ -57,5 +58,10 @@ public class SpireFeature extends Feature<BlockStateConfiguration> {
             }
         }
         return placed;
+    }
+
+    /** 可被尖塔替换的方块：空气或流体（使尖塔能在甲烷海等液体中从海底生长而非浮于液面）。 */
+    private static boolean isReplaceable(BlockState s) {
+        return s.isAir() || !s.getFluidState().isEmpty();
     }
 }

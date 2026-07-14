@@ -3,6 +3,8 @@ package com.tonywww.titan_satellite.entity;
 import com.tonywww.titan_satellite.block.CryovolcanicGeyserBlock;
 import com.tonywww.titan_satellite.registry.TSMobEffects;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
@@ -89,12 +91,23 @@ public class AmmoniaStalker extends Monster {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new GeyserLaunchGoal(this, 1.15D, 8));
-        this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 1.0D, false));
-        this.goalSelector.addGoal(3, new RandomStrollGoal(this, 0.8D));
-        this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8.0F));
-        this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+        // 远程：喷吐氨液（伤害随攻击力，并附异星毒素 + 挖掘疲劳）；5~14 格时启用，贴近改用近战。
+        this.goalSelector.addGoal(2, new RangedHitscan.AttackGoal(this, 5.0D, 14.0D, 25, 70, target -> {
+            RangedHitscan.beam(this, target,
+                    (float) (this.getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.75D),
+                    ParticleTypes.SPIT, SoundEvents.LLAMA_SPIT, 1.0F);
+            target.addEffect(TSMobEffects.tholinToxin(100, 0), this);
+            target.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 100, 0), this);
+        }));
+        this.goalSelector.addGoal(3, new MeleeAttackGoal(this, 1.0D, false));
+        this.goalSelector.addGoal(4, new RandomStrollGoal(this, 0.8D));
+        this.goalSelector.addGoal(5, new LookAtPlayerGoal(this, Player.class, 8.0F));
+        this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
+        // 顶级掠食（食物网 §3.1）：无玩家时猎食下位物种——托林织体蛛、冰硅甲虫。
+        this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, TholinWeaver.class, true));
+        this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, CryoScavenger.class, true));
     }
 
     /**

@@ -3,6 +3,6 @@
   "variant": "beacon",
   "biomes": "#titan_satellite:has_structure/beacon",
   "step": "surface_structures",
-  "terrain_adaptation": "beard_thin",
+  "terrain_adaptation": "none",
   "spawn_overrides": {}
 }

@@ -1,0 +1,28 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "titan_satellite:aero_membrane",
+    "titan_satellite:tholin_dust",
+    "titan_satellite:tholin_dust"
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "create"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "mekanism"
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "titan_satellite:azotosome_sheet"
+  }
+}

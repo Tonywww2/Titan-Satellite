@@ -64,6 +64,11 @@ public final class TSItems {
     // ---- M7 宏伟地物构成方块物品（T7.1）----
     public static final Supplier<Item> ACETYLENE_SPIRE = blockItem("acetylene_spire", TSBlocks.ACETYLENE_SPIRE);
     public static final Supplier<Item> THOLIN_MYCELIUM = blockItem("tholin_mycelium", TSBlocks.THOLIN_MYCELIUM);
+    public static final Supplier<Item> HYDROGEN_BUBBLE_MAT = blockItem("hydrogen_bubble_mat", TSBlocks.HYDROGEN_BUBBLE_MAT);
+
+    // ---- 材料加工链被动生产方块物品（MC2/MC3）----
+    public static final Supplier<Item> HYDROGEN_COLLECTOR = blockItem("hydrogen_collector", TSBlocks.HYDROGEN_COLLECTOR);
+    public static final Supplier<Item> THOLIN_COMPOSTER = blockItem("tholin_composter", TSBlocks.THOLIN_COMPOSTER);
 
     // ---- 流体桶 ----
     //? if forge {
@@ -89,6 +94,25 @@ public final class TSItems {
     public static final Supplier<Item> THOLIN_FIBRE = register("tholin_fibre", () -> new Item(new Item.Properties()));
     public static final Supplier<Item> TOUGH_NEURAL_GLAND = register("tough_neural_gland", () -> new Item(new Item.Properties()));
     public static final Supplier<Item> THOLIN_SILK_SAC = register("tholin_silk_sac", () -> new Item(new Item.Properties()));
+
+    // ---- 材料加工链（MC1；均普通物品，加工由配方/方块行为驱动，无生化模拟）----
+    // 中间体
+    public static final Supplier<Item> THOLIN_DUST = register("tholin_dust", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> CONDENSED_ACETYLENE = register("condensed_acetylene", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> HYDROGEN_CAPSULE = register("hydrogen_capsule", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> METEORIC_IRON_INGOT = register("meteoric_iron_ingot", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> SILICON_DUST = register("silicon_dust", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> METHANE_ICE_SHARD = register("methane_ice_shard", () -> new Item(new Item.Properties()));
+    // 三试剂（晶体粉碎）
+    public static final Supplier<Item> ABYSS_CRYSTAL_DUST = register("abyss_crystal_dust", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> AMMONIA_SALT = register("ammonia_salt", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> THOLIN_CRYSTAL_DUST = register("tholin_crystal_dust", () -> new Item(new Item.Properties()));
+    // 高级产物
+    public static final Supplier<Item> POLYPHOSPHAZENE_COENZYME = register("polyphosphazene_coenzyme", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> AZOTOSOME_SHEET = register("azotosome_sheet", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> CRYO_ALLOY_INGOT = register("cryo_alloy_ingot", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> BIO_BATTERY = register("bio_battery", () -> new Item(new Item.Properties()));
+    public static final Supplier<Item> TITAN_ANTIDOTE = register("titan_antidote", () -> new Item(new Item.Properties()));
 
     // ---- 刷怪蛋 ----
     //? if forge {

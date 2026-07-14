@@ -39,15 +39,15 @@ public final class TSEntities {
                     .clientTrackingRange(8)
                     .build("aero_jelly"));
 
-    // 冰硅甲虫（中立，桩）。
+    // 冰硅甲虫（中立·清道夫）。
     public static final Supplier<EntityType<CryoScavenger>> CRYO_SCAVENGER = REGISTER.register("cryo_scavenger",
             () -> EntityType.Builder.of(CryoScavenger::new, MobCategory.CREATURE)
                     .sized(0.9F, 0.6F).clientTrackingRange(10).build("cryo_scavenger"));
-    // 氨泉掉食者（敌对，桩）。
+    // 氨泉掠食者（敌对·顶级掠食）。
     public static final Supplier<EntityType<AmmoniaStalker>> AMMONIA_STALKER = REGISTER.register("ammonia_stalker",
             () -> EntityType.Builder.of(AmmoniaStalker::new, MobCategory.MONSTER)
                     .sized(0.9F, 1.4F).clientTrackingRange(10).build("ammonia_stalker"));
-    // 失控探测器（敌对，桩）。
+    // 失控探测器（敌对·遗迹守卫）。
     public static final Supplier<EntityType<CorruptedProbe>> CORRUPTED_PROBE = REGISTER.register("corrupted_probe",
             () -> EntityType.Builder.of(CorruptedProbe::new, MobCategory.MONSTER)
                     .sized(0.8F, 0.8F).clientTrackingRange(12).build("corrupted_probe"));

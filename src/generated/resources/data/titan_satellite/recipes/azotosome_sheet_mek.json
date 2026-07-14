@@ -1,0 +1,24 @@
+{
+  "type": "mekanism:combining",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "extraInput": {
+    "amount": 2,
+    "ingredient": {
+      "item": "titan_satellite:tholin_dust"
+    }
+  },
+  "mainInput": {
+    "ingredient": {
+      "item": "titan_satellite:aero_membrane"
+    }
+  },
+  "output": {
+    "count": 1,
+    "item": "titan_satellite:azotosome_sheet"
+  }
+}

@@ -72,6 +72,20 @@
             { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:tholin_sand" } }
           ]
         }
+      },
+      {
+        "_comment": "托林沙海 硬化托林 带状+区域生成：位于顶层沙之下(约 depth 2-6)的次表层硬壳带，由 minecraft:surface 噪声门控成片状区域，在雅丹/拱门/沙丘断面露出为水平结壳层——替代原粘土式圆盘特征(tholin_crust_patch disk)。放在表层沙规则之后故顶层沙保留。区域密度调 noise_threshold.min_threshold(越低越广)，带厚调 stone_depth.offset。",
+        "type": "minecraft:condition",
+        "if_true": { "type": "minecraft:biome", "biome_is": ["titan_satellite:tholin_dune_sea"] },
+        "then_run": {
+          "type": "minecraft:condition",
+          "if_true": { "type": "minecraft:noise_threshold", "noise": "minecraft:surface", "min_threshold": 0.25, "max_threshold": 2.0 },
+          "then_run": {
+            "type": "minecraft:condition",
+            "if_true": { "type": "minecraft:stone_depth", "offset": 6, "surface_type": "floor", "add_surface_depth": false, "secondary_depth_range": 0 },
+            "then_run": { "type": "minecraft:block", "result_state": { "Name": "titan_satellite:hardened_tholin" } }
+          }
+        }
       }
     ]
   },

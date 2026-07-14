@@ -59,6 +59,10 @@ public class TSLanguageProvider extends LanguageProvider {
         t("block.titan_satellite.frost_bush", "Frost Bush", "霜枯灌木");
         t("block.titan_satellite.acetylene_spire", "Acetylene Ice Spire", "乙炔冰笋");
         t("block.titan_satellite.tholin_mycelium", "Tholin Mycelium", "托林菌网");
+        t("block.titan_satellite.hydrogen_bubble_mat", "Hydrogen Bubble Mat", "氢泡菌毯");
+        t("block.titan_satellite.hydrogen_collector", "Hydrogen Collector", "集氢罩");
+        t("block.titan_satellite.tholin_composter", "Tholin Composter", "托林堆肥槽");
+        t("block.titan_satellite.tholin_composter.hint", "Needs Tholin Mycelium below; insert biomatter (fibre / silk sac / twig / rotten flesh).", "需下方为托林菌网；投入生物残渣（纤维 / 丝囊 / 枝条 / 腐肉）。");
 
         // 物品
         t("item.titan_satellite.aero_membrane", "Aero-Membrane", "浮游薄膜");
@@ -70,6 +74,22 @@ public class TSLanguageProvider extends LanguageProvider {
         t("item.titan_satellite.tholin_fibre", "Tholin Fibre", "托林纤维");
         t("item.titan_satellite.tough_neural_gland", "Tough Neural Gland", "强韧神经腺");
         t("item.titan_satellite.tholin_silk_sac", "Tholin Silk Sac", "托林丝囊");
+
+        // 材料加工链物品（MC1）
+        t("item.titan_satellite.tholin_dust", "Tholin Dust", "托林粉末");
+        t("item.titan_satellite.condensed_acetylene", "Condensed Acetylene", "凝乙炔");
+        t("item.titan_satellite.hydrogen_capsule", "Hydrogen Capsule", "氢气瓶");
+        t("item.titan_satellite.meteoric_iron_ingot", "Meteoric Iron Ingot", "陨铁锭");
+        t("item.titan_satellite.silicon_dust", "Silicon Dust", "硅晶粉");
+        t("item.titan_satellite.methane_ice_shard", "Methane Ice Shard", "甲烷冰晶");
+        t("item.titan_satellite.abyss_crystal_dust", "Abyss Crystal Dust", "深渊晶粉");
+        t("item.titan_satellite.ammonia_salt", "Ammonia Salt", "氨盐");
+        t("item.titan_satellite.tholin_crystal_dust", "Tholin Crystal Dust", "托林晶粉");
+        t("item.titan_satellite.polyphosphazene_coenzyme", "Polyphosphazene Coenzyme", "多磷腈辅酶");
+        t("item.titan_satellite.azotosome_sheet", "Azotosome Sheet", "氮质体膜片");
+        t("item.titan_satellite.cryo_alloy_ingot", "Cryo-Alloy Ingot", "冰晶合金锭");
+        t("item.titan_satellite.bio_battery", "Bio-Battery", "生物电池");
+        t("item.titan_satellite.titan_antidote", "Titan Antidote", "异星解毒剂");
         t("item.titan_satellite.liquid_methane_bucket", "Liquid Methane Bucket", "液态甲烷桶");
         t("item.titan_satellite.liquid_ammonia_bucket", "Liquid Ammonia Bucket", "液态氨桶");
 
@@ -78,7 +98,7 @@ public class TSLanguageProvider extends LanguageProvider {
         t("fluid_type.titan_satellite.liquid_ammonia", "Liquid Ammonia", "液态氨");
         t("item.titan_satellite.aero_jelly_spawn_egg", "Aero-Jelly Spawn Egg", "甲烷浮游体刷怪蛋");
         t("item.titan_satellite.cryo_scavenger_spawn_egg", "Cryo-Scavenger Spawn Egg", "冰硅甲虫刷怪蛋");
-        t("item.titan_satellite.ammonia_stalker_spawn_egg", "Ammonia Stalker Spawn Egg", "氨泉掉食者刷怪蛋");
+        t("item.titan_satellite.ammonia_stalker_spawn_egg", "Ammonia Stalker Spawn Egg", "氨泉掠食者刷怪蛋");
         t("item.titan_satellite.corrupted_probe_spawn_egg", "Tholin-Parasitized Probe Spawn Egg", "托林寄生探测器刷怪蛋");
         t("item.titan_satellite.tholin_weaver_spawn_egg", "Tholin-Weaver Spawn Egg", "托林织体蛛刷怪蛋");
         t("item.titan_satellite.native_ice_worm_spawn_egg", "Native Ice Worm Spawn Egg", "原生冰虫刷怪蛋");
@@ -91,7 +111,7 @@ public class TSLanguageProvider extends LanguageProvider {
         // 实体
         t("entity.titan_satellite.aero_jelly", "Aero-Jelly", "甲烷浮游体");
         t("entity.titan_satellite.cryo_scavenger", "Cryo-Scavenger", "冰硅甲虫");
-        t("entity.titan_satellite.ammonia_stalker", "Ammonia Stalker", "氨泉掉食者");
+        t("entity.titan_satellite.ammonia_stalker", "Ammonia Stalker", "氨泉掠食者");
         t("entity.titan_satellite.corrupted_probe", "Tholin-Parasitized Probe", "托林寄生探测器");
         t("entity.titan_satellite.tholin_weaver", "Tholin-Weaver", "托林织体蛛");
         t("entity.titan_satellite.native_ice_worm", "Native Ice Worm", "原生冰虫");

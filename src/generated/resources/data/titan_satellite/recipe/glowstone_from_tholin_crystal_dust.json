@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "titan_satellite:tholin_crystal_dust",
+    "titan_satellite:tholin_crystal_dust",
+    "titan_satellite:tholin_crystal_dust",
+    "titan_satellite:tholin_crystal_dust"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:glowstone"
+  }
+}

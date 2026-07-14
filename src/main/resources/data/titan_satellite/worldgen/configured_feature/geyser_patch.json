@@ -16,7 +16,14 @@
           }
         }
       },
-      "placement": []
+      "placement": [
+        {
+          "type": "minecraft:environment_scan",
+          "direction_of_search": "down",
+          "max_steps": 6,
+          "target_condition": { "type": "minecraft:solid" }
+        }
+      ]
     }
   }
 }

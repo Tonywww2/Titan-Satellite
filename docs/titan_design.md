@@ -91,16 +91,16 @@ Towering plateaus of weathered titan stone. Geologically similar to the Polar La
 *   **群系:** 极地迷宫冰原。**碳基（类珊瑚）**，多孔冰体空洞表面的半透明花簇。
 *   **已实现:** 方块 `methane_ice_bloom`（十字发光装饰）+ worldgen `ice_bloom_patch` + **火源检测连锁爆炸**（`randomTick` 扫邻域 → `level.explode` + 连锁引燃，C1 实测三株链爆）。
 
-### 2.4 〔扩充〕新增初级生产者 (New Primary Producers) ⬜
-*   **乙炔冰笋 (Acetylene Ice Spires):** 深渊/裂隙壁生长的高能乙炔富集晶柱，采集得「凝乙炔」（燃料/合成）。与甲烷海相邻，靠近火源同样易爆。**（M7 深渊「乙炔大晶洞」宏伟地物的构成方块。）**
-*   **氢泡菌毯 (Hydrogen Bubble Mats):** 荒原低洼处的化能菌毯，随机刻缓释 H₂ 气泡（`#minecraft:fire` 邻接 → 轻微轰燃），为浮游体提供食源。
-*   **托林菌网 (Tholin Mycelium):** 巢穴/洞穴内的分解者菌网，把生物残渣重整回托林——生态循环的「分解者」一环，也是冰虫巢穴/大巢的「生物有机壁」。
+### 2.4 〔扩充〕新增初级生产者 (New Primary Producers) ✅
+*   **乙烔冰笋 (Acetylene Ice Spires):** 深渊/裂隙壁生长的高能乙烔富集晶柱，采集得「凝乙烔」（燃料/合成）。与甲烷海相邻，靠近火源同样易爆。**（M7 深渊「乙烔大晶洞」宏伟地物的构成方块。）** **已实现:** `acetylene_spire`（发光方块）+ `AcetyleneSpireBlock` **近火剧烈连锁爆炸**（`randomTick`/`neighborChanged` 检测火源/着火实体 → `explode` 当量 2.4、高于甲烷冰花 + 沿晶脉 `scheduleTick` 链爆）。
+*   **氢泡菌毯 (Hydrogen Bubble Mats):** 荒原低洼处的化能菌毯，随机刻缓释 H₂ 气泡（`#minecraft:fire` 邻接 → 轻微轰燃），为浮游体/蹒兽提供食源。**已实现:** `hydrogen_bubble_mat` 方块 + `HydrogenBubbleMatBlock`（`randomTick` 释放 H₂ 气泡粒子；近火**轻微轰燃**当量 1.0 + 链爆）+ worldgen（陨坑荒原 / 荒芜高原 `random_patch` 生成）+ 氢营养蹒兽啼食（§3.7）。
+*   **托林菌网 (Tholin Mycelium):** 巢穴/洞穴内的分解者菌网，把生物残渣重整回托林——生态循环的「分解者」一环，也是冰虫巢穴/大巢的「生物有机壁」。**已实现:** `tholin_mycelium` 方块 + `TholinMyceliumBlock`（`randomTick` 散孢子 + 消解上方 1 格内本维度生物残渣掉落物，缓慢重整回托林）。
 
 ---
 
 ## 三、 特色生物群与食物网 (Fauna & Food Web)
 
-> 各物种的**代谢特化** + 实装状态。彼此之间暂无捕食 AI（食物网为 Lore + 分营养级刷怪），玩家为主要交互对象。
+> 各物种的**代谢特化** + 实装状态。食物网已由 **Lore + 分营养级刷怪** 深化为**运行时行为**：捕食者按 §3.1 能量流锁定下位物种（织体蜉猎浮游体 / 冰硅甲虫，氨泉掠食者猎织体蜉 / 冰硅甲虫），初级消费者主动摄食（浮游体滤食甲烷微浮群、蹒兽啼食氢泡菌毯），浮游体遇织体蜉逃逸，分解者（托林菌网）消解生物残渣。玩家仍是主要战斗交互对象。
 
 ### 3.1 营养级与能量流 (Trophic Flow)
 
@@ -247,10 +247,6 @@ flowchart LR
 *   **机制核心 (Core Mechanics):** 深渊底部罕见生成 **甲烷池核心方块 (Methane Pool Core)**；玩家须合成放置 **特制甲烷泵 (Special Methane Pump)** 于其上方抽取（不可用桶直取）。泵含红石启动（不可重复）、自动化产物入上方容器、只出不进流体槽（CR-15）。
 *   **事件触发 (Event Trigger):** 泵启动 → 后端抛 `MethaneExtractionWaveEvent` → 轰鸣吸引深渊怪物 → 塔防式波次围攻，须在开采完成前保护泵站。波次已**纯生物化**（氨泉掠食者 + 第 3 波起托林织体蛛，E1）；**抽取量 → 生态压力 → 波次强度**联动（E2，见 §4.2）；胜利产出可接代谢材料（多磷腈辅酶等）。
 
-### 6.4 〔扩充〕新增生态事件 (New Ecological Events) ⬜
-*   **托林潮汐 (Tholin Bloom):** 周期性沙海托林粉末暴增 → 托林灌木/织体蛛短时繁盛，采集/危险双升。
-*   **甲烷退潮 (Methane Ebb):** 某区被过度抽取 → 甲烷海面下降、暴露乙炔冰笋与巢穴入口（`sea_level`/局部流体挂钩开采量，进阶）。
-
 ---
 
 ## 七、 生态 ↔ 群系分布矩阵 (Ecology × Biome Matrix)
@@ -298,9 +294,8 @@ flowchart LR
 ### 8.2 剩余路线 (Remaining Roadmap)
 > 生态深化主体已 ✅（见 §8.1 与 [titan_ecosystem_tasks.md](titan_ecosystem_tasks.md)）。剩余：
 1.  **代谢材料链 + 辅酶增效泵** ⬜（高·深度）：多磷腈辅酶等新 item 链 + 泵燃料接口。
-2.  **托林潮汐 / 甲烷退潮 周期事件** ⬜（E5）。
-3.  **M7 宏伟地物与结构** ✅（10 地物 + 4 结构 + 2 新方块（乙炔冰笋/托林菌网），已实测；贴图/几何为占位，可后续精修）。
-4.  **lang/创造栏/loot 全量补齐 + runClient 目视打磨** ⬜（G1）。
+2.  **M7 宏伟地物与结构** ✅（10 地物 + 4 结构 + 2 新方块（乙炔冰笋/托林菌网），已实测；贴图/几何为占位，可后续精修）。
+3.  **lang/创造栏/loot 全量补齐 + runClient 目视打磨** ⬜（G1）。
 
 ### 8.3 平衡与可调参数 (Tunables)
 

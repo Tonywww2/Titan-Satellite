@@ -38,6 +38,7 @@ public class MethaneMareFeature extends Feature<NoneFeatureConfiguration> {
         BlockState air = Blocks.AIR.defaultBlockState();
         BlockState methane = TSBlocks.LIQUID_METHANE_BLOCK.get().defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        int minY = level.getMinBuildHeight();
         boolean placed = false;
 
         for (int dx = -radius; dx <= radius; dx++) {
@@ -52,8 +53,13 @@ public class MethaneMareFeature extends Feature<NoneFeatureConfiguration> {
                 int wz = origin.getZ() + dz;
                 // 嵌入地形深处：不清空上方地表（避免高空开口/液体外溢），仅把实心替换为液态甲烷
                 for (int dy = 0; dy > -localSink; dy--) {
-                    pos.set(wx, origin.getY() + dy, wz);
-                    if (!level.getBlockState(pos).isAir()) {
+                    int y = origin.getY() + dy;
+                    if (y < minY + 5) {
+                        break;                                   // 基岩守卫：不下探到基岩层(Y 0-4)
+                    }
+                    pos.set(wx, y, wz);
+                    BlockState existing = level.getBlockState(pos);
+                    if (!existing.isAir() && !existing.is(Blocks.BEDROCK)) {
                         setBlock(level, pos, methane);
                         level.scheduleTick(pos.immutable(), methane.getFluidState().getType(), 5);
                         placed = true;

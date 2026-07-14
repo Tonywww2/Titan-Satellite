@@ -79,6 +79,8 @@ public class TitanSatellite {
         modBus.addListener(TSEntities::onAttributeCreation);
         //? if neoforge {
         /*modBus.addListener(com.tonywww.titan_satellite.blockentity.SpecialMethanePumpBlockEntity::registerCapabilities);
+        modBus.addListener(com.tonywww.titan_satellite.blockentity.HydrogenCollectorBlockEntity::registerCapabilities);
+        modBus.addListener(com.tonywww.titan_satellite.blockentity.TholinComposterBlockEntity::registerCapabilities);
         com.tonywww.titan_satellite.worldgen.TSWorldgenTypes.register(modBus);
         com.tonywww.titan_satellite.worldgen.structure.TSStructures.register(modBus);
         *///?}

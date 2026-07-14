@@ -58,6 +58,10 @@ public final class TSCreativeTabs {
                         // M7 宏伟地物构成方块
                         output.accept(TSBlocks.ACETYLENE_SPIRE.get());
                         output.accept(TSBlocks.THOLIN_MYCELIUM.get());
+                        output.accept(TSBlocks.HYDROGEN_BUBBLE_MAT.get());
+                        // 材料加工链被动生产方块（MC2/MC3）
+                        output.accept(TSBlocks.HYDROGEN_COLLECTOR.get());
+                        output.accept(TSBlocks.THOLIN_COMPOSTER.get());
                         // 流体桶
                         output.accept(TSItems.LIQUID_METHANE_BUCKET.get());
                         output.accept(TSItems.LIQUID_AMMONIA_BUCKET.get());
@@ -71,6 +75,21 @@ public final class TSCreativeTabs {
                         output.accept(TSItems.THOLIN_FIBRE.get());
                         output.accept(TSItems.TOUGH_NEURAL_GLAND.get());
                         output.accept(TSItems.THOLIN_SILK_SAC.get());
+                        // 材料加工链（MC1）
+                        output.accept(TSItems.THOLIN_DUST.get());
+                        output.accept(TSItems.CONDENSED_ACETYLENE.get());
+                        output.accept(TSItems.HYDROGEN_CAPSULE.get());
+                        output.accept(TSItems.METEORIC_IRON_INGOT.get());
+                        output.accept(TSItems.SILICON_DUST.get());
+                        output.accept(TSItems.METHANE_ICE_SHARD.get());
+                        output.accept(TSItems.ABYSS_CRYSTAL_DUST.get());
+                        output.accept(TSItems.AMMONIA_SALT.get());
+                        output.accept(TSItems.THOLIN_CRYSTAL_DUST.get());
+                        output.accept(TSItems.POLYPHOSPHAZENE_COENZYME.get());
+                        output.accept(TSItems.AZOTOSOME_SHEET.get());
+                        output.accept(TSItems.CRYO_ALLOY_INGOT.get());
+                        output.accept(TSItems.BIO_BATTERY.get());
+                        output.accept(TSItems.TITAN_ANTIDOTE.get());
                         // 刷怪蛋
                         output.accept(TSItems.AERO_JELLY_SPAWN_EGG.get());
                         output.accept(TSItems.CRYO_SCAVENGER_SPAWN_EGG.get());

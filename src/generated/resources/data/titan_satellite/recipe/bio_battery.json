@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": "titan_satellite:azotosome_sheet",
+    "B": "titan_satellite:depleted_battery",
+    "C": "titan_satellite:polyphosphazene_coenzyme",
+    "P": "titan_satellite:precision_components",
+    "S": "titan_satellite:silicon_dust"
+  },
+  "pattern": [
+    "SPS",
+    "CBC",
+    "SAS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "titan_satellite:bio_battery"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    "titan_satellite:acetylene_spire"
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "create"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "mekanism"
+      }
+    }
+  ],
+  "result": {
+    "count": 2,
+    "id": "titan_satellite:condensed_acetylene"
+  }
+}
