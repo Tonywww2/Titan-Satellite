@@ -1,6 +1,0 @@
-{
-    "type":  "neoforge:add_features",
-    "biomes":  "titan_satellite:cryovolcanic_cliff",
-    "features":  "titan_satellite:frozen_ammonia_falls",
-    "step":  "top_layer_modification"
-}

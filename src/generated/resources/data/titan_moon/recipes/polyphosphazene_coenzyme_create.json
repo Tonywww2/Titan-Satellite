@@ -1,0 +1,30 @@
+{
+  "type": "create:mixing",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "titan_moon:condensed_acetylene"
+    },
+    {
+      "item": "titan_moon:condensed_acetylene"
+    },
+    {
+      "item": "titan_moon:condensed_acetylene"
+    },
+    {
+      "item": "titan_moon:hydrogen_capsule"
+    }
+  ],
+  "results": [
+    {
+      "count": 1,
+      "item": "titan_moon:polyphosphazene_coenzyme"
+    }
+  ]
+}

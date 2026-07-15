@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:disk",
+  "config": {
+    "state_provider": {
+      "fallback": { "type": "minecraft:simple_state_provider", "state": { "Name": "titan_moon:crushed_ice" } },
+      "rules": []
+    },
+    "target": { "type": "minecraft:matching_blocks", "blocks": ["titan_moon:packed_methane_ice"] },
+    "radius": { "type": "minecraft:uniform", "value": { "min_inclusive": 2, "max_inclusive": 4 } },
+    "half_height": 1
+  }
+}

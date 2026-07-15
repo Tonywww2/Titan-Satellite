@@ -1,0 +1,12 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "titan_moon:polar_labyrinth"
+  ],
+  "spawners": {
+    "type": "titan_moon:native_ice_worm",
+    "weight": 3,
+    "minCount": 1,
+    "maxCount": 1
+  }
+}

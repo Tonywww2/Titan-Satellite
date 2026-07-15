@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "titan_satellite:barren_plateau",
-  "features": "titan_satellite:weathered_hoodoo",
-  "step": "surface_structures"
-}

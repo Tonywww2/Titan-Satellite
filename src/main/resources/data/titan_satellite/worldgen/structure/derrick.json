@@ -1,8 +1,0 @@
-{
-  "type": "titan_satellite:titan_structure",
-  "variant": "derrick",
-  "biomes": "#titan_satellite:has_structure/derrick",
-  "step": "surface_structures",
-  "terrain_adaptation": "none",
-  "spawn_overrides": {}
-}

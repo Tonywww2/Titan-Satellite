@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:barren_plateau",
+  "features": "titan_moon:titan_ore_vein",
+  "step": "underground_ores"
+}

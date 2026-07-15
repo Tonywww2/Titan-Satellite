@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "create"
+      }
+    },
+    {
+      "type": "forge:not",
+      "value": {
+        "type": "forge:mod_loaded",
+        "modid": "mekanism"
+      }
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "titan_moon:aero_membrane"
+    },
+    {
+      "item": "titan_moon:tholin_dust"
+    },
+    {
+      "item": "titan_moon:tholin_dust"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "titan_moon:azotosome_sheet"
+  }
+}

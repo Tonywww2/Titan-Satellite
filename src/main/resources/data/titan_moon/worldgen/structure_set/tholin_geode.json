@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "titan_moon:tholin_geode",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 22,
+    "separation": 7,
+    "salt": 472946821
+  }
+}

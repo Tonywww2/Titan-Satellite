@@ -1,0 +1,19 @@
+{
+  "type": "thermal:pulverizer",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "thermal"
+    }
+  ],
+  "energy": 1500,
+  "ingredient": {
+    "item": "titan_moon:crystalline_twig"
+  },
+  "result": [
+    {
+      "count": 1,
+      "item": "titan_moon:silicon_dust"
+    }
+  ]
+}

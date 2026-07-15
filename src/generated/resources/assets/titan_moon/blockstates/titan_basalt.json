@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "titan_moon:block/titan_basalt"
+      },
+      {
+        "model": "titan_moon:block/titan_basalt",
+        "y": 90
+      },
+      {
+        "model": "titan_moon:block/titan_basalt",
+        "y": 180
+      },
+      {
+        "model": "titan_moon:block/titan_basalt",
+        "y": 270
+      }
+    ]
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:barren_plateau",
+  "features": "titan_moon:hoodoo_labyrinth",
+  "step": "local_modifications"
+}

@@ -1,0 +1,6 @@
+{
+  "type": "titan_moon:spire",
+  "config": {
+    "state": { "Name": "titan_moon:cryo_ice" }
+  }
+}

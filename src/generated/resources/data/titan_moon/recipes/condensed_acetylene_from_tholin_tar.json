@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.5,
+  "ingredient": {
+    "item": "titan_moon:tholin_tar"
+  },
+  "result": "titan_moon:condensed_acetylene"
+}

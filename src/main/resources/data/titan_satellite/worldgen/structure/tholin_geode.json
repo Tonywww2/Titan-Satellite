@@ -1,8 +1,0 @@
-{
-  "type": "titan_satellite:titan_structure",
-  "variant": "geode",
-  "biomes": "#titan_satellite:has_structure/tholin_geode",
-  "step": "underground_structures",
-  "terrain_adaptation": "none",
-  "spawn_overrides": {}
-}

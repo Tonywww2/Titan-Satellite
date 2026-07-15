@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "titan_moon:cryo_carapace"
+    },
+    {
+      "item": "titan_moon:cryo_carapace"
+    },
+    {
+      "item": "titan_moon:meteoric_iron_ingot"
+    }
+  ],
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "create"
+      }
+    },
+    {
+      "type": "neoforge:not",
+      "value": {
+        "type": "neoforge:mod_loaded",
+        "modid": "mekanism"
+      }
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "titan_moon:cryo_alloy_ingot"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "forge:add_features",
+  "biomes": [
+    "titan_moon:cratered_wastelands",
+    "titan_moon:barren_plateau",
+    "titan_moon:cryovolcanic_cliff"
+  ],
+  "features": "titan_moon:frost_bush",
+  "step": "vegetal_decoration"
+}

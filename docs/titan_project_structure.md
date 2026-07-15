@@ -1,10 +1,10 @@
-# 土卫六 (Titan Satellite) 项目结构文档
+# 土卫六 (Titan Moon) 项目结构文档
 
-# Titan Satellite - Project Structure Reference
+# Titan Moon - Project Structure Reference
 
 > 目标平台 / Target: Minecraft **1.20.1 Forge 47.4.4** (Java 17)
 > 构建 / Build: **Stonecutter (flat) + Architectury Loom**，源码纯 Java
-> mod id: `titan_satellite`；主包 / group: `com.tonywww.titan_satellite`
+> mod id: `titan_moon`；主包 / group: `com.tonywww.titan_moon`
 > 配套文档: [titan_design.md](titan_design.md)（创意）、[titan_technical_design.md](titan_technical_design.md)（技术方案）
 
 本文档精确到每一个类、字段与方法，反映当前代码真实状态（注册表类采用 `TSXxx` 命名）。
@@ -26,8 +26,8 @@ Titan_Satellite/
 │  └─ 1.20.1-forge/gradle.properties  # loom.platform=forge, vers.*
 ├─ docs/                            # 设计与参考文档
 └─ src/main/
-   ├─ java/com/tonywww/titan_satellite/
-   │  ├─ TitanSatellite.java        # @Mod 主类
+   ├─ java/com/tonywww/titan_moon/
+   │  ├─ TitanMoon.java        # @Mod 主类
    │  ├─ registry/                  # 全部 DeferredRegister（TSXxx）
    │  │  ├─ TSBlocks.java
    │  │  ├─ TSItems.java
@@ -44,9 +44,9 @@ Titan_Satellite/
    └─ resources/
       ├─ META-INF/mods.toml
       ├─ pack.mcmeta
-      ├─ titan_satellite.mixins.json
-      ├─ assets/titan_satellite/    # blockstates / models / lang
-      └─ data/titan_satellite/      # dimension_type / dimension / worldgen
+      ├─ titan_moon.mixins.json
+      ├─ assets/titan_moon/    # blockstates / models / lang
+      └─ data/titan_moon/      # dimension_type / dimension / worldgen
 ```
 
 ---
@@ -65,15 +65,15 @@ Titan_Satellite/
 
 ## 三、Java 源码：逐类逐函数 (Java Sources - Per Class)
 
-### 3.1 `com.tonywww.titan_satellite.TitanSatellite` — mod 主类
+### 3.1 `com.tonywww.titan_moon.TitanMoon` — mod 主类
 
-`@Mod(TitanSatellite.MODID)` 标注的入口类。
+`@Mod(TitanMoon.MODID)` 标注的入口类。
 
 | 成员 | 类型/签名 | 说明 |
 |---|---|---|
-| `MODID` | `public static final String` = `"titan_satellite"` | mod 唯一 id，注册与资源命名空间。 |
+| `MODID` | `public static final String` = `"titan_moon"` | mod 唯一 id，注册与资源命名空间。 |
 | `LOGGER` | `public static final Logger` (`LogUtils.getLogger()`) | SLF4J 日志器。 |
-| `TitanSatellite()` | 构造器 | 取 `FMLJavaModLoadingContext.get().getModEventBus()`；依次 `register(modBus)`：`TSFluidTypes`→`TSFluids`→`TSBlocks`→`TSItems`→`TSEntities`→`TSCreativeTabs`；`modBus.addListener(TSEntities::onAttributeCreation)`；输出加载日志。 |
+| `TitanMoon()` | 构造器 | 取 `FMLJavaModLoadingContext.get().getModEventBus()`；依次 `register(modBus)`：`TSFluidTypes`→`TSFluids`→`TSBlocks`→`TSItems`→`TSEntities`→`TSCreativeTabs`；`modBus.addListener(TSEntities::onAttributeCreation)`；输出加载日志。 |
 
 ### 3.2 `registry` 包
 
@@ -153,15 +153,15 @@ Titan_Satellite/
 
 | 成员 | 说明 |
 |---|---|
-| `TITAN : RegistryObject<CreativeModeTab>` | 标题 `itemGroup.titan_satellite.titan`；图标 `AERO_MEMBRANE`；`displayItems` 依次加入浮游薄膜 + 10 固体方块 + 2 流体桶。 |
+| `TITAN : RegistryObject<CreativeModeTab>` | 标题 `itemGroup.titan_moon.titan`；图标 `AERO_MEMBRANE`；`displayItems` 依次加入浮游薄膜 + 10 固体方块 + 2 流体桶。 |
 
 #### `TSDimensions` — 维度 ResourceKey 常量
 无 DeferredRegister，仅存 key 供运行时判定/传送。
 
 | 成员 | 说明 |
 |---|---|
-| `TITAN_LEVEL : ResourceKey<Level>` | `titan_satellite:titan`（维度实例 key）。 |
-| `TITAN_DIM_TYPE : ResourceKey<DimensionType>` | `titan_satellite:titan`（维度类型 key）。 |
+| `TITAN_LEVEL : ResourceKey<Level>` | `titan_moon:titan`（维度实例 key）。 |
+| `TITAN_DIM_TYPE : ResourceKey<DimensionType>` | `titan_moon:titan`（维度类型 key）。 |
 
 ### 3.3 `entity` 包
 
@@ -188,7 +188,7 @@ Titan_Satellite/
 | `onRegisterRenderers(EntityRenderersEvent.RegisterRenderers)` `@SubscribeEvent` | 为 `TSEntities.AERO_JELLY` 注册 `AeroJellyRenderer::new`。 |
 
 ### 3.5 `mixin` 包
-- `package-info.java`：Mixin 占位包文档。当前 `titan_satellite.mixins.json` 的 `mixins` 为空，按技术方案第六章后续加入。
+- `package-info.java`：Mixin 占位包文档。当前 `titan_moon.mixins.json` 的 `mixins` 为空，按技术方案第六章后续加入。
 
 ---
 
@@ -197,21 +197,21 @@ Titan_Satellite/
 ### 4.1 元数据
 | 文件 | 说明 |
 |---|---|
-| `META-INF/mods.toml` | `modLoader=javafml`；`${...}` 由 `processResources` 展开；声明 `[[mixins]] config=titan_satellite.mixins.json`；依赖 forge `[47,)` 与 minecraft `[1.20.1,1.21)`。 |
+| `META-INF/mods.toml` | `modLoader=javafml`；`${...}` 由 `processResources` 展开；声明 `[[mixins]] config=titan_moon.mixins.json`；依赖 forge `[47,)` 与 minecraft `[1.20.1,1.21)`。 |
 | `pack.mcmeta` | `pack_format=15`（1.20.1）。 |
-| `titan_satellite.mixins.json` | `package=com.tonywww.titan_satellite.mixin`；`compatibilityLevel=JAVA_17`；`refmap=titan_satellite.refmap.json`；`mixins=[]`、`client=[]`（占位）。 |
+| `titan_moon.mixins.json` | `package=com.tonywww.titan_moon.mixin`；`compatibilityLevel=JAVA_17`；`refmap=titan_moon.refmap.json`；`mixins=[]`、`client=[]`（占位）。 |
 
-### 4.2 assets（`assets/titan_satellite/`）
+### 4.2 assets（`assets/titan_moon/`）
 - `blockstates/`：11 个（10 固体方块 + 2 流体块，`liquid_ammonia`/`liquid_methane`；`tholin_sand` 等），单变体指向对应方块模型。
 - `models/block/`：11 个。固体为 `cube_all` + 复用原版贴图；流体为仅含 `particle` 贴图的占位模型。
 - `models/item/`：13 个。方块物品继承对应方块模型；`aero_membrane` 与两个桶继承 `item/generated`（复用 `phantom_membrane`/`water_bucket`）。
 - `lang/en_us.json`、`lang/zh_cn.json`：物品栏名 + 12 方块名 + 3 物品名（薄膜/两桶）+ 实体名。
 
-### 4.3 data（`data/titan_satellite/`）— 数据驱动 worldgen
+### 4.3 data（`data/titan_moon/`）— 数据驱动 worldgen
 | 文件 | 说明 |
 |---|---|
 | `dimension_type/titan.json` | `min_y=0, height=320, logical_height=320`；`has_skylight=true`；`ambient_light=0.1`；`effects=minecraft:overworld`；`monster_spawn_light_level` 为 `uniform{value:{0..7}}`（注意 IntProvider 需嵌套 `value`）。 |
-| `dimension/titan.json` | `type=titan_satellite:titan`；`generator=minecraft:noise`，`settings=titan_satellite:titan`，`biome_source=minecraft:fixed → titan_satellite:tholin_dune_sea`。 |
+| `dimension/titan.json` | `type=titan_moon:titan`；`generator=minecraft:noise`，`settings=titan_moon:titan`，`biome_source=minecraft:fixed → titan_moon:tholin_dune_sea`。 |
 | `worldgen/noise_settings/titan.json` | 见下方 worldgen 链路。 |
 | `worldgen/biome/tholin_dune_sea.json` | `has_precipitation=false`，`temperature=-0.7`；橙色系 `effects`；`spawners/spawn_costs/carvers={}`，`features=[]`。 |
 
@@ -223,8 +223,8 @@ Titan_Satellite/
 
 `noise_settings/titan.json` 关键参数（**已实测**）：
 - `sea_level = 72`
-- `default_block = titan_satellite:titan_stone`（**维度基础方块**）
-- `default_fluid = titan_satellite:liquid_methane`（level 0，**维度基础液体**）
+- `default_block = titan_moon:titan_stone`（**维度基础方块**）
+- `default_fluid = titan_moon:liquid_methane`（level 0，**维度基础液体**）
 - `noise = { min_y:0, height:320, size_horizontal:1, size_vertical:2 }`
 - `noise_router.final_density = y_clamped_gradient(from_y 40→+1, to_y 88→-1)` → 密度零点 y≈64
 - `surface_rule = condition(stone_depth: floor, offset 0, add_surface_depth) → block tholin_sand`（深度受限，仅表层）
@@ -259,9 +259,9 @@ Titan_Satellite/
 ## 七、验证状态 (Verification Status)
 
 - 编译：`.\gradlew.bat :1.20.1-forge:compileJava` → BUILD SUCCESSFUL（仅少量 `[removal]` 弃用告警）。
-- 完整构建：`.\gradlew.bat :1.20.1-forge:build` → 产出 `versions/1.20.1-forge/build/libs/titan_satellite-forge-0.1.0+1.20.1.jar`。
+- 完整构建：`.\gradlew.bat :1.20.1-forge:build` → 产出 `versions/1.20.1-forge/build/libs/titan_moon-forge-0.1.0+1.20.1.jar`。
 - 运行时：`.\gradlew.bat :1.20.1-forge:runServer` → `Done`，mod 加载、流体注册无初始化崩溃；
-  `titan_satellite:titan` 维度可进入、地形分层（titan_stone / tholin_sand / liquid_methane）实测命中。
+  `titan_moon:titan` 维度可进入、地形分层（titan_stone / tholin_sand / liquid_methane）实测命中。
 - **待验证**（需客户端）：`runClient` 目视维度天空/雾、方块贴图、`aero_jelly` 渲染、流体染色。
 
 ---

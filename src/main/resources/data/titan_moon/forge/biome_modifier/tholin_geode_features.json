@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:tholin_dune_sea",
+  "features": "titan_moon:tholin_geode",
+  "step": "local_modifications"
+}

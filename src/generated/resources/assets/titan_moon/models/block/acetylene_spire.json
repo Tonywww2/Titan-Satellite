@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "titan_moon:block/acetylene_spire"
+  }
+}

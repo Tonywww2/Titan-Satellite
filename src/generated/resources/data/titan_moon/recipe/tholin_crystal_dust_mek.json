@@ -1,0 +1,17 @@
+{
+  "type": "mekanism:crushing",
+  "input": {
+    "count": 1,
+    "item": "titan_moon:tholin_crystal"
+  },
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "output": {
+    "count": 1,
+    "id": "titan_moon:tholin_crystal_dust"
+  }
+}

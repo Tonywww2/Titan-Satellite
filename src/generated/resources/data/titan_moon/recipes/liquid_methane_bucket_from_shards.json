@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "titan_moon:methane_ice_shard"
+    },
+    {
+      "item": "titan_moon:methane_ice_shard"
+    },
+    {
+      "item": "titan_moon:methane_ice_shard"
+    },
+    {
+      "item": "titan_moon:methane_ice_shard"
+    },
+    {
+      "item": "minecraft:bucket"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "titan_moon:liquid_methane_bucket"
+  }
+}

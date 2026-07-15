@@ -1,0 +1,22 @@
+{
+  "_comment": "blend B: lerp(blend_ridges, methane 海底 base=6, w_methane). base=6 = sea_level(12)-6：methane_abyss 地表落在液面下 → noise_settings 的 default_fluid(液态甲烷)+sea_level=12 自动把 Y<12 的空气填成液态甲烷 → 开阔甲烷之海(地形层生成, 不靠特征, 无跨区块写入限制)。biome_height{16} 做 +/-16 起伏: 洼地最深至 min_y=0(12 格深), 高处(>sea_level)露出岛屿。",
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:mul",
+    "argument1": "titan_moon:height/blend_ridges",
+    "argument2": {
+      "type": "minecraft:add",
+      "argument1": 1.0,
+      "argument2": { "type": "minecraft:mul", "argument1": -1.0, "argument2": "titan_moon:height/w_methane" }
+    }
+  },
+  "argument2": {
+    "type": "minecraft:mul",
+    "argument1": {
+      "type": "minecraft:add",
+      "argument1": 6.0,
+      "argument2": { "type": "titan_moon:biome_height", "factor": 16.0 }
+    },
+    "argument2": "titan_moon:height/w_methane"
+  }
+}

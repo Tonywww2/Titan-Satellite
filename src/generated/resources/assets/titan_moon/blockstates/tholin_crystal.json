@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "titan_moon:block/tholin_crystal"
+      },
+      {
+        "model": "titan_moon:block/tholin_crystal",
+        "y": 90
+      },
+      {
+        "model": "titan_moon:block/tholin_crystal",
+        "y": 180
+      },
+      {
+        "model": "titan_moon:block/tholin_crystal",
+        "y": 270
+      }
+    ]
+  }
+}

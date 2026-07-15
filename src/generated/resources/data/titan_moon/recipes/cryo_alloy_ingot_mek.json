@@ -1,0 +1,24 @@
+{
+  "type": "mekanism:combining",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "extraInput": {
+    "ingredient": {
+      "item": "titan_moon:meteoric_iron_ingot"
+    }
+  },
+  "mainInput": {
+    "amount": 2,
+    "ingredient": {
+      "item": "titan_moon:cryo_carapace"
+    }
+  },
+  "output": {
+    "count": 1,
+    "item": "titan_moon:cryo_alloy_ingot"
+  }
+}

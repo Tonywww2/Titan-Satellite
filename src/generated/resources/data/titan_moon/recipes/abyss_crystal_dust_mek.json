@@ -1,0 +1,18 @@
+{
+  "type": "mekanism:crushing",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "input": {
+    "ingredient": {
+      "item": "titan_moon:abyss_crystal"
+    }
+  },
+  "output": {
+    "count": 1,
+    "item": "titan_moon:abyss_crystal_dust"
+  }
+}

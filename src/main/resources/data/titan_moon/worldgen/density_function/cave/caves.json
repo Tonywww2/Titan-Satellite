@@ -1,0 +1,20 @@
+{
+  "_comment": "Combined cave carve = min(tunnels, rooms) + y-floor bias. The floor bias adds +4 below Y4 (fading to 0 by Y18) so the world bottom stays solid (no void holes). Caves are fully active from Y18 up to each biome surface.",
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:min",
+    "argument1": "titan_moon:cave/spaghetti",
+    "argument2": "titan_moon:cave/cheese"
+  },
+  "argument2": {
+    "type": "minecraft:mul",
+    "argument1": 4.0,
+    "argument2": {
+      "type": "minecraft:y_clamped_gradient",
+      "from_y": 4,
+      "to_y": 18,
+      "from_value": 1.0,
+      "to_value": 0.0
+    }
+  }
+}

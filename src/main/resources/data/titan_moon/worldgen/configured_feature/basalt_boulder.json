@@ -1,0 +1,6 @@
+{
+  "type": "minecraft:forest_rock",
+  "config": {
+    "state": { "Name": "titan_moon:titan_basalt" }
+  }
+}

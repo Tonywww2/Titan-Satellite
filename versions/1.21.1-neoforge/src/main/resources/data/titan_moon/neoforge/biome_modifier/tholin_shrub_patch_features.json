@@ -1,0 +1,6 @@
+{
+    "type":  "neoforge:add_features",
+    "biomes":  "titan_moon:tholin_dune_sea",
+    "features":  "titan_moon:tholin_shrub_patch",
+    "step":  "vegetal_decoration"
+}

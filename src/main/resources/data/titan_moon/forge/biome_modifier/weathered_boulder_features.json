@@ -1,0 +1,9 @@
+{
+  "type": "forge:add_features",
+  "biomes": [
+    "titan_moon:cratered_wastelands",
+    "titan_moon:barren_plateau"
+  ],
+  "features": "titan_moon:weathered_boulder",
+  "step": "local_modifications"
+}

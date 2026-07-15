@@ -1,0 +1,18 @@
+{
+  "type": "mekanism:enriching",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "input": {
+    "ingredient": {
+      "item": "titan_moon:hardened_tholin"
+    }
+  },
+  "output": {
+    "count": 2,
+    "item": "titan_moon:tholin_dust"
+  }
+}

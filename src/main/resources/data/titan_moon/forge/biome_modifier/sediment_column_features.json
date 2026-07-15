@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:methane_abyss",
+  "features": "titan_moon:sediment_column",
+  "step": "surface_structures"
+}

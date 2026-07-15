@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "titan_moon:cryovolcanic_geyser"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "titan_moon:blocks/cryovolcanic_geyser"
+}

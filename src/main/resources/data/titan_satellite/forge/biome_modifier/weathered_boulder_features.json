@@ -1,9 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": [
-    "titan_satellite:cratered_wastelands",
-    "titan_satellite:barren_plateau"
-  ],
-  "features": "titan_satellite:weathered_boulder",
-  "step": "local_modifications"
-}

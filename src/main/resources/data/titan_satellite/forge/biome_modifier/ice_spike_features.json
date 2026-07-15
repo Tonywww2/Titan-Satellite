@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "titan_satellite:polar_labyrinth",
-  "features": "titan_satellite:ice_spike",
-  "step": "surface_structures"
-}

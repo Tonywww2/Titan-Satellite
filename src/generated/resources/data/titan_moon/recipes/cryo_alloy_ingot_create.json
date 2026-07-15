@@ -1,0 +1,27 @@
+{
+  "type": "create:mixing",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "heatRequirement": "heated",
+  "ingredients": [
+    {
+      "item": "titan_moon:cryo_carapace"
+    },
+    {
+      "item": "titan_moon:cryo_carapace"
+    },
+    {
+      "item": "titan_moon:meteoric_iron_ingot"
+    }
+  ],
+  "results": [
+    {
+      "count": 1,
+      "item": "titan_moon:cryo_alloy_ingot"
+    }
+  ]
+}

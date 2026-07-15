@@ -18,7 +18,7 @@
 
 | 层 | 内容 | 1.20.1 Forge 实现方式 |
 |---|---|---|
-| 世界生成 (Worldgen) | 维度、群系、地形、结构、矿物/特征 | 数据驱动 JSON (`data/titan_satellite/...`)，代码仅注册自定义 Feature/Structure 类型 |
+| 世界生成 (Worldgen) | 维度、群系、地形、结构、矿物/特征 | 数据驱动 JSON (`data/titan_moon/...`)，代码仅注册自定义 Feature/Structure 类型 |
 | 内容注册 (Content) | 方块、物品、流体、实体、生物效果、创造模式物品栏 | `DeferredRegister` + `RegistryObject` |
 | 大气与氛围 (Atmosphere) | 甲烷雨、浓橙雾、天空/能见度 | 客户端 `DimensionSpecialEffects` + biome 环境参数（极寒/无氧/低重力仅作背景设定，无生存适配层） |
 | 事件玩法 (Events) | 甲烷开采塔防、喷泉击飞、晶洞惊扰 | 方块实体 tick + 服务端调度 + 自定义 `ForgeEvent` + Mixin 定制刷怪 |
@@ -30,7 +30,7 @@
 
 ## 二、内容注册清单 (Registry Inventory)
 
-所有注册用 `DeferredRegister`，集中在 `registry/` 包，主类 `TitanSatellite` 统一 `register(modBus)`。
+所有注册用 `DeferredRegister`，集中在 `registry/` 包，主类 `TitanMoon` 统一 `register(modBus)`。
 
 ### 2.1 方块 (Blocks) -> `ModBlocks`
 注册到 `ForgeRegistries.BLOCKS`；每个方块同时在 `ModItems` 注册对应 `BlockItem`。
@@ -77,7 +77,7 @@
 
 ## 三、世界生成 (Worldgen, 数据驱动)
 
-维度/群系/噪声全部 JSON 化，位于 `src/main/resources/data/titan_satellite/`。
+维度/群系/噪声全部 JSON 化，位于 `src/main/resources/data/titan_moon/`。
 
 ### 3.1 维度三件套
 - `dimension_type/titan.json`：无天空光的浓雾维度参数（`has_skylight=false` 或低 `ambient_light`、`has_ceiling=false`、`min_y=0`、`height=320`、`logical_height=320`、`coordinate_scale`、`effects` 指向自定义或复用）。
@@ -147,7 +147,7 @@ RUNNING:
 
 ## 六、Mixin 接入点 (Mixin Targets)
 
-Loom 内建 Mixin 支持；配置 `titan_satellite.mixins.json`（骨架先留空 `mixins: []`，随功能逐步加入）。预期注入点：
+Loom 内建 Mixin 支持；配置 `titan_moon.mixins.json`（骨架先留空 `mixins: []`，随功能逐步加入）。预期注入点：
 
 | 目的 | 目标类/方法 | 注入方式 |
 |---|---|---|
@@ -171,8 +171,8 @@ Titan_Satellite/
   versions/
     1.20.1-forge/gradle.properties   # loom.platform=forge, vers.mcVersion, vers.deps.fml
   src/main/
-    java/com/tonywww/titan_satellite/
-      TitanSatellite.java        # @Mod 主类, MODID, DeferredRegister 汇总注册
+    java/com/tonywww/titan_moon/
+      TitanMoon.java        # @Mod 主类, MODID, DeferredRegister 汇总注册
       registry/                  # ModBlocks/ModItems/ModEntities/ModCreativeTabs/ModDimensions
       entity/                    # AeroJelly 等实体类
       client/                    # 客户端渲染注册(仅 Dist.CLIENT)
@@ -180,9 +180,9 @@ Titan_Satellite/
     resources/
       META-INF/mods.toml
       pack.mcmeta
-      titan_satellite.mixins.json
-      assets/titan_satellite/... # lang, blockstates, models
-      data/titan_satellite/...   # dimension_type, dimension, worldgen/biome
+      titan_moon.mixins.json
+      assets/titan_moon/... # lang, blockstates, models
+      data/titan_moon/...   # dimension_type, dimension, worldgen/biome
   gradlew / gradlew.bat / gradle/wrapper/  # Gradle Wrapper
 ```
 
@@ -218,7 +218,7 @@ Titan_Satellite/
 - **工具链组合可用**：Gradle `9.6.1`（wrapper）+ Stonecutter `0.9.6` + Architectury Loom `1.11.458` + Forge `1.20.1-47.4.4` 相互兼容；Gradle 以本机 jdk-21 运行（编译工具链 Java 17 由 foojay 解析）。
 - **配置成功**：`gradlew :1.20.1-forge:build --dry-run` → BUILD SUCCESSFUL，任务图正常。
 - **Java 编译通过**：`gradlew :1.20.1-forge:compileJava` → BUILD SUCCESSFUL（仅 4 条 `[removal]` 弃用告警，见下）。
-- **完整构建产出 jar**：`gradlew :1.20.1-forge:build` → 产出 `versions/1.20.1-forge/build/libs/titan_satellite-forge-0.1.0+1.20.1.jar`；`META-INF/mods.toml` 的 `${...}` 模板已正确展开；维度/群系/噪声/lang/模型等资源均已打包进 jar。
+- **完整构建产出 jar**：`gradlew :1.20.1-forge:build` → 产出 `versions/1.20.1-forge/build/libs/titan_moon-forge-0.1.0+1.20.1.jar`；`META-INF/mods.toml` 的 `${...}` 模板已正确展开；维度/群系/噪声/lang/模型等资源均已打包进 jar。
 
 ### 构建脚本落地时修正的两处（Kotlin DSL 陷阱）
 1. `createMinecraftArtifacts` 在配置期尚不存在（Loom 1.11 惰性注册该任务）→ 由 `named(...)` 改为
@@ -229,5 +229,5 @@ Titan_Satellite/
 - `new ResourceLocation(...)` 与 `FMLJavaModLoadingContext.get()` 在 Forge 47.4.4 被标记 `forRemoval`；1.20.1 下替代工厂方法未必存在，保持现状，待引入更高版本节点时用 Stonecutter `//? if` 版本化处理。
 
 ### 仍待验证（需启动游戏）
-1. **进游戏实测维度**：占位 worldgen JSON 已通过打包与静态校验，但尚未启动客户端确认维度可进入、地形正常。`gradlew :1.20.1-forge:runClient` 后新建世界，`/execute in titan_satellite:titan run tp @s 0 100 0` 核对地表 `tholin_sand`、Y 范围与群系橙色调。
-2. **实体渲染**：`/summon titan_satellite:aero_jelly` 确认复用史莱姆模型正常显示。
+1. **进游戏实测维度**：占位 worldgen JSON 已通过打包与静态校验，但尚未启动客户端确认维度可进入、地形正常。`gradlew :1.20.1-forge:runClient` 后新建世界，`/execute in titan_moon:titan run tp @s 0 100 0` 核对地表 `tholin_sand`、Y 范围与群系橙色调。
+2. **实体渲染**：`/summon titan_moon:aero_jelly` 确认复用史莱姆模型正常显示。

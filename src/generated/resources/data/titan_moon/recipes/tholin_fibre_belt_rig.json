@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "item": "titan_moon:tholin_fibre"
+    },
+    "M": {
+      "item": "titan_moon:meteoric_iron_ingot"
+    }
+  },
+  "pattern": [
+    "FFF",
+    "FMF"
+  ],
+  "result": {
+    "count": 1,
+    "item": "titan_moon:tholin_fibre_belt_rig"
+  }
+}

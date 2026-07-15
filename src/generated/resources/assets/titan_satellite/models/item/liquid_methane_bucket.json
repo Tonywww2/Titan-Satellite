@@ -1,5 +1,0 @@
-{
-  "parent": "${fluid_loader}:item/bucket",
-  "fluid": "titan_satellite:liquid_methane",
-  "loader": "${fluid_loader}:fluid_container"
-}

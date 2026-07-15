@@ -1,4 +1,4 @@
-rootProject.name = "titan_satellite"
+rootProject.name = "titan_moon"
 
 pluginManagement {
     repositories {

@@ -1,4 +1,4 @@
-# NeoForge 1.21.1 移植待办 (Titan Satellite)
+# NeoForge 1.21.1 移植待办 (Titan Moon)
 
 > 在现有 Stonecutter(flat)+Loom 基础上增加 `1.21.1-neoforge` 节点，与 `1.20.1-forge` 并行。
 > 每处平台差异用 Stonecutter `//? if forge { … } //?} else { … //?}` 隔离；共用体不变。
@@ -14,7 +14,7 @@
 - [x] NeoForge 已 provision、stonecutterGenerate 正常、`:1.21.1-neoforge:compileJava` 如期报错=待移植
 
 ## 阶段 1 · registry/ + 主类（地基） ✅ 完成（Forge 编译绿）
-- [x] 主类 `TitanSatellite`：`@Mod` 总线隔离 + `rl()` / `mcRl()` ResourceLocation 辅助
+- [x] 主类 `TitanMoon`：`@Mod` 总线隔离 + `rl()` / `mcRl()` ResourceLocation 辅助
 - [x] 9/9 registry 已移植：TSDimensions/TSCreativeTabs/TSBlockEntities/TSMobEffects/TSEntities/
       TSFluids/TSFluidTypes/TSBlocks/TSItems
 - 已确立范式：字段统一 `Supplier<T>`；`DeferredRegister.create(Registries.X, MODID)` 共用；
@@ -47,7 +47,7 @@
 - 无实体 override `finalizeSpawn` / 用 `MobType`（grep 确认，省事）；目标 1.21.1→Properties 不需 setId
 
 ## 阶段 4 · client/（11）✅ 完成（Forge 编译绿；NeoForge 客户端 API 已 javap 核实）
-- [x] 8 渲染器 `TEXTURE`+`FogHandler` METHANE_ABYSS+`TitanDimensionEffects` KEY → `TitanSatellite.rl(path)`（纯 vanilla 模型，无其他改动）
+- [x] 8 渲染器 `TEXTURE`+`FogHandler` METHANE_ABYSS+`TitanDimensionEffects` KEY → `TitanMoon.rl(path)`（纯 vanilla 模型，无其他改动）
 - [x] `TitanDimensionEffects`/`FogHandler`/`TitanClientEvents`：`RegisterDimensionSpecialEffectsEvent`/`ViewportEvent`/
       `EntityRenderersEvent`/`RegisterColorHandlersEvent` 事件 API 两版签名相同→仅 import + `@EventBusSubscriber` 注解隔离
 - [x] 甲烷/氨流体客户端染色：Forge `DynamicFluidContainerModel`(Forge-only) ↔ NeoForge
@@ -71,7 +71,7 @@
 ## 阶段 6 · data/（datagen）+ worldgen/ ✅ 完成（两端 :compileJava 均 BUILD SUCCESSFUL）
 - [x] datagen：NeoForge 保留了 Forge 风格模型生成器（`BlockStateProvider`/`ItemModelProvider`/`LanguageProvider`/
       `SoundDefinitionsProvider`/`BlockTagsProvider`/`DynamicFluidContainerModelBuilder` 同名，只换包 `net.neoforged.neoforge.*`）；
-      `GatherDataEvent`/`ExistingFileHelper` 换包；`new ResourceLocation` → `TitanSatellite.rl/mcRl/parse`
+      `GatherDataEvent`/`ExistingFileHelper` 换包；`new ResourceLocation` → `TitanMoon.rl/mcRl/parse`
 - [x] **1.21 loot datagen 大改**：`LootTableSubProvider.generate(BiConsumer<ResourceKey<LootTable>,…>)`；
       `SubProviderEntry(Function<HolderLookup.Provider,…>,…)`（子 provider 构造器收 provider）；
       `LootingEnchantFunction`→`EnchantedCountIncreaseFunction.lootingMultiplier(provider,…)`；
@@ -81,13 +81,13 @@
       ~17 feature/density 文件纯 vanilla 免改
 - [x] **javac 兜底捕获的 6 处 1.21 vanilla 变更**：`BaseEntityBlock.codec()`、`canBreatheUnderwater` final→`canDrownInFluidType`、
       Codec→MapCodec（density/structure）、`setLootTable(ResourceKey<LootTable>)`
-- [x] 构建坑：`mods.toml` 的 `[[dependencies.${id}]]` 表键 → 硬编码 `titan_satellite`（Loom TOML 解析）
+- [x] 构建坑：`mods.toml` 的 `[[dependencies.${id}]]` 表键 → 硬编码 `titan_moon`（Loom TOML 解析）
 
 ## 阶段 7 · 运行期与验证 ✅ 编译/打包完成
 - [x] **两端 `:compileJava` 均 BUILD SUCCESSFUL**（Forge 1.20.1 + NeoForge 1.21.1）
 - [x] `pack.mcmeta` pack_format 版本化：`vers.packFormat`（15 ↔ 34）经 processResources `expand` 注入
 - [x] **两端 `:build` 均 BUILD SUCCESSFUL**，产出 mod jar：
-      `titan_satellite-forge-0.1.0+1.20.1.jar`（344 KB）+ `titan_satellite-neoforge-0.1.0+1.21.1.jar`（342 KB）
+      `titan_moon-forge-0.1.0+1.20.1.jar`（344 KB）+ `titan_moon-neoforge-0.1.0+1.21.1.jar`（342 KB）
 - [x] 元数据分离正确：NeoForge 包内仅 `neoforge.mods.toml`（`mods.toml` 已 exclude）
 - [ ] （可选后续）`runClient`/`runData`/`runServer` 运行期冒烟；worldgen JSON 1.21 格式校验；
       NeoForge `AmmoniaStalker` 水下呼吸如需与 Forge 完全一致可加实体类型 tag `minecraft:can_breathe_under_water`

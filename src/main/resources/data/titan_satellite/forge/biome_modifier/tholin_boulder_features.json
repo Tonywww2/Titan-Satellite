@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "titan_satellite:tholin_dune_sea",
-  "features": "titan_satellite:tholin_boulder",
-  "step": "local_modifications"
-}

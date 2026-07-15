@@ -1,4 +1,4 @@
-# 土卫六 (Titan Satellite) — 总任务表 (Master Task Plan)
+# 土卫六 (Titan Moon) — 总任务表 (Master Task Plan)
 
 > 源 / Source: [设计案 titan_technical_design.md](titan_technical_design.md)（Stage 1 设计）· 现状 [titan_project_structure.md](titan_project_structure.md)。
 > 平行执行编排见 [平行任务表 parallel-tasks.md](parallel-tasks.md)。
@@ -29,7 +29,7 @@
 
 | ID | 任务 | Cx | Deps | 验收标准 | Files |
 |---|---|---|---|---|---|
-| ☑ T0.1 | 全注册与装配冻结：声明 M1–M5 全部方块/物品/实体/流体/生物效果/方块实体的 `RegistryObject`（指向桩类）；主类 wiring；全部 lang；客户端渲染器注册（指向桩） | L | agent1 | `build` 通过；`runServer` Done、所有注册项以桩存在；`runClient` 到标题页不崩 | `registry/TS*.java`, `TitanSatellite.java`, `block/*`, `entity/*`, `item/*`, `client/*Renderer.java`+`TitanClientEvents.java`, `lang/*.json` |
+| ☑ T0.1 | 全注册与装配冻结：声明 M1–M5 全部方块/物品/实体/流体/生物效果/方块实体的 `RegistryObject`（指向桩类）；主类 wiring；全部 lang；客户端渲染器注册（指向桩） | L | agent1 | `build` 通过；`runServer` Done、所有注册项以桩存在；`runClient` 到标题页不崩 | `registry/TS*.java`, `TitanMoon.java`, `block/*`, `entity/*`, `item/*`, `client/*Renderer.java`+`TitanClientEvents.java`, `lang/*.json` |
 | ☑ T0.2 | 系统与 worldgen 类型脚手架：worldgen 自定义类型注册（DensityFunction/Feature/Structure codec）+ 桁类；`MethaneExtractionWaveEvent`；Mixin 配置 + 插件；`is_titan` 群系标签（~~环境 Capability 接口 + 附加~~、~~`damage_type` 数据~~ 已随 **CR-5** 移除） | M | — | 编译通过；event/mixin 骨架就位、自订阅不需改主类；`is_titan` 标签加载无误 | `worldgen/**`（类型注册+桁）, `event/*`, `mixin/*`, `data/.../tags/worldgen/biome/is_titan.json` |
 
 **Gate 0**：`:1.20.1-forge:build` + `runServer` Done（全注册项以桩加载）+ `runClient` 到标题页。
@@ -42,7 +42,7 @@
 | ☑ T1.2 | 自定义 `noise_settings` + density functions（极端高差 0–320、**破碎感/悬崖峧壁**）+ 按群系 `surface_rule`；填充 `BiomeHeightDensityFunction`（群系影响地形高度） | L | T0.1,T0.2 | 地形体现峡谷/沙丘/断崖高差、**明显悬崖峧壁破碎感**；各群系地表方块正确 | `data/.../worldgen/noise_settings/titan.json`, `data/.../worldgen/density_function/*.json`, `worldgen/density/BiomeHeightDensityFunction.java` |
 | ☑ T1.3 | 特征：甲烷湖/陨石坑/巨型沙脊/冰层天坑/发光晶簇 → `configured_feature`+`placed_feature` + `forge:add_features` biome_modifier 注入 `#is_titan`（CR-4；biome JSON 不引用特征） | M | T0.1,T0.2 | 各特征经 biome_modifier 注入并生成 | `data/.../worldgen/configured_feature/*.json`, `placed_feature/*.json`, `data/.../forge/biome_modifier/*.json`, `worldgen/feature/*.java` |
 
-**Gate 1**：`runServer` → `execute in titan_satellite:titan` 探测：5 群系存在、高差地形与悬崖峧壁破碎感、按群系地表、特征生成。
+**Gate 1**：`runServer` → `execute in titan_moon:titan` 探测：5 群系存在、高差地形与悬崖峧壁破碎感、按群系地表、特征生成。
 
 ## Stage 2 · M2 生物
 
@@ -158,7 +158,7 @@ flowchart LR
 
 ## 完成定义 (Definition of Done)
 
-- ☐ M1：进入 `titan_satellite:titan`，五大群系按 Y/坐标分层、极端高差地形、**悬崖峧壁破碎感**、关键特征生成。
+- ☐ M1：进入 `titan_moon:titan`，五大群系按 Y/坐标分层、极端高差地形、**悬崖峧壁破碎感**、关键特征生成。
 - ☐ M2：三种生物完整 AI/属性/渲染/掉落，且在对应群系自然生成。
 - ~~M3~~：环境系统已取消（CR-5），无对应验收项。
 - ☐ M4：甲烷开采塔防波次可玩（含 Mixin 刷怪）；喷泉击飞；晶洞惊扰。

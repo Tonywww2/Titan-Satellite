@@ -266,7 +266,7 @@ flowchart LR
 
 ### 8.1 实现状态总览 (Implementation Status Overview)
 
-> 权威来源：`registry/TS*.java`、`entity/*.java`、`block/*.java`、`event/*.java`、`data/titan_satellite/worldgen/**`。
+> 权威来源：`registry/TS*.java`、`entity/*.java`、`block/*.java`、`event/*.java`、`data/titan_moon/worldgen/**`。
 
 | 设计元素 | 状态 | 代码/资源 id | 备注 |
 |---|---|---|---|

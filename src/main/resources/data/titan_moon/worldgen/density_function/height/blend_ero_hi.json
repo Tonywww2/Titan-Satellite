@@ -1,0 +1,22 @@
+{
+  "_comment": "blend A: lerp(blend_cont, cratered@72 (rugged +biome_height*8), w_cratered).",
+  "type": "minecraft:add",
+  "argument1": {
+    "type": "minecraft:mul",
+    "argument1": "titan_moon:height/blend_cont",
+    "argument2": {
+      "type": "minecraft:add",
+      "argument1": 1.0,
+      "argument2": { "type": "minecraft:mul", "argument1": -1.0, "argument2": "titan_moon:height/w_cratered" }
+    }
+  },
+  "argument2": {
+    "type": "minecraft:mul",
+    "argument1": {
+      "type": "minecraft:add",
+      "argument1": 72.0,
+      "argument2": { "type": "titan_moon:biome_height", "factor": 8.0 }
+    },
+    "argument2": "titan_moon:height/w_cratered"
+  }
+}

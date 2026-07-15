@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "titan_satellite:barren_plateau",
-  "features": "titan_satellite:pebble_field",
-  "step": "top_layer_modification"
-}

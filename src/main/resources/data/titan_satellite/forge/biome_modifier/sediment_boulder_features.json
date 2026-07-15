@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "titan_satellite:methane_abyss",
-  "features": "titan_satellite:sediment_boulder",
-  "step": "local_modifications"
-}

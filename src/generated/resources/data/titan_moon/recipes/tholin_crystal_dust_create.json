@@ -1,0 +1,21 @@
+{
+  "type": "create:crushing",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "create"
+    }
+  ],
+  "ingredients": [
+    {
+      "item": "titan_moon:tholin_crystal"
+    }
+  ],
+  "processingTime": 200,
+  "results": [
+    {
+      "count": 1,
+      "item": "titan_moon:tholin_crystal_dust"
+    }
+  ]
+}

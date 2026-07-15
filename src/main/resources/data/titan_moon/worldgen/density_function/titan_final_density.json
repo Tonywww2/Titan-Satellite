@@ -1,0 +1,37 @@
+{
+  "_comment": "Hard height filter carved by the cave system: min(height density + 3D detail, caves). Height density = 0.5*(target_height - y): solid below the biome band, air above, steep cliffs at biome borders. The terrain_detail 3D noise (surface offset = 4*noise*amp; amp 3.0 => typical +/-3, peak +/-8 blocks) is the ONLY 3D noise in this otherwise-2D heightmap terrain; it breaks the clean geometric cuboid faces into natural rugged rock. The min with titan_moon:cave/caves subtracts the cave voids.",
+  "type": "minecraft:min",
+  "argument1": {
+    "type": "minecraft:add",
+    "argument1": {
+      "type": "minecraft:mul",
+      "argument1": 0.5,
+      "argument2": {
+        "type": "minecraft:add",
+        "argument1": "titan_moon:titan_target_height",
+        "argument2": {
+          "type": "minecraft:mul",
+          "argument1": -1.0,
+          "argument2": {
+            "type": "minecraft:y_clamped_gradient",
+            "from_y": 0,
+            "to_y": 320,
+            "from_value": 0.0,
+            "to_value": 320.0
+          }
+        }
+      }
+    },
+    "argument2": {
+      "type": "minecraft:mul",
+      "argument1": 3.0,
+      "argument2": {
+        "type": "minecraft:noise",
+        "noise": "titan_moon:terrain_detail",
+        "xz_scale": 1.0,
+        "y_scale": 1.0
+      }
+    }
+  },
+  "argument2": "titan_moon:cave/caves"
+}

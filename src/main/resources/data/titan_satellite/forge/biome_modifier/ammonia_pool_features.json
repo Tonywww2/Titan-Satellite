@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "titan_satellite:cryovolcanic_cliff",
-  "features": "titan_satellite:ammonia_pool",
-  "step": "lakes"
-}

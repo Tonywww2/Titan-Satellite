@@ -1,0 +1,6 @@
+{
+    "type":  "neoforge:add_features",
+    "biomes":  "titan_moon:polar_labyrinth",
+    "features":  "titan_moon:surface_crystal",
+    "step":  "vegetal_decoration"
+}

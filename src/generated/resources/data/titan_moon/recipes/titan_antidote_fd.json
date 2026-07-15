@@ -1,0 +1,26 @@
+{
+  "type": "farmersdelight:cooking",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "farmersdelight"
+    }
+  ],
+  "cookingtime": 200,
+  "experience": 0.5,
+  "ingredients": [
+    {
+      "item": "titan_moon:tough_neural_gland"
+    },
+    {
+      "item": "titan_moon:toxic_gland"
+    },
+    {
+      "item": "titan_moon:ammonia_salt"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "titan_moon:titan_antidote"
+  }
+}

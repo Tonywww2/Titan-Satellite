@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:polar_labyrinth",
+  "features": "titan_moon:sponge_cave",
+  "step": "underground_decoration"
+}

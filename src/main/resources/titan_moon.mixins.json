@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.tonywww.titan_moon.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "titan_moon.refmap.json",
+  "plugin": "com.tonywww.titan_moon.mixin.TitanMixinPlugin",
+  "mixins": [
+    "WaveSpawnMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

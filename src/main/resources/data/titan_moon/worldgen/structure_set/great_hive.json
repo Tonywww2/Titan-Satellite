@@ -1,0 +1,11 @@
+{
+  "structures": [
+    { "structure": "titan_moon:great_hive", "weight": 1 }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 36,
+    "separation": 12,
+    "salt": 741852963
+  }
+}

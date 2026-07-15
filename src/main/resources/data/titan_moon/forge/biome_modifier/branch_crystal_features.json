@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:cratered_wastelands",
+  "features": "titan_moon:branch_crystal",
+  "step": "vegetal_decoration"
+}

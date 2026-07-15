@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "titan_moon:block/sedimentary_titan_stone"
+      },
+      {
+        "model": "titan_moon:block/sedimentary_titan_stone",
+        "y": 90
+      },
+      {
+        "model": "titan_moon:block/sedimentary_titan_stone",
+        "y": 180
+      },
+      {
+        "model": "titan_moon:block/sedimentary_titan_stone",
+        "y": 270
+      }
+    ]
+  }
+}

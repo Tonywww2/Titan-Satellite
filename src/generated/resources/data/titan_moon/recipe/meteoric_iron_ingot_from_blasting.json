@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.7,
+  "ingredient": {
+    "item": "titan_moon:meteor_fragment"
+  },
+  "result": {
+    "count": 1,
+    "id": "titan_moon:meteoric_iron_ingot"
+  }
+}

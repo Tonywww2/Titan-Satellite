@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "F": {
+      "item": "titan_moon:tholin_fibre"
+    },
+    "G": {
+      "item": "titan_moon:toxic_gland"
+    },
+    "S": {
+      "item": "titan_moon:tholin_silk_sac"
+    }
+  },
+  "pattern": [
+    "FGF",
+    "FSF"
+  ],
+  "result": {
+    "count": 1,
+    "id": "titan_moon:tholin_venom_glove"
+  }
+}

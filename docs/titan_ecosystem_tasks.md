@@ -59,8 +59,8 @@
 - **步骤：**
   1. 匿名类内覆写 `applyEffectTick(LivingEntity, amplifier)`：`entity.hurt(damageSources().magic()/自定义, 1.0F)`。
   2. 覆写 `isDurationEffectTick(duration, amplifier)`：仿凋零，周期 `40 >> amplifier`（等级越高越快），`isInstantenous()=false`。
-  3. （可选）自定义 `DamageType` `titan_satellite:alien_toxin`（数据 JSON，scaling `never`）作伤害源，便于 tooltip/免疫。
-- **验收（无头）：** `effect give @e[..] titan_satellite:tholin_toxin 30 0` → 目标 `data get entity @s Health` 随时间递减；效果计时正常；不误伤免疫源。
+  3. （可选）自定义 `DamageType` `titan_moon:alien_toxin`（数据 JSON，scaling `never`）作伤害源，便于 tooltip/免疫。
+- **验收（无头）：** `effect give @e[..] titan_moon:tholin_toxin 30 0` → 目标 `data get entity @s Health` 随时间递减；效果计时正常；不误伤免疫源。
 - **注意：** 这是 B1/D1/D2 及晶洞毒气的**共同依赖**，先做。
 
 #### A2 — 新掉落/材料 item 注册 〔P1 · S〕 ✅
@@ -68,7 +68,7 @@
 - **建立于：** `registry/TSItems.java`（`register(...)` 范式已有）、`TSCreativeTabs.java`、`lang`、`models/item/*`。
 - **新增 item：** `crystalline_twig`（晶化枝条）、`tholin_fibre`（托林纤维）、`tough_neural_gland`（强韧神经腺）、`tholin_silk_sac`（托林丝囊）。〔`polyphosphazene_coenzyme` 多磷腈辅酶列为**可选** P2 风味掉落，不做机制。〕
 - **步骤：** `register` 4 项 → 创造栏 `output.accept` → `item/generated` 模型（复用近似原版贴图占位）→ 中英 lang。
-- **验收：** `/give @p titan_satellite:crystalline_twig` 成功；创造栏可见；无 model/lang 缺失警告（runClient）。
+- **验收：** `/give @p titan_moon:crystalline_twig` 成功；创造栏可见；无 model/lang 缺失警告（runClient）。
 
 ---
 
@@ -78,7 +78,7 @@
 - **目标：** 把攻击附毒从**原版 POISON** 换成**异星毒素**，并附加**挖掘疲劳**（设计 §3.4 缺口①②）。
 - **建立于：** `entity/AmmoniaStalker.java`（`doHurtTarget` 现施 `MobEffects.POISON`）。
 - **步骤：** `doHurtTarget` 中 `living.addEffect(new MobEffectInstance(TSMobEffects.THOLIN_TOXIN.get(), dur, 0))` + `MobEffects.DIG_SLOWDOWN`（挖掘疲劳，短时）。
-- **验收（无头）：** `forceload` 平台，铁傀儡诱敌被咬后 `data get entity @e[type=iron_golem] ActiveEffects` 含 `titan_satellite:tholin_toxin` 与 `dig_slowdown`。
+- **验收（无头）：** `forceload` 平台，铁傀儡诱敌被咬后 `data get entity @e[type=iron_golem] ActiveEffects` 含 `titan_moon:tholin_toxin` 与 `dig_slowdown`。
 
 #### B2 — 冰硅甲虫「冰球冲撞」〔P2 · M〕 ✅
 - **目标：** 中立受击/索敌时进入「冰球态」高速撞击 + 击退（设计 §3.3 缺口）。
@@ -114,7 +114,7 @@
 
 #### C3 — 树枝结晶采「晶化枝条」〔P2 · S〕 ✅ （依赖 A2）
 - **目标：** `branch_crystal` 镐采产「晶化枝条」而非方块本身（设计 §2.1）。
-- **步骤：** `data/titan_satellite/loot_tables/blocks/branch_crystal.json`（`minecraft:block` 类型，掉 `crystalline_twig` 1–2，可加 `silk_touch` 例外掉方块）。
+- **步骤：** `data/titan_moon/loot_tables/blocks/branch_crystal.json`（`minecraft:block` 类型，掉 `crystalline_twig` 1–2，可加 `silk_touch` 例外掉方块）。
 - **验收：** `/loot spawn ~ ~ ~ mine <pos> <手持镐>` 或挖掘掉 `crystalline_twig`。
 
 ---
@@ -170,7 +170,7 @@
 #### E4 — 冰虫巢穴 Boss 化 + 生物有机壁 〔P3 · L〕 ✅ （依赖 D2）
 - **目标：** 设计 §5.2 缺口①②：`tholin_geode`/`sponge_cave` 内加「生物有机壁」方块（可复用/新增 `hardened_tholin` 变体）+ 精英冰虫作 Boss + 破坏晶体惊醒之。
 - **验收：** `/place` 结构含有机壁 + 惊扰生成冰虫。
-- **✅ 完成（CR-23）：** `TitanStructurePiece.buildGeode` 地板改 `HARDENED_THOLIN`（生物有机壁）+ 新增 `spawnIceWorm` 在 `tholin_geode` 内生成精英冰虫 Boss；破坏托林晶体经既有 `TholinCrystalBlock.disturb` 惊醒附近 `Enemy`（冰虫为 Monster 自动满足）。无头验证：`/place structure titan_satellite:tholin_geode`→ 结构生成 + 冰虫已在巢穴内 ✓。
+- **✅ 完成（CR-23）：** `TitanStructurePiece.buildGeode` 地板改 `HARDENED_THOLIN`（生物有机壁）+ 新增 `spawnIceWorm` 在 `tholin_geode` 内生成精英冰虫 Boss；破坏托林晶体经既有 `TholinCrystalBlock.disturb` 惊醒附近 `Enemy`（冰虫为 Monster 自动满足）。无头验证：`/place structure titan_moon:tholin_geode`→ 结构生成 + 冰虫已在巢穴内 ✓。
 
 ---
 

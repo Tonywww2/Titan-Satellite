@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "titan_moon:block/crushed_ice"
+      },
+      {
+        "model": "titan_moon:block/crushed_ice",
+        "y": 90
+      },
+      {
+        "model": "titan_moon:block/crushed_ice",
+        "y": 180
+      },
+      {
+        "model": "titan_moon:block/crushed_ice",
+        "y": 270
+      }
+    ]
+  }
+}

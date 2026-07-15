@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "titan_moon:cryo_alloy_ingot"
+    },
+    "P": {
+      "item": "titan_moon:precision_components"
+    }
+  },
+  "pattern": [
+    " C ",
+    "C C",
+    " P "
+  ],
+  "result": {
+    "count": 1,
+    "id": "titan_moon:cryo_alloy_ring_mount"
+  }
+}

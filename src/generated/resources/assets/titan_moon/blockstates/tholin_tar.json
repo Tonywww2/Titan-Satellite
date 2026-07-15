@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "titan_moon:block/tholin_tar"
+      },
+      {
+        "model": "titan_moon:block/tholin_tar",
+        "y": 90
+      },
+      {
+        "model": "titan_moon:block/tholin_tar",
+        "y": 180
+      },
+      {
+        "model": "titan_moon:block/tholin_tar",
+        "y": 270
+      }
+    ]
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "cookingtime": 200,
-  "experience": 0.7,
-  "ingredient": {
-    "item": "titan_satellite:meteor_fragment"
-  },
-  "result": "titan_satellite:meteoric_iron_ingot"
-}

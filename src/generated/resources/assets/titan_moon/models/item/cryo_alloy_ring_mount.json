@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "titan_moon:item/cryo_alloy_ring_mount"
+  }
+}

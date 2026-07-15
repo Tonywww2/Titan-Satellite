@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "titan_satellite:cryo_alloy_ring_mount",
-    "titan_satellite:tholin_fibre_belt_rig",
-    "titan_satellite:meteoric_iron_back_frame"
+    "titan_moon:cryo_alloy_ring_mount",
+    "titan_moon:tholin_fibre_belt_rig",
+    "titan_moon:meteoric_iron_back_frame"
   ]
 }

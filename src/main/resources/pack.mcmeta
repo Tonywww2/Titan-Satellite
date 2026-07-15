@@ -1,6 +1,6 @@
 {
   "pack": {
     "pack_format": ${pack_format},
-    "description": "Titan Satellite resources and data"
+    "description": "Titan Moon resources and data"
   }
 }

@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "titan_satellite:methane_abyss",
-  "features": "titan_satellite:abyss_crystal_cluster",
-  "step": "vegetal_decoration"
-}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:lake",
+  "config": {
+    "fluid": {
+      "type": "minecraft:simple_state_provider",
+      "state": { "Name": "titan_moon:liquid_ammonia", "Properties": { "level": "0" } }
+    },
+    "barrier": {
+      "type": "minecraft:simple_state_provider",
+      "state": { "Name": "titan_moon:cryo_ice" }
+    }
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:lake",
-  "config": {
-    "fluid": { "type": "minecraft:simple_state_provider", "state": { "Name": "titan_satellite:liquid_methane", "Properties": { "level": "0" } } },
-    "barrier": { "type": "minecraft:simple_state_provider", "state": { "Name": "titan_satellite:weathered_titan_stone" } }
-  }
-}

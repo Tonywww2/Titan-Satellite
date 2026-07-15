@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:cratered_wastelands",
+  "features": "titan_moon:impact_basin",
+  "step": "local_modifications"
+}

@@ -1,0 +1,24 @@
+{
+  "type": "mekanism:combining",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "mekanism"
+    }
+  ],
+  "extraInput": {
+    "ingredient": {
+      "item": "titan_moon:hydrogen_capsule"
+    }
+  },
+  "mainInput": {
+    "amount": 3,
+    "ingredient": {
+      "item": "titan_moon:condensed_acetylene"
+    }
+  },
+  "output": {
+    "count": 1,
+    "item": "titan_moon:polyphosphazene_coenzyme"
+  }
+}

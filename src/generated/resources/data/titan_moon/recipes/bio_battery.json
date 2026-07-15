@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "A": {
+      "item": "titan_moon:azotosome_sheet"
+    },
+    "B": {
+      "item": "titan_moon:depleted_battery"
+    },
+    "C": {
+      "item": "titan_moon:polyphosphazene_coenzyme"
+    },
+    "P": {
+      "item": "titan_moon:precision_components"
+    },
+    "S": {
+      "item": "titan_moon:silicon_dust"
+    }
+  },
+  "pattern": [
+    "SPS",
+    "CBC",
+    "SAS"
+  ],
+  "result": {
+    "count": 1,
+    "item": "titan_moon:bio_battery"
+  }
+}

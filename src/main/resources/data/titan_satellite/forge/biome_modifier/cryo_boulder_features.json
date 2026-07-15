@@ -1,9 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": [
-    "titan_satellite:polar_labyrinth",
-    "titan_satellite:cryovolcanic_cliff"
-  ],
-  "features": "titan_satellite:cryo_boulder",
-  "step": "local_modifications"
-}

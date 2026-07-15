@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:cryovolcanic_cliff",
+  "features": "titan_moon:cryo_pinnacle",
+  "step": "surface_structures"
+}

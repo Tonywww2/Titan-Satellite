@@ -1,0 +1,9 @@
+{
+  "feature": "titan_moon:tholin_shrub_patch",
+  "placement": [
+    { "type": "minecraft:count", "count": 5 },
+    { "type": "minecraft:in_square" },
+    { "type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG" },
+    { "type": "minecraft:biome" }
+  ]
+}

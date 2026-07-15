@@ -1,0 +1,26 @@
+{
+  "type": "thermal:smelter",
+  "conditions": [
+    {
+      "type": "forge:mod_loaded",
+      "modid": "thermal"
+    }
+  ],
+  "energy": 4000,
+  "ingredients": [
+    {
+      "count": 2,
+      "item": "titan_moon:cryo_carapace"
+    },
+    {
+      "count": 1,
+      "item": "titan_moon:meteoric_iron_ingot"
+    }
+  ],
+  "result": [
+    {
+      "count": 1,
+      "item": "titan_moon:cryo_alloy_ingot"
+    }
+  ]
+}

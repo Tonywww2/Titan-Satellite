@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:lake",
+  "config": {
+    "fluid": { "type": "minecraft:simple_state_provider", "state": { "Name": "titan_moon:liquid_methane", "Properties": { "level": "0" } } },
+    "barrier": { "type": "minecraft:simple_state_provider", "state": { "Name": "titan_moon:weathered_titan_stone" } }
+  }
+}

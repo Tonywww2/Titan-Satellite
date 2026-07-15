@@ -1,7 +1,0 @@
-{
-  "_comment": "Gentle smooth surface undulation (~unit range), used to give the flat biomes a desert-like relief.",
-  "type": "minecraft:noise",
-  "noise": "titan_satellite:titan_surface_wobble",
-  "xz_scale": 1.0,
-  "y_scale": 0.0
-}

@@ -95,5 +95,5 @@
 ## 备注 (Notes)
 
 - **纯色占位判定**：以贴图 PNG 文件大小区分——约 136–137 B 为单色占位（本次上色的 14 块）；343–742 B 为已有细节贴图（8 块，仅注释）。
-- **流体**：`liquid_methane` / `liquid_ammonia` 世界液面颜色由 [TSFluidTypes](../src/main/java/com/tonywww/titan_satellite/registry/TSFluidTypes.java) 的 `getTintColor` 控制（复用原版 water 贴图 + 染色），属**刻意的"近无色写实"**设定，本表不改其 tint，仅把破碎粒子 PNG 同步为同色。
+- **流体**：`liquid_methane` / `liquid_ammonia` 世界液面颜色由 [TSFluidTypes](../src/main/java/com/tonywww/titan_moon/registry/TSFluidTypes.java) 的 `getTintColor` 控制（复用原版 water 贴图 + 染色），属**刻意的"近无色写实"**设定，本表不改其 tint，仅把破碎粒子 PNG 同步为同色。
 - **待办**：`tholin_sand` 现贴图偏灰白，与土卫六橙色基调不符，建议后续按 `#C08A4A` 重着；`titan_gravel` 可偏暖褐。

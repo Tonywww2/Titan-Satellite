@@ -1,12 +1,12 @@
 {
   "values": [
-    "titan_satellite:aero_jelly",
-    "titan_satellite:cryo_scavenger",
-    "titan_satellite:ammonia_stalker",
-    "titan_satellite:corrupted_probe",
-    "titan_satellite:tholin_weaver",
-    "titan_satellite:native_ice_worm",
-    "titan_satellite:methane_midge",
-    "titan_satellite:hydrotroph_grazer"
+    "titan_moon:aero_jelly",
+    "titan_moon:cryo_scavenger",
+    "titan_moon:ammonia_stalker",
+    "titan_moon:corrupted_probe",
+    "titan_moon:tholin_weaver",
+    "titan_moon:native_ice_worm",
+    "titan_moon:methane_midge",
+    "titan_moon:hydrotroph_grazer"
   ]
 }

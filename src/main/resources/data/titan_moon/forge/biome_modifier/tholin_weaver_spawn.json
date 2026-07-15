@@ -1,0 +1,13 @@
+{
+  "type": "forge:add_spawns",
+  "biomes": [
+    "titan_moon:tholin_dune_sea",
+    "titan_moon:barren_plateau"
+  ],
+  "spawners": {
+    "type": "titan_moon:tholin_weaver",
+    "weight": 14,
+    "minCount": 1,
+    "maxCount": 2
+  }
+}

@@ -1,8 +1,0 @@
-{
-  "type": "titan_satellite:titan_structure",
-  "variant": "great_hive",
-  "biomes": "#titan_satellite:has_structure/great_hive",
-  "step": "underground_structures",
-  "terrain_adaptation": "none",
-  "spawn_overrides": {}
-}

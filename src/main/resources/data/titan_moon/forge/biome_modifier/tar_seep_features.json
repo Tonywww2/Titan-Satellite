@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:methane_abyss",
+  "features": "titan_moon:tar_seep",
+  "step": "top_layer_modification"
+}

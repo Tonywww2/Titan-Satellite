@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "titan_moon:liquid_hydrogen_bucket"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "item": "titan_moon:hydrogen_capsule"
+  }
+}

@@ -193,7 +193,7 @@ tasks {
         inputs.properties(props)
         // Forge 读 META-INF/mods.toml，NeoForge 读 META-INF/neoforge.mods.toml；两者都做占位展开，
         // 再按当前加载器排除另一个，避免多余元数据进包。
-        filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta", "assets/titan_satellite/models/item/liquid_methane_bucket.json", "assets/titan_satellite/models/item/liquid_ammonia_bucket.json", "data/titan_satellite/dimension/titan_orbit.json")) { expand(props) }
+        filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta", "assets/titan_moon/models/item/liquid_methane_bucket.json", "assets/titan_moon/models/item/liquid_ammonia_bucket.json", "data/titan_moon/dimension/titan_orbit.json")) { expand(props) }
         exclude(if (loader == "neoforge") "META-INF/mods.toml" else "META-INF/neoforge.mods.toml")
     }
     withType<JavaCompile> { options.release = javaVersion }

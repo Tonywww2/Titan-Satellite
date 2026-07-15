@@ -1,6 +1,0 @@
-{
-  "type": "titan_satellite:spire",
-  "config": {
-    "state": { "Name": "titan_satellite:packed_methane_ice" }
-  }
-}

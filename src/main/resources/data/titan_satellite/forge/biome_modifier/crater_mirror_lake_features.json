@@ -1,6 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": "titan_satellite:cratered_wastelands",
-  "features": "titan_satellite:crater_mirror_lake",
-  "step": "lakes"
-}

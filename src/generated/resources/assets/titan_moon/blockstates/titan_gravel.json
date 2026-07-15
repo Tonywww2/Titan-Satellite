@@ -1,0 +1,21 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "titan_moon:block/titan_gravel"
+      },
+      {
+        "model": "titan_moon:block/titan_gravel",
+        "y": 90
+      },
+      {
+        "model": "titan_moon:block/titan_gravel",
+        "y": 180
+      },
+      {
+        "model": "titan_moon:block/titan_gravel",
+        "y": 270
+      }
+    ]
+  }
+}

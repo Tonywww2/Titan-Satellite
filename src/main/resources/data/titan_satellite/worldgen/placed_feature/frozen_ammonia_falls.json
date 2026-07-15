@@ -1,9 +1,0 @@
-{
-  "feature": "titan_satellite:frozen_ammonia_falls",
-  "placement": [
-    { "type": "minecraft:rarity_filter", "chance": 40 },
-    { "type": "minecraft:in_square" },
-    { "type": "minecraft:heightmap", "heightmap": "WORLD_SURFACE_WG" },
-    { "type": "minecraft:biome" }
-  ]
-}

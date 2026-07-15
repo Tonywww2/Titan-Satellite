@@ -1,0 +1,15 @@
+{
+    "type":  "neoforge:add_spawns",
+    "biomes":  [
+                   "titan_moon:barren_plateau",
+                   "titan_moon:cratered_wastelands"
+               ],
+    "spawners":  [
+                     {
+                         "type":  "titan_moon:hydrotroph_grazer",
+                         "weight":  8,
+                         "minCount":  2,
+                         "maxCount":  4
+                     }
+                 ]
+}

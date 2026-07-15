@@ -1,4 +1,4 @@
-# 土卫六 (Titan Satellite) — 验收测试矩阵 (Acceptance Test Matrix)
+# 土卫六 (Titan Moon) — 验收测试矩阵 (Acceptance Test Matrix)
 
 > 对应 **PF-4 / T5.4**（平衡 + 验收矩阵 + DoD）。源：[parallel-tasks.md](parallel-tasks.md) 各任务 output + [task-plan.md](task-plan.md)。
 > 范围：**M0–M5（Stage A–F）**。M6（Stage G · 群系特色化，PG-1..4）为后续独立阶段，见 §5。
@@ -33,7 +33,7 @@
 - [x] **runServer Done**：全系统联动加载（worldgen + 5 群系 + 实体×4 + 事件×3 + mixin + 结构×2 + 流体交互 + 天空特效注册 + 平衡 config），无报错。
 - [x] **结构生成**：`/place structure` 两结构均 Generated、`/locate structure` 均找到自然实例。
 - [x] **全系统联动**：同一 `runServer` 内 summon 四生物、`/place` 结构、流体交互、config 波次缩放均正常，子系统互不冲突。
-- [x] **平衡 config**：`config/titan_satellite-common.toml` 生成；改 `waveMobHealthMultiplier` 后波次怪最大生命按乘子缩放（NBT 实测）。
+- [x] **平衡 config**：`config/titan_moon-common.toml` 生成；改 `waveMobHealthMultiplier` 后波次怪最大生命按乘子缩放（NBT 实测）。
 - [ ] **天空橙黄浓雾（肉眼）**：需 `runClient` 进 titan 维度目视（无头无法截屏）——见 §4。
 - [ ] **完整 `runClient` 通关（人工）**：需真人跑一遍（战斗/破坏/击飞/激光/音效）——见 §4。
 
@@ -41,7 +41,7 @@
 
 ## 3. 平衡参考 (Balance Reference)
 
-> 当前各系统平衡数值与其**设定位置**。带 ⚙ 者已由 PF-4 的 `config/titan_satellite-common.toml` 暴露为可调项；其余硬编码在各自 Owns 文件（改动需对应任务的 CR）。
+> 当前各系统平衡数值与其**设定位置**。带 ⚙ 者已由 PF-4 的 `config/titan_moon-common.toml` 暴露为可调项；其余硬编码在各自 Owns 文件（改动需对应任务的 CR）。
 
 | 系统 | 参数 | 当前值 | 设定位置 |
 |---|---|---|---|
@@ -61,7 +61,7 @@
 
 ## 4. 需人工 `runClient` 确认项 (Client-manual Verification)
 
-无头服无法驱动渲染/音效/玩家交互；以下须真人 `runClient` → 建世界 → `/execute in titan_satellite:titan run tp @s <x> 120 <z>` 逐项确认：
+无头服无法驱动渲染/音效/玩家交互；以下须真人 `runClient` → 建世界 → `/execute in titan_moon:titan run tp @s <x> 120 <z>` 逐项确认：
 
 1. **天空/雾**（PF-2/CR-9）：进 titan 呈橙黄雾；`methane_abyss` 浓雾（约 42 格）、其它群系淡雾（约 192 格）。
 2. **喷泉击飞手感**（PE-1）：站冰火山喷泉喷发瞬间被弹起。

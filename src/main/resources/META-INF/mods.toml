@@ -12,16 +12,16 @@ ${description}
 '''
 
 [[mixins]]
-config = "titan_satellite.mixins.json"
+config = "titan_moon.mixins.json"
 
-[[dependencies.titan_satellite]]
+[[dependencies.titan_moon]]
 modId = "forge"
 mandatory = true
 versionRange = "[47,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.titan_satellite]]
+[[dependencies.titan_moon]]
 modId = "minecraft"
 mandatory = true
 versionRange = "[1.20.1,1.21)"
@@ -29,7 +29,7 @@ ordering = "NONE"
 side = "BOTH"
 
 # 饰品前置（Curios）：本模组饰品依赖 Curios API，必需
-[[dependencies.titan_satellite]]
+[[dependencies.titan_moon]]
 modId = "curios"
 mandatory = true
 versionRange = "[5.9,)"
@@ -37,21 +37,21 @@ ordering = "AFTER"
 side = "BOTH"
 
 # 可选前置（联动配方用；缺省不影响加载）
-[[dependencies.titan_satellite]]
+[[dependencies.titan_moon]]
 modId = "create"
 mandatory = false
 versionRange = "[0,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.titan_satellite]]
+[[dependencies.titan_moon]]
 modId = "mekanism"
 mandatory = false
 versionRange = "[0,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies.titan_satellite]]
+[[dependencies.titan_moon]]
 modId = "farmersdelight"
 mandatory = false
 versionRange = "[0,)"

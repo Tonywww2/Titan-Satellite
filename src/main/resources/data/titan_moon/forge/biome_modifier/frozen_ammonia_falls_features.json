@@ -1,0 +1,6 @@
+{
+  "type": "forge:add_features",
+  "biomes": "titan_moon:cryovolcanic_cliff",
+  "features": "titan_moon:frozen_ammonia_falls",
+  "step": "top_layer_modification"
+}

@@ -1,9 +1,0 @@
-{
-  "type": "forge:add_features",
-  "biomes": [
-    "titan_satellite:cratered_wastelands",
-    "titan_satellite:barren_plateau"
-  ],
-  "features": "titan_satellite:hydrogen_bubble_mat",
-  "step": "vegetal_decoration"
-}
