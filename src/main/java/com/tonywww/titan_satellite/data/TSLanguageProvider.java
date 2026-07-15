@@ -91,7 +91,11 @@ public class TSLanguageProvider extends LanguageProvider {
         t("item.titan_satellite.cryo_alloy_ingot", "Cryo-Alloy Ingot", "冰晶合金锭");
         t("item.titan_satellite.bio_battery", "Bio-Battery", "生物电池");
         t("item.titan_satellite.titan_antidote", "Titan Antidote", "异星解毒剂");
-        t("item.titan_satellite.liquid_methane_bucket", "Liquid Methane Bucket", "液态甲烷桶");
+        // 饰品（Curios 扩展坞系列）
+        t("item.titan_satellite.cryo_alloy_ring_mount", "Cryo-Alloy Ring Mount", "冰晶合金指环座");
+        t("item.titan_satellite.tholin_fibre_belt_rig", "Tholin-Fibre Belt Rig", "托林纤维腰挂");
+        t("item.titan_satellite.meteoric_iron_back_frame", "Meteoric-Iron Back Frame", "陨铁背架");
+        t("item.titan_satellite.tholin_life_support_kit", "Tholin Life-Support Kit", "托林维生套件");        t("item.titan_satellite.liquid_methane_bucket", "Liquid Methane Bucket", "液态甲烷桶");
         t("item.titan_satellite.liquid_ammonia_bucket", "Liquid Ammonia Bucket", "液态氨桶");
         t("item.titan_satellite.liquid_hydrogen_bucket", "Liquid Hydrogen Bucket", "液氢桶");
 

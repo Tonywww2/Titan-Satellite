@@ -81,6 +81,10 @@ dependencies {
     if (loader == "neoforge") {
         "neoForge"("net.neoforged:neoforge:${property("vers.deps.fml")}")
 
+        // 饰品 API（Curios）：本模组饰品的实现依赖。modImplementation=编译期+dev 运行期（Loom 重映射）；
+        // 发布版由 neoforge.mods.toml 声明 required 依赖、用户自行安装 Curios。
+        "modImplementation"("maven.modrinth:curios:yohfFbgD")      // Curios 9.5.1+1.21.1 (NeoForge)
+
         // 可选前置（编译期 + dev 运行期）。modCompileOnly=编译期访问；modLocalRuntime=仅 dev 运行期
         // （不进发布产物、不强制用户装）。Mek/FD 的 NeoForge 包自包含（无 JiJ、仅需 minecraft+neoforge），
         // dev 运行期可用；Create 保持 compileOnly（同 Forge：client mixin 在 Loom dev 重映射崩溃）。
@@ -93,6 +97,10 @@ dependencies {
         "modLocalRuntime"("maven.modrinth:farmers-delight:GbNuOZ4S")
     } else {
         "forge"("net.minecraftforge:forge:$mcVersion-${property("vers.deps.fml")}")
+
+        // 饰品 API（Curios）：本模组饰品的实现依赖。modImplementation=编译期+dev 运行期（Loom 重映射）；
+        // 发布版由 mods.toml 声明 mandatory 依赖、用户自行安装 Curios。
+        "modImplementation"("maven.modrinth:curios:IPQlZkz1")      // Curios 5.14.1+1.20.1 (Forge)
 
         // 开发期运行时 mod（仅 Forge 节点；供 runClient/runServer 测试，不进入发布产物）
         // JEI（配方/物品查看）

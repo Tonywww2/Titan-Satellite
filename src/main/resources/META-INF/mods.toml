@@ -28,6 +28,14 @@ versionRange = "[1.20.1,1.21)"
 ordering = "NONE"
 side = "BOTH"
 
+# 饰品前置（Curios）：本模组饰品依赖 Curios API，必需
+[[dependencies.titan_satellite]]
+modId = "curios"
+mandatory = true
+versionRange = "[5.9,)"
+ordering = "AFTER"
+side = "BOTH"
+
 # 可选前置（联动配方用；缺省不影响加载）
 [[dependencies.titan_satellite]]
 modId = "create"

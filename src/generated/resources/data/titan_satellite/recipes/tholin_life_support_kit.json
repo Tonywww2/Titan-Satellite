@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "titan_satellite:condensed_acetylene"
+    },
+    "E": {
+      "item": "titan_satellite:polyphosphazene_coenzyme"
+    },
+    "H": {
+      "item": "titan_satellite:hydrogen_capsule"
+    },
+    "P": {
+      "item": "titan_satellite:precision_components"
+    }
+  },
+  "pattern": [
+    "CHC",
+    "HEH",
+    "CPC"
+  ],
+  "result": {
+    "count": 1,
+    "item": "titan_satellite:tholin_life_support_kit"
+  }
+}

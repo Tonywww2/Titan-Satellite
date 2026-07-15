@@ -58,6 +58,12 @@ public class TSItemModelProvider extends ItemModelProvider {
         generated("bio_battery", "titan_satellite:item/bio_battery");
         generated("titan_antidote", "titan_satellite:item/titan_antidote");
 
+        // 饰品（Curios 扩展坞系列，generated + 纯色占位贴图）
+        generated("cryo_alloy_ring_mount", "titan_satellite:item/cryo_alloy_ring_mount");
+        generated("tholin_fibre_belt_rig", "titan_satellite:item/tholin_fibre_belt_rig");
+        generated("meteoric_iron_back_frame", "titan_satellite:item/meteoric_iron_back_frame");
+        generated("tholin_life_support_kit", "titan_satellite:item/tholin_life_support_kit");
+
         // 流体桶：forge:fluid_container 动态模型（空桶轮廓 + 按流体 FluidType.getTintColor 染色的液面），
         // 不再复用固定蓝色的 water_bucket 贴图，故每种流体的桶显示各自的液体颜色。
         fluidBucket("liquid_methane_bucket", TSFluids.LIQUID_METHANE.get());

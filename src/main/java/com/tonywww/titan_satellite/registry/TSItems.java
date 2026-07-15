@@ -1,6 +1,8 @@
 package com.tonywww.titan_satellite.registry;
 
 import com.tonywww.titan_satellite.TitanSatellite;
+import com.tonywww.titan_satellite.curio.LifeSupportCurioItem;
+import com.tonywww.titan_satellite.curio.SlotExpanderCurioItem;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.BucketItem;
@@ -117,6 +119,17 @@ public final class TSItems {
     public static final Supplier<Item> CRYO_ALLOY_INGOT = mat("cryo_alloy_ingot", Rarity.RARE);
     public static final Supplier<Item> BIO_BATTERY = mat("bio_battery", Rarity.EPIC);
     public static final Supplier<Item> TITAN_ANTIDOTE = mat("titan_antidote", Rarity.RARE);
+
+    // ---- 饰品（Curios 扩展坞系列：放入通用 curio 栏 → 授予额外功能栏）----
+    public static final Supplier<Item> CRYO_ALLOY_RING_MOUNT = register("cryo_alloy_ring_mount",
+            () -> new SlotExpanderCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE), "ring", 1));
+    public static final Supplier<Item> THOLIN_FIBRE_BELT_RIG = register("tholin_fibre_belt_rig",
+            () -> new SlotExpanderCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), "belt", 1));
+    public static final Supplier<Item> METEORIC_IRON_BACK_FRAME = register("meteoric_iron_back_frame",
+            () -> new SlotExpanderCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), "back", 1));
+    // 维生套件（护符栏；每 10 秒回复 1 + 1% 最大生命值）
+    public static final Supplier<Item> THOLIN_LIFE_SUPPORT_KIT = register("tholin_life_support_kit",
+            () -> new LifeSupportCurioItem(new Item.Properties().stacksTo(1).rarity(Rarity.RARE), 200, 1.0F, 0.01F));
 
     // ---- 刷怪蛋 ----
     //? if forge {

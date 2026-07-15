@@ -91,6 +91,11 @@ public final class TSCreativeTabs {
                         output.accept(TSItems.CRYO_ALLOY_INGOT.get());
                         output.accept(TSItems.BIO_BATTERY.get());
                         output.accept(TSItems.TITAN_ANTIDOTE.get());
+                        // 饰品（Curios 扩展坞系列）
+                        output.accept(TSItems.CRYO_ALLOY_RING_MOUNT.get());
+                        output.accept(TSItems.THOLIN_FIBRE_BELT_RIG.get());
+                        output.accept(TSItems.METEORIC_IRON_BACK_FRAME.get());
+                        output.accept(TSItems.THOLIN_LIFE_SUPPORT_KIT.get());
                         // 刷怪蛋
                         output.accept(TSItems.AERO_JELLY_SPAWN_EGG.get());
                         output.accept(TSItems.CRYO_SCAVENGER_SPAWN_EGG.get());

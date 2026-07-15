@@ -92,6 +92,18 @@ public class TSRecipeProvider implements DataProvider {
                 "S", ts("silicon_dust"), "P", ts("precision_components"), "C", ts("polyphosphazene_coenzyme"),
                 "B", ts("depleted_battery"), "A", ts("azotosome_sheet"));
 
+        // 饰品（Curios 扩展坞系列：用 Titan 材料手工装配；常开无机器等价）
+        shaped("cryo_alloy_ring_mount", ts("cryo_alloy_ring_mount"), 1, null, new String[]{" C ", "C C", " P "},
+                "C", ts("cryo_alloy_ingot"), "P", ts("precision_components"));
+        shaped("tholin_fibre_belt_rig", ts("tholin_fibre_belt_rig"), 1, null, new String[]{"FFF", "FMF"},
+                "F", ts("tholin_fibre"), "M", ts("meteoric_iron_ingot"));
+        shaped("meteoric_iron_back_frame", ts("meteoric_iron_back_frame"), 1, null, new String[]{"MFM", "MPM"},
+                "M", ts("meteoric_iron_ingot"), "F", ts("tholin_fibre"), "P", ts("precision_components"));
+        // 维生套件（氢气 + 凝乙炷 + 多磷腈辅酶生化核心 + 精密外壳；常开）
+        shaped("tholin_life_support_kit", ts("tholin_life_support_kit"), 1, null, new String[]{"CHC", "HEH", "CPC"},
+                "C", ts("condensed_acetylene"), "H", ts("hydrogen_capsule"), "E", ts("polyphosphazene_coenzyme"),
+                "P", ts("precision_components"));
+
         // ---- 互斥 base：not(create)+not(mek)（粉碎/化学；有机器时禁用）----
         // 方块类原料获取易，故粉碎产出不再倍增（托林 4→2，其余晶粉 2→1），提高方块需求、降低粉末产出。
         shapeless("tholin_dust", ts("tholin_dust"), 2, notCreateMek(), ts("hardened_tholin"));

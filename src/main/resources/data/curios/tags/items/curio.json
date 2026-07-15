@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "titan_satellite:cryo_alloy_ring_mount",
+    "titan_satellite:tholin_fibre_belt_rig",
+    "titan_satellite:meteoric_iron_back_frame"
+  ]
+}
