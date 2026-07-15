@@ -166,14 +166,12 @@ public class TitanStructurePiece extends StructurePiece {
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
         int fy = origin.getY();
 
-        // 地板 + 浅地基
         for (int dx = -half; dx <= half; dx++) {
             for (int dz = -half; dz <= half; dz++) {
                 put(level, base, m.set(origin.getX() + dx, fy, origin.getZ() + dz), box);
                 put(level, base, m.set(origin.getX() + dx, fy - 1, origin.getZ() + dz), box);
             }
         }
-        // 清空内部
         for (int wy = 1; wy <= 3; wy++) {
             for (int dx = -half + 1; dx <= half - 1; dx++) {
                 for (int dz = -half + 1; dz <= half - 1; dz++) {
@@ -195,7 +193,6 @@ public class TitanStructurePiece extends StructurePiece {
                 }
             }
         }
-        // 屋顶
         for (int dx = -half; dx <= half; dx++) {
             for (int dz = -half; dz <= half; dz++) {
                 put(level, wall, m.set(origin.getX() + dx, fy + 4, origin.getZ() + dz), box);

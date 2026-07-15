@@ -82,7 +82,6 @@ public class TholinComposterBlockEntity extends BlockEntity {
         progress++;
         if (progress >= TSConfig.COMPOSTER_PROCESS_INTERVAL.get()) {
             progress = 0;
-            // 消耗 1 份输入
             input.shrink(1);
             inv.setStackInSlot(INPUT_SLOT, input);
             // 产出 1 托林粉末到输出槽（内部直写，绕过 isItemValid）

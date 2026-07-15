@@ -44,13 +44,11 @@ public class SilkShroudFeature extends Feature<NoneFeatureConfiguration> {
             int wx = origin.getX() + ox;
             int wz = origin.getZ() + oz;
             int terrainTop = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, wx, wz) - 1;
-            // 地表菌网
             pos.set(wx, terrainTop, wz);
             if (!level.getBlockState(pos).isAir()) {
                 setBlock(level, pos, myc);
                 placed = true;
             }
-            // 近地悬挂蛛丝
             int wy = terrainTop + 1 + random.nextInt(3);
             pos.set(wx, wy, wz);
             if (level.getBlockState(pos).isAir()) {

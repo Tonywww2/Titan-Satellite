@@ -5,7 +5,7 @@
     "item": "titan_satellite:hydrogen_capsule"
   },
   "main_input": {
-    "count": 2,
+    "count": 3,
     "item": "titan_satellite:condensed_acetylene"
   },
   "neoforge:conditions": [

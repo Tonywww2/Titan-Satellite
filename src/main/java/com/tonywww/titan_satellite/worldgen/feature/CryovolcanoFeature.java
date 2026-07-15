@@ -71,7 +71,6 @@ public class CryovolcanoFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        // 山腰喷泉群
         for (int i = 0; i < 6; i++) {
             double ang = random.nextDouble() * Math.PI * 2.0D;
             double rr = baseRadius * (0.45D + random.nextDouble() * 0.35D);

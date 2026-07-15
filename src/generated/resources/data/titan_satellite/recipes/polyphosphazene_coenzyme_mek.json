@@ -12,7 +12,7 @@
     }
   },
   "mainInput": {
-    "amount": 2,
+    "amount": 3,
     "ingredient": {
       "item": "titan_satellite:condensed_acetylene"
     }

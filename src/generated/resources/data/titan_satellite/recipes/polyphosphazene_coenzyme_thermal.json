@@ -9,7 +9,7 @@
   "energy": 3200,
   "ingredients": [
     {
-      "count": 2,
+      "count": 3,
       "item": "titan_satellite:condensed_acetylene"
     },
     {

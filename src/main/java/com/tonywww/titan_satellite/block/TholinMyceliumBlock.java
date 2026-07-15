@@ -29,7 +29,6 @@ public class TholinMyceliumBlock extends Block {
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
-        // 孢子（分解者视觉提示）
         level.sendParticles(ParticleTypes.SPORE_BLOSSOM_AIR,
                 pos.getX() + 0.5D, pos.getY() + 1.0D, pos.getZ() + 0.5D,
                 3, 0.3D, 0.1D, 0.3D, 0.0D);

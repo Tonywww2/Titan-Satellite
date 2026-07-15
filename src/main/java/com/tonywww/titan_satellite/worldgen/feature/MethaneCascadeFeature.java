@@ -61,7 +61,6 @@ public class MethaneCascadeFeature extends Feature<NoneFeatureConfiguration> {
         int edgeZ = origin.getZ() + bestDir[1];
         boolean placed = false;
 
-        // 崖顶喂给池（崖沿内侧小潭）
         for (int w = -1; w <= 1; w++) {
             pos.set(origin.getX() + perpX * w, topY, origin.getZ() + perpZ * w);
             if (!level.getBlockState(pos).isAir()) {

@@ -57,7 +57,6 @@ public class FrozenAmmoniaFallsFeature extends Feature<NoneFeatureConfiguration>
         int edgeZ = origin.getZ() + bestDir[1];
         boolean placed = false;
 
-        // 崖顶氨潭
         for (int w = -1; w <= 1; w++) {
             pos.set(origin.getX() + perpX * w, topY, origin.getZ() + perpZ * w);
             if (!level.getBlockState(pos).isAir()) {
@@ -66,7 +65,6 @@ public class FrozenAmmoniaFallsFeature extends Feature<NoneFeatureConfiguration>
                 placed = true;
             }
         }
-        // 冻氨冰帘
         for (int y = topY; y >= floorLimit; y--) {
             for (int w = -1; w <= 1; w++) {
                 pos.set(edgeX + perpX * w, y, edgeZ + perpZ * w);

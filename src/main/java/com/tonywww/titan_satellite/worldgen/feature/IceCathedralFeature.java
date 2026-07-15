@@ -58,7 +58,6 @@ public class IceCathedralFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
 
-        // 殿底地板 + 中央甲烷潭
         int rFloor = radius - 2;
         for (int dx = -rFloor; dx <= rFloor; dx++) {
             for (int dz = -rFloor; dz <= rFloor; dz++) {

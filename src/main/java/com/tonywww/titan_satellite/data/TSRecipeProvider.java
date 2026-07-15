@@ -93,24 +93,25 @@ public class TSRecipeProvider implements DataProvider {
                 "B", ts("depleted_battery"), "A", ts("azotosome_sheet"));
 
         // ---- 互斥 base：not(create)+not(mek)（粉碎/化学；有机器时禁用）----
-        shapeless("tholin_dust", ts("tholin_dust"), 4, notCreateMek(), ts("hardened_tholin"));
-        shapeless("condensed_acetylene_from_spire", ts("condensed_acetylene"), 2, notCreateMek(), ts("acetylene_spire"));
+        // 方块类原料获取易，故粉碎产出不再倍增（托林 4→2，其余晶粉 2→1），提高方块需求、降低粉末产出。
+        shapeless("tholin_dust", ts("tholin_dust"), 2, notCreateMek(), ts("hardened_tholin"));
+        shapeless("condensed_acetylene_from_spire", ts("condensed_acetylene"), 1, notCreateMek(), ts("acetylene_spire"));
         shapeless("silicon_dust", ts("silicon_dust"), 1, notCreateMek(), ts("crystalline_twig"));
-        shapeless("abyss_crystal_dust", ts("abyss_crystal_dust"), 2, notCreateMek(), ts("abyss_crystal"));
-        shapeless("ammonia_salt", ts("ammonia_salt"), 2, notCreateMek(), ts("ammonia_crystal"));
-        shapeless("tholin_crystal_dust", ts("tholin_crystal_dust"), 2, notCreateMek(), ts("tholin_crystal"));
+        shapeless("abyss_crystal_dust", ts("abyss_crystal_dust"), 1, notCreateMek(), ts("abyss_crystal"));
+        shapeless("ammonia_salt", ts("ammonia_salt"), 1, notCreateMek(), ts("ammonia_crystal"));
+        shapeless("tholin_crystal_dust", ts("tholin_crystal_dust"), 1, notCreateMek(), ts("tholin_crystal"));
         shapeless("polyphosphazene_coenzyme", ts("polyphosphazene_coenzyme"), 1, notCreateMek(),
-                ts("condensed_acetylene"), ts("condensed_acetylene"), ts("hydrogen_capsule"));
-        // 高产辅酶（消耗稀有深渊晶粉；试剂①用途）
+                ts("condensed_acetylene"), ts("condensed_acetylene"), ts("condensed_acetylene"), ts("hydrogen_capsule"));
+        // 高产辅酶（额外消耗稀有深渊晶粉换翻倍产出；试剂①用途）
         shapeless("polyphosphazene_coenzyme_abyss", ts("polyphosphazene_coenzyme"), 2, notCreateMek(),
-                ts("abyss_crystal_dust"), ts("condensed_acetylene"), ts("condensed_acetylene"), ts("hydrogen_capsule"));
+                ts("abyss_crystal_dust"), ts("condensed_acetylene"), ts("condensed_acetylene"), ts("condensed_acetylene"), ts("hydrogen_capsule"));
         shapeless("azotosome_sheet", ts("azotosome_sheet"), 1, notCreateMek(),
                 ts("aero_membrane"), ts("tholin_dust"), ts("tholin_dust"));
         shapeless("cryo_alloy_ingot", ts("cryo_alloy_ingot"), 1, notCreateMek(),
                 ts("cryo_carapace"), ts("cryo_carapace"), ts("meteoric_iron_ingot"));
 
         // ---- 互斥 base：not(farmersdelight)（有 FD 时走炖锅）----
-        shapeless("titan_antidote", ts("titan_antidote"), 2, notFD(),
+        shapeless("titan_antidote", ts("titan_antidote"), 1, notFD(),
                 ts("tough_neural_gland"), ts("toxic_gland"), ts("ammonia_salt"));
 
         buildModRecipes();
@@ -122,34 +123,34 @@ public class TSRecipeProvider implements DataProvider {
      */
     private void buildModRecipes() {
         // ---- Create（mod_loaded:create）----
-        createCrushing("tholin_dust_create", ts("hardened_tholin"), ts("tholin_dust"), 4, 200);
-        createCrushing("condensed_acetylene_spire_create", ts("acetylene_spire"), ts("condensed_acetylene"), 2, 250);
+        createCrushing("tholin_dust_create", ts("hardened_tholin"), ts("tholin_dust"), 2, 200);
+        createCrushing("condensed_acetylene_spire_create", ts("acetylene_spire"), ts("condensed_acetylene"), 1, 250);
         createCrushing("silicon_dust_create", ts("crystalline_twig"), ts("silicon_dust"), 1, 150);
-        createCrushing("abyss_crystal_dust_create", ts("abyss_crystal"), ts("abyss_crystal_dust"), 2, 200);
-        createCrushing("ammonia_salt_create", ts("ammonia_crystal"), ts("ammonia_salt"), 2, 200);
-        createCrushing("tholin_crystal_dust_create", ts("tholin_crystal"), ts("tholin_crystal_dust"), 2, 200);
+        createCrushing("abyss_crystal_dust_create", ts("abyss_crystal"), ts("abyss_crystal_dust"), 1, 200);
+        createCrushing("ammonia_salt_create", ts("ammonia_crystal"), ts("ammonia_salt"), 1, 200);
+        createCrushing("tholin_crystal_dust_create", ts("tholin_crystal"), ts("tholin_crystal_dust"), 1, 200);
         createMixing("polyphosphazene_coenzyme_create", ts("polyphosphazene_coenzyme"), 1, true,
-                ts("condensed_acetylene"), ts("condensed_acetylene"), ts("hydrogen_capsule"));
+                ts("condensed_acetylene"), ts("condensed_acetylene"), ts("condensed_acetylene"), ts("hydrogen_capsule"));
         createMixing("cryo_alloy_ingot_create", ts("cryo_alloy_ingot"), 1, true,
                 ts("cryo_carapace"), ts("cryo_carapace"), ts("meteoric_iron_ingot"));
         createCompacting("azotosome_sheet_create", ts("azotosome_sheet"), 1,
                 ts("aero_membrane"), ts("tholin_dust"), ts("tholin_dust"));
 
         // ---- Mekanism（mod_loaded:mekanism）----
-        mekSingle("mekanism:enriching", "tholin_dust_mek", ts("hardened_tholin"), 1, ts("tholin_dust"), 4);
-        mekSingle("mekanism:crushing", "condensed_acetylene_spire_mek", ts("acetylene_spire"), 1, ts("condensed_acetylene"), 2);
+        mekSingle("mekanism:enriching", "tholin_dust_mek", ts("hardened_tholin"), 1, ts("tholin_dust"), 2);
+        mekSingle("mekanism:crushing", "condensed_acetylene_spire_mek", ts("acetylene_spire"), 1, ts("condensed_acetylene"), 1);
         mekSingle("mekanism:enriching", "silicon_dust_mek", ts("crystalline_twig"), 1, ts("silicon_dust"), 1);
-        mekSingle("mekanism:crushing", "abyss_crystal_dust_mek", ts("abyss_crystal"), 1, ts("abyss_crystal_dust"), 2);
-        mekSingle("mekanism:crushing", "ammonia_salt_mek", ts("ammonia_crystal"), 1, ts("ammonia_salt"), 2);
-        mekSingle("mekanism:crushing", "tholin_crystal_dust_mek", ts("tholin_crystal"), 1, ts("tholin_crystal_dust"), 2);
+        mekSingle("mekanism:crushing", "abyss_crystal_dust_mek", ts("abyss_crystal"), 1, ts("abyss_crystal_dust"), 1);
+        mekSingle("mekanism:crushing", "ammonia_salt_mek", ts("ammonia_crystal"), 1, ts("ammonia_salt"), 1);
+        mekSingle("mekanism:crushing", "tholin_crystal_dust_mek", ts("tholin_crystal"), 1, ts("tholin_crystal_dust"), 1);
         mekCombining("azotosome_sheet_mek", ts("aero_membrane"), 1, ts("tholin_dust"), 2, ts("azotosome_sheet"), 1);
         mekCombining("cryo_alloy_ingot_mek", ts("cryo_carapace"), 2, ts("meteoric_iron_ingot"), 1, ts("cryo_alloy_ingot"), 1);
         // 组合机：凝乙炷 + 氢气瓶（物品）→ 辅酶（用物品氢而非气体，避开 chemical_input 的版本差异）
-        mekCombining("polyphosphazene_coenzyme_mek", ts("condensed_acetylene"), 2, ts("hydrogen_capsule"), 1,
+        mekCombining("polyphosphazene_coenzyme_mek", ts("condensed_acetylene"), 3, ts("hydrogen_capsule"), 1,
                 ts("polyphosphazene_coenzyme"), 1);
 
         // ---- Farmer's Delight（mod_loaded:farmersdelight）----
-        fdCooking("titan_antidote_fd", ts("titan_antidote"), 2, 200, 0.5F,
+        fdCooking("titan_antidote_fd", ts("titan_antidote"), 1, 200, 0.5F,
                 ts("tough_neural_gland"), ts("toxic_gland"), ts("ammonia_salt"));
 
         // ---- Thermal Series（mod_loaded:thermal）----
@@ -157,17 +158,17 @@ public class TSRecipeProvider implements DataProvider {
         // 故仅发 Forge 格式（!neo）。均为处理现有产物的机器变体，无新物品。
         if (!neo) {
             // 粉碎机 Pulverizer ← 对应 Create 粉碎 / Mek 粉碎
-            thermalPulverizer("tholin_dust_thermal", ts("hardened_tholin"), ts("tholin_dust"), 4, 2000);
-            thermalPulverizer("condensed_acetylene_spire_thermal", ts("acetylene_spire"), ts("condensed_acetylene"), 2, 2500);
+            thermalPulverizer("tholin_dust_thermal", ts("hardened_tholin"), ts("tholin_dust"), 2, 2000);
+            thermalPulverizer("condensed_acetylene_spire_thermal", ts("acetylene_spire"), ts("condensed_acetylene"), 1, 2500);
             thermalPulverizer("silicon_dust_thermal", ts("crystalline_twig"), ts("silicon_dust"), 1, 1500);
-            thermalPulverizer("abyss_crystal_dust_thermal", ts("abyss_crystal"), ts("abyss_crystal_dust"), 2, 2000);
-            thermalPulverizer("ammonia_salt_thermal", ts("ammonia_crystal"), ts("ammonia_salt"), 2, 2000);
-            thermalPulverizer("tholin_crystal_dust_thermal", ts("tholin_crystal"), ts("tholin_crystal_dust"), 2, 2000);
+            thermalPulverizer("abyss_crystal_dust_thermal", ts("abyss_crystal"), ts("abyss_crystal_dust"), 1, 2000);
+            thermalPulverizer("ammonia_salt_thermal", ts("ammonia_crystal"), ts("ammonia_salt"), 1, 2000);
+            thermalPulverizer("tholin_crystal_dust_thermal", ts("tholin_crystal"), ts("tholin_crystal_dust"), 1, 2000);
             // 感应熔炉 Induction Smelter（多物品合成）← 对应 Create 混合 / Mek 组合
             thermalSmelter("cryo_alloy_ingot_thermal", ts("cryo_alloy_ingot"), 1, 4000,
                     new String[]{ts("cryo_carapace"), ts("meteoric_iron_ingot")}, new int[]{2, 1});
             thermalSmelter("polyphosphazene_coenzyme_thermal", ts("polyphosphazene_coenzyme"), 1, 3200,
-                    new String[]{ts("condensed_acetylene"), ts("hydrogen_capsule")}, new int[]{2, 1});
+                    new String[]{ts("condensed_acetylene"), ts("hydrogen_capsule")}, new int[]{3, 1});
             thermalSmelter("azotosome_sheet_thermal", ts("azotosome_sheet"), 1, 3200,
                     new String[]{ts("aero_membrane"), ts("tholin_dust")}, new int[]{1, 2});
         }

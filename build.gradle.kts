@@ -3,7 +3,7 @@ plugins {
     id("me.modmuss50.mod-publish-plugin") version "2.1.1"
 }
 
-// 加载器由节点 gradle.properties 的 loom.platform 决定（当前节点为 forge）
+// 加载器由节点 gradle.properties 的 loom.platform 决定
 val loader = property("loom.platform").toString()
 val mcVersion = property("vers.mcVersion").toString()
 // 预先取出 mod.id（Project 作用域）：runConfigs 的 lambda 里 property(String) 会命中
@@ -147,9 +147,7 @@ dependencies {
         // 由 mod id `thermal` = Thermal Core 注册）。核心 mod `thermal`（thermal_core）以 JiJ 内嵌于
         // Thermal Foundation，Loom dev 不解压内嵌 jar → 需手动解压到 libs/（见 build/extract_thermal_jij.ps1）
         // 再以 modLocalRuntime(files(...)) 显式补到 dev 运行期（Loom 会重映射本地 mod jar），否则缺
-        // `thermal` 依赖致加载失败。modCompileOnly=编译期；modLocalRuntime=仅 dev 运行期（不进发布产物、
-        // 不强制用户装）。发布版联动由 mods.toml 可选依赖 + mod_loaded:thermal 门控的数据配方保证。
-        // 用 Modrinth 版本 ID 锁定具体文件，避开同号包命中的坑。
+        // `thermal` 依赖致加载失败。发布版联动由 mod_loaded:thermal 门控的数据配方保证。
         "modCompileOnly"("maven.modrinth:cofh-core:kglS53Hd")           // CoFH Core 11.0.2 (Forge 1.20.1)
         "modCompileOnly"("maven.modrinth:thermal-foundation:44ilyZbi") // Thermal Foundation 11.0.6
         "modCompileOnly"("maven.modrinth:thermal-expansion:Ux2Z0ow1")  // Thermal Expansion 11.0.1
