@@ -20,6 +20,7 @@ import net.minecraft.world.phys.AABB;
  * <p>随机刻缓释可燃 H₂ 气泡粒子；一旦邻近火源（火焰标签方块或着火实体）即发生<b>轻微轰燃</b>，
  * 并把相邻菌毯延迟点燃形成连锁（复用甲烷冰花范式，但当量更低）。
  */
+@SuppressWarnings("deprecation")
 public class HydrogenBubbleMatBlock extends Block {
 
     /** 轻微轰燃当量（明显弱于甲烷冰花的 1.6）。 */

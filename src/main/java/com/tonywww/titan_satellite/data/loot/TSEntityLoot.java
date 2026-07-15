@@ -88,7 +88,7 @@ public class TSEntityLoot implements LootTableSubProvider {
 
     //? if forge {
     private static ResourceLocation entity(String name) {
-        return new ResourceLocation(TitanSatellite.MODID, "entities/" + name);
+        return TitanSatellite.rl("entities/" + name);
     }
     //?} else {
     /*private static ResourceKey<LootTable> entity(String name) {

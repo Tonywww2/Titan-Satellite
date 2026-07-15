@@ -118,7 +118,7 @@ public class TSBlockStateProvider extends BlockStateProvider {
 
     private static Block block(String name) {
         //? if forge {
-        return ForgeRegistries.BLOCKS.getValue(new ResourceLocation(TitanSatellite.MODID, name));
+        return ForgeRegistries.BLOCKS.getValue(TitanSatellite.rl(name));
         //?} else {
         /*return BuiltInRegistries.BLOCK.get(TitanSatellite.rl(name));
         *///?}

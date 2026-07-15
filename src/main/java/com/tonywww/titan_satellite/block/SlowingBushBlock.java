@@ -12,6 +12,7 @@ import net.minecraft.world.phys.Vec3;
  * 减速灌木（托林灌木 / 霜枯灌木）：无碰撞可穿过，但踩入时显著拖慢移动（仿甜浆果丛 / 蛛网的
  * {@code makeStuckInBlock}）。剪刀采集掉落见 {@code TSBlockLoot}（托林纤维）。
  */
+@SuppressWarnings("deprecation")
 public class SlowingBushBlock extends Block {
 
     /** 穿行时的运动衰减系数（x/z 0.8、y 0.75，越小越黏）。 */

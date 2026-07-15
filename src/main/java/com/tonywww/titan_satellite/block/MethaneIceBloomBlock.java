@@ -18,6 +18,7 @@ import net.minecraft.world.phys.AABB;
  * 通过随机刻检测周围是否存在<b>着火的实体</b>或<b>火焰标签方块</b>；命中则瞬间引爆，
  * 并把相邻的甲烷冰花延迟点燃，形成连锁化学爆炸。
  */
+@SuppressWarnings("deprecation")
 public class MethaneIceBloomBlock extends Block {
 
     /** 单株爆炸当量（小于 TNT 的 4.0）。 */

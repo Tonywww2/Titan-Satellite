@@ -25,6 +25,7 @@ public final class TSSystemsBootstrap {
     }
 
     //? if forge {
+    @SuppressWarnings("removal")
     @SubscribeEvent
     public static void onConstruct(FMLConstructModEvent event) {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();

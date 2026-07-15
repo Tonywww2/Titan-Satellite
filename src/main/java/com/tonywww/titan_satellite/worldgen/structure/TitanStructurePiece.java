@@ -30,6 +30,7 @@ import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSeriali
  * 所有放置都用 {@link BoundingBox#isInside(net.minecraft.core.Vec3i)} 门控，故跨区块生成时
  * 每个区块只落自己那部分（{@code postProcess} 逐区块调用），整座结构正确拼合。
  */
+@SuppressWarnings("deprecation")
 public class TitanStructurePiece extends StructurePiece {
 
     //? if forge {

@@ -53,6 +53,7 @@ public class AmmoniaStalker extends Monster {
     }
 
     //? if forge {
+    @SuppressWarnings("deprecation")
     @Override
     public boolean canBreatheUnderwater() {
         return true;

@@ -32,6 +32,7 @@ public class TitanSatellite {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     /** 构造本 mod 命名空间下的 ResourceLocation（Forge 1.20.1 构造器 / NeoForge 1.21 工厂）。 */
+    @SuppressWarnings("removal")
     public static ResourceLocation rl(String path) {
         //? if forge {
         return new ResourceLocation(MODID, path);
@@ -41,6 +42,7 @@ public class TitanSatellite {
     }
 
     /** minecraft 命名空间下的 ResourceLocation（Forge 构造器 / NeoForge 工厂）。 */
+    @SuppressWarnings("removal")
     public static ResourceLocation mcRl(String path) {
         //? if forge {
         return new ResourceLocation(path);
@@ -50,6 +52,7 @@ public class TitanSatellite {
     }
 
     /** 解析带命名空间的完整串 {@code ns:path}（Forge 构造器 / NeoForge 1.21 parse）。 */
+    @SuppressWarnings("removal")
     public static ResourceLocation parse(String str) {
         //? if forge {
         return new ResourceLocation(str);
@@ -58,6 +61,7 @@ public class TitanSatellite {
         *///?}
     }
 
+    @SuppressWarnings("removal")
     //? if forge {
     public TitanSatellite() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();

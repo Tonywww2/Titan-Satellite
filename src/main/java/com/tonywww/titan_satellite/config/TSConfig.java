@@ -163,6 +163,7 @@ public final class TSConfig {
         SPEC = builder.build();
     }
 
+    @SuppressWarnings("removal")
     @SubscribeEvent
     public static void onConstruct(FMLConstructModEvent event) {
         //? if forge {

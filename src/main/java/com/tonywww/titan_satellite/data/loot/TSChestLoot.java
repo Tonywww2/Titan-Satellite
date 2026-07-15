@@ -66,7 +66,7 @@ public class TSChestLoot implements LootTableSubProvider {
 
     //? if forge {
     private static ResourceLocation chest(String name) {
-        return new ResourceLocation(TitanSatellite.MODID, "chests/" + name);
+        return TitanSatellite.rl("chests/" + name);
     }
     //?} else {
     /*private static ResourceKey<LootTable> chest(String name) {

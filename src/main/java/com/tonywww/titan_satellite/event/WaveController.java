@@ -35,6 +35,7 @@ import java.util.List;
  * 每波刷怪数量经 {@link #baseWaveMobCount(int, int)}（可继承覆写以调强度）；波次怪的生命周期与
  * 属性强化由 {@code WaveSpawnMixin} 注入 vanilla {@code Mob.aiStep} 定制。
  */
+@SuppressWarnings("deprecation")
 public final class WaveController {
 
     private WaveController() {

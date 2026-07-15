@@ -77,6 +77,7 @@
   "item.titan_satellite.tholin_fibre": "托林纤维",
   "item.titan_satellite.tholin_fibre_belt_rig": "托林纤维腰挂",
   "item.titan_satellite.tholin_life_support_kit": "托林维生套件",
+  "item.titan_satellite.tholin_life_support_kit.desc": "佩戴时每 %1$s 秒回复 %2$s + %3$s%% 最大生命值。",
   "item.titan_satellite.tholin_silk_sac": "托林丝囊",
   "item.titan_satellite.tholin_weaver_spawn_egg": "托林织体蛛刷怪蛋",
   "item.titan_satellite.titan_antidote": "异星解毒剂",

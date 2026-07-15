@@ -23,6 +23,7 @@ import org.jetbrains.annotations.Nullable;
  * 特制甲烷泵方块（带方块实体）。置于 {@code methane_pool_core} 上方，右键激活开采塔防：
  * 服务端 ticker 驱动 {@link SpecialMethanePumpBlockEntity} 状态机；运行中被破坏则判定失败。
  */
+@SuppressWarnings("deprecation")
 public class SpecialMethanePumpBlock extends BaseEntityBlock {
 
     public SpecialMethanePumpBlock(BlockBehaviour.Properties properties) {

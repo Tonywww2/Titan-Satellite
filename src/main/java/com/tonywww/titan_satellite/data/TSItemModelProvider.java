@@ -92,7 +92,7 @@ public class TSItemModelProvider extends ItemModelProvider {
     private void fluidBucket(String name, Fluid fluid) {
         //? if forge {
         getBuilder(name)
-                .parent(new ModelFile.UncheckedModelFile(new ResourceLocation("forge", "item/bucket")))
+                .parent(new ModelFile.UncheckedModelFile(TitanSatellite.parse("forge:item/bucket")))
                 .customLoader(DynamicFluidContainerModelBuilder::begin)
                 .fluid(fluid)
                 .end();

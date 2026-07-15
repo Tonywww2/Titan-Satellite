@@ -27,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
  * 托林堆肥槽方块（带方块实体）。架在 {@code tholin_mycelium} 正上方，吞生物残渣产托林粉末
  * （逻辑见 {@link TholinComposterBlockEntity}）。右键手持残渣可塞入；漏斗/管道亦可自动化。
  */
+@SuppressWarnings("deprecation")
 public class TholinComposterBlock extends BaseEntityBlock {
 
     public TholinComposterBlock(BlockBehaviour.Properties properties) {

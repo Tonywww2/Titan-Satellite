@@ -81,6 +81,7 @@
   "item.titan_satellite.tholin_fibre": "Tholin Fibre",
   "item.titan_satellite.tholin_fibre_belt_rig": "Tholin-Fibre Belt Rig",
   "item.titan_satellite.tholin_life_support_kit": "Tholin Life-Support Kit",
+  "item.titan_satellite.tholin_life_support_kit.desc": "While worn, restores %2$s + %3$s%% max health every %1$s seconds.",
   "item.titan_satellite.tholin_silk_sac": "Tholin Silk Sac",
   "item.titan_satellite.tholin_weaver_spawn_egg": "Tholin-Weaver Spawn Egg",
   "item.titan_satellite.titan_antidote": "Titan Antidote",

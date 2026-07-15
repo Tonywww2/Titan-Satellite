@@ -18,6 +18,7 @@ import net.minecraft.world.phys.AABB;
  * <p>富集的乙炔极不稳定：一旦邻近火源（火焰标签方块或着火实体）即发生<b>剧烈连锁爆炸</b>——
  * 当量高于甲烷冰花，并把相邻乙炔冰笋延迟引爆，形成沿晶脉传播的链爆。
  */
+@SuppressWarnings("deprecation")
 public class AcetyleneSpireBlock extends Block {
 
     /** 单柱爆炸当量（高能乙炔，明显强于甲烷冰花的 1.6）。 */

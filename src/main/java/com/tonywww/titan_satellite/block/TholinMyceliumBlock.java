@@ -21,6 +21,7 @@ import net.minecraft.world.phys.AABB;
  * <p>随机刻散发孢子（视觉提示），并消解其上方 1 格内的残渣物品（每刻至多一份，缓慢）。
  * 只作用于本维度生物残渣，不吞噬玩家的工具 / 战利品。
  */
+@SuppressWarnings("deprecation")
 public class TholinMyceliumBlock extends Block {
 
     public TholinMyceliumBlock(BlockBehaviour.Properties properties) {
