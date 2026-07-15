@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 托林织体蛛渲染器（桩，复用原版蜘蛛模型 + 洞穴蜘蛛贴图占位）。真实模型/贴图待美术替换。
+ * 托林织体蜉渲染器：复用原版蜘蛛模型（占位）。
  */
 public class TholinWeaverRenderer extends MobRenderer<TholinWeaver, SpiderModel<TholinWeaver>> {
 

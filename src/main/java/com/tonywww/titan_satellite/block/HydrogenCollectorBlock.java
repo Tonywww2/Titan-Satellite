@@ -49,14 +49,4 @@ public class HydrogenCollectorBlock extends BaseEntityBlock {
         }
         return createTickerHelper(type, TSBlockEntities.HYDROGEN_COLLECTOR.get(), HydrogenCollectorBlockEntity::serverTick);
     }
-
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
-        if (!state.is(newState.getBlock())) {
-            if (level.getBlockEntity(pos) instanceof HydrogenCollectorBlockEntity be) {
-                be.dropContents(level, pos);
-            }
-            super.onRemove(state, level, pos, newState, movedByPiston);
-        }
-    }
 }

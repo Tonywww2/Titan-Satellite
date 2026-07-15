@@ -16,9 +16,9 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * 甲烷微浮群（Methane Midge，D3）：极小的漂浮被动群集，营养级最底层、浮游体（Aero-Jelly）的食源。
+ * 甲烷微浮群（Methane Midge）：极小的漂浮被动群集，营养级最底层、浮游体（Aero-Jelly）的食源。
  * 复用浮游体的无重力飞行悬浮范式，但限制在贴地表的低空 Y 带 [+2, +10] 内成群随风漂移。
- * 渲染用缩小的史莱姆模型占位（真实模型待美术）。
+ * 渲染用缩小的史莱姆模型占位。
  */
 public class MethaneMidge extends PathfinderMob {
 

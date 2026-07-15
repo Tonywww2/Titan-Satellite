@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 原生冰虫渲染器（桩，复用放大的蠹虫模型 + 蠹虫贴图占位）。真实模型/贴图待美术替换。
+ * 原生冰虫渲染器：复用放大的原版蟹虫模型（占位）。
  */
 public class NativeIceWormRenderer extends MobRenderer<NativeIceWorm, SilverfishModel<NativeIceWorm>> {
 

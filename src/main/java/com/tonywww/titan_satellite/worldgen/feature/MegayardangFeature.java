@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 巨型沙脊特征（PA-2 桩）。M1（PB-3）填充：托林沙海中高墙般的狭长山脊。
+ * 巨型沙脊特征：托林沙海中高墙般的狭长山脊。
  */
 public class MegayardangFeature extends Feature<NoneFeatureConfiguration> {
 

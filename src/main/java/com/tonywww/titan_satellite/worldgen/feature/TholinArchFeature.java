@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 托林天生巨拱（T7.3 · 宏伟地物）：横跨沙谷的巨型风蚀天生桥（{@code hardened_tholin}）。半圆拱券，
+ * 托林天生巨拱（宏伟地物）：横跨沙谷的巨型风蚀天生桥（{@code hardened_tholin}）。半圆拱券，
  * 相邻列以竖直连接保证曲线不断裂，两足垂直落到<b>各自列真实地表</b>接地（拱心悬于中央、为拱之本意）。
  */
 public class TholinArchFeature extends Feature<NoneFeatureConfiguration> {

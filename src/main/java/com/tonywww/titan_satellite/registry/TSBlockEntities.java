@@ -14,7 +14,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 /**
- * 方块实体注册表。当前仅甲烷泵（开采塔防状态机由 M4 / PE-2 填充）。
+ * 方块实体注册表。
  */
 public final class TSBlockEntities {
 

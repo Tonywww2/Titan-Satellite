@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 碎裂裂隙特征（PG-4）：液态甲烷深渊地表的细长深沟（迷你峡谷），底部积存液态甲烷。
+ * 碎裂裂隙特征：液态甲烷深渊地表的细长深沟（迷你峡谷），底部积存液态甲烷。
  *
  * <p>沿随机水平方向延伸，V 形横截面（中心深、边缘浅），沿程深浅起伏营造碎裂感，底部数格填液态甲烷。
  */

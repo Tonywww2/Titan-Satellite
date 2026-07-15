@@ -67,6 +67,8 @@ public final class TitanClientEvents {
             ItemBlockRenderTypes.setRenderLayer(TSFluids.FLOWING_LIQUID_METHANE.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TSFluids.LIQUID_AMMONIA.get(), RenderType.translucent());
             ItemBlockRenderTypes.setRenderLayer(TSFluids.FLOWING_LIQUID_AMMONIA.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TSFluids.LIQUID_HYDROGEN.get(), RenderType.translucent());
+            ItemBlockRenderTypes.setRenderLayer(TSFluids.FLOWING_LIQUID_HYDROGEN.get(), RenderType.translucent());
         });
     }
 
@@ -79,7 +81,8 @@ public final class TitanClientEvents {
     public static void onRegisterItemColors(RegisterColorHandlersEvent.Item event) {
         event.register(new DynamicFluidContainerModel.Colors(),
                 TSItems.LIQUID_METHANE_BUCKET.get(),
-                TSItems.LIQUID_AMMONIA_BUCKET.get());
+                TSItems.LIQUID_AMMONIA_BUCKET.get(),
+                TSItems.LIQUID_HYDROGEN_BUCKET.get());
     }
     //?} else {
     /*@SubscribeEvent
@@ -87,6 +90,7 @@ public final class TitanClientEvents {
         // NeoForge 无 FluidType.initializeClient，改由此注册流体客户端渲染（复用水贴图 + 甲烷/氨染色）。
         event.registerFluidType(fluidExt(0xFFE7E3B8, 0x99E7E3B8), TSFluidTypes.LIQUID_METHANE.get());
         event.registerFluidType(fluidExt(0xFFBAE8E4, 0x99BAE8E4), TSFluidTypes.LIQUID_AMMONIA.get());
+        event.registerFluidType(fluidExt(0xFFCFE8F0, 0x99CFE8F0), TSFluidTypes.LIQUID_HYDROGEN.get());
     }
 
     @SubscribeEvent
@@ -95,7 +99,8 @@ public final class TitanClientEvents {
         // NeoForge 同样提供 DynamicFluidContainerModel.Colors（取桶内流体 getTintColor）。
         event.register(new DynamicFluidContainerModel.Colors(),
                 TSItems.LIQUID_METHANE_BUCKET.get(),
-                TSItems.LIQUID_AMMONIA_BUCKET.get());
+                TSItems.LIQUID_AMMONIA_BUCKET.get(),
+                TSItems.LIQUID_HYDROGEN_BUCKET.get());
     }
 
     private static IClientFluidTypeExtensions fluidExt(int itemColor, int worldColor) {

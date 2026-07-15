@@ -18,7 +18,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 破碎海绵特征（PG-4）：极地迷宫冰原地表下数格用 3D 值噪声挖出密布空洞的多孔冰体（破碎海绵）。
+ * 破碎海绵特征：极地迷宫冰原地表下数格用 3D 值噪声挖出密布空洞的多孔冰体（破碎海绵）。
  *
  * <p>仅在噪声高值处挖空（保留原有冰壁），配合边缘衰减使中心多孔、边缘保留壁，形成海绵状孔隙。
  */
@@ -67,8 +67,12 @@ public class SpongeCaveFeature extends Feature<NoneFeatureConfiguration> {
         BlockState air = Blocks.CAVE_AIR.defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         boolean placed = false;
+        int minY = level.getMinBuildHeight();
 
         for (int dy = -topOffset; dy > -topOffset - height; dy--) {
+            if (origin.getY() + dy < minY + 5) {
+                break;                                 // 基岩守卫：不凿穿 Y0-4 基岩带
+            }
             for (int dx = -radius; dx <= radius; dx++) {
                 for (int dz = -radius; dz <= radius; dz++) {
                     double horiz = Math.sqrt((double) (dx * dx + dz * dz));

@@ -28,9 +28,9 @@ import java.util.concurrent.CompletableFuture;
  * 1.21.1 用 {@code recipe/} 目录、ingredient 字符串、result {@code {"id":..}}、cooking result 为对象、
  * 条件 key {@code "neoforge:conditions"} + {@code neoforge:*}。
  *
- * <p>互斥分档（注意点 0）：熔制类只写一份 {@code smelting}/{@code blasting}（常开，Create 鼓风机 /
+ * <p>互斥分档：熔制类只写一份 {@code smelting}/{@code blasting}（常开，Create 鼓风机 /
  * Mek 熔炉自动派生）；非熔制 base 用 {@code not(create)+not(mek)} 门控，Create/Mek 变体各自
- * {@code mod_loaded} —— 见 MC6/MC7/MC8。
+ * {@code mod_loaded}。
  */
 public class TSRecipeProvider implements DataProvider {
 
@@ -70,15 +70,17 @@ public class TSRecipeProvider implements DataProvider {
     // 配方定义
     // ============================================================
     private void buildRecipes() {
-        // ---- 熔制类（常开、无条件；Create 鼓风机 / Mek 熔炉自动派生，注意点 0）----
+        // ---- 熔制类（常开、无条件；Create 鼓风机 / Mek 熔炉自动派生）----
         cooking("minecraft:smelting", "condensed_acetylene_from_smelting", ts("hardened_tholin"), ts("condensed_acetylene"), 0.7F, 200);
         cooking("minecraft:smelting", "condensed_acetylene_from_tholin_tar", ts("tholin_tar"), ts("condensed_acetylene"), 0.5F, 200);
         cooking("minecraft:smelting", "meteoric_iron_ingot_from_smelting", ts("meteor_fragment"), ts("meteoric_iron_ingot"), 0.7F, 200);
         cooking("minecraft:blasting", "meteoric_iron_ingot_from_blasting", ts("meteor_fragment"), ts("meteoric_iron_ingot"), 0.7F, 100);
 
         // ---- 常开合成（无机器等价，不门控）----
-        // 氢气瓶手采兜底（被动主路是集氢罩）
+        // 氢气瓶手采兜底（集氢罩已改产液氢流体）
         shapeless("hydrogen_capsule_manual", ts("hydrogen_capsule"), 1, null, ts("hydrogen_bubble_mat"));
+        // 液氢桶 → 氢气瓶（集氢罩流体产物回灌为物品氢，供辅酶链；空桶由容器物自动返还）
+        shapeless("hydrogen_capsule_from_liquid", ts("hydrogen_capsule"), 1, null, ts("liquid_hydrogen_bucket"));
         // 甲烷冰晶熔入桶 → 液态甲烷（和平可再生甲烷）
         shapeless("liquid_methane_bucket_from_shards", ts("liquid_methane_bucket"), 1, null,
                 ts("methane_ice_shard"), ts("methane_ice_shard"), ts("methane_ice_shard"), ts("methane_ice_shard"), "minecraft:bucket");
@@ -116,7 +118,7 @@ public class TSRecipeProvider implements DataProvider {
 
     /**
      * mod 变体配方（各自 {@code mod_loaded} 门控；dev 无该 mod 会被跳过，故 schema 无法在 dev 验证——
-     * 按各 mod 文档格式手搓）。熔制类不写（Create 鼓风机 / Mek 熔炉自动派生，注意点 0）。
+     * 按各 mod 文档格式手搓）。熔制类不写（Create 鼓风机 / Mek 熔炉自动派生）。
      */
     private void buildModRecipes() {
         // ---- Create（mod_loaded:create）----
@@ -149,6 +151,26 @@ public class TSRecipeProvider implements DataProvider {
         // ---- Farmer's Delight（mod_loaded:farmersdelight）----
         fdCooking("titan_antidote_fd", ts("titan_antidote"), 2, 200, 0.5F,
                 ts("tough_neural_gland"), ts("toxic_gland"), ts("ammonia_salt"));
+
+        // ---- Thermal Series（mod_loaded:thermal）----
+        // Thermal 仅 1.20.1 有（无 1.21.1 版），且采用自有序列化器（result 恒为 {"item":id}），
+        // 故仅发 Forge 格式（!neo）。均为处理现有产物的机器变体，无新物品。
+        if (!neo) {
+            // 粉碎机 Pulverizer ← 对应 Create 粉碎 / Mek 粉碎
+            thermalPulverizer("tholin_dust_thermal", ts("hardened_tholin"), ts("tholin_dust"), 4, 2000);
+            thermalPulverizer("condensed_acetylene_spire_thermal", ts("acetylene_spire"), ts("condensed_acetylene"), 2, 2500);
+            thermalPulverizer("silicon_dust_thermal", ts("crystalline_twig"), ts("silicon_dust"), 1, 1500);
+            thermalPulverizer("abyss_crystal_dust_thermal", ts("abyss_crystal"), ts("abyss_crystal_dust"), 2, 2000);
+            thermalPulverizer("ammonia_salt_thermal", ts("ammonia_crystal"), ts("ammonia_salt"), 2, 2000);
+            thermalPulverizer("tholin_crystal_dust_thermal", ts("tholin_crystal"), ts("tholin_crystal_dust"), 2, 2000);
+            // 感应熔炉 Induction Smelter（多物品合成）← 对应 Create 混合 / Mek 组合
+            thermalSmelter("cryo_alloy_ingot_thermal", ts("cryo_alloy_ingot"), 1, 4000,
+                    new String[]{ts("cryo_carapace"), ts("meteoric_iron_ingot")}, new int[]{2, 1});
+            thermalSmelter("polyphosphazene_coenzyme_thermal", ts("polyphosphazene_coenzyme"), 1, 3200,
+                    new String[]{ts("condensed_acetylene"), ts("hydrogen_capsule")}, new int[]{2, 1});
+            thermalSmelter("azotosome_sheet_thermal", ts("azotosome_sheet"), 1, 3200,
+                    new String[]{ts("aero_membrane"), ts("tholin_dust")}, new int[]{1, 2});
+        }
     }
 
     // ============================================================
@@ -233,6 +255,48 @@ public class TSRecipeProvider implements DataProvider {
         JsonArray a = new JsonArray();
         a.add(craftResult(id, count));
         return a;
+    }
+
+    // ---- Thermal（thermal:* 自有序列化器，与加载器无关；本 mod 仅 1.20.1 有 Thermal，故只在 !neo 调用）----
+    /** 粉碎机：单输入 → 单产物（result 为数组，元素 {"item":id,"count":N}）。 */
+    private void thermalPulverizer(String name, String inputId, String resultId, int count, int energy) {
+        JsonObject r = new JsonObject();
+        r.addProperty("type", "thermal:pulverizer");
+        r.add("ingredient", ing(inputId));
+        JsonArray res = new JsonArray();
+        res.add(thermalResult(resultId, count));
+        r.add("result", res);
+        r.addProperty("energy", energy);
+        addConds(r, modLoadedArr("thermal"));
+        put(name, r);
+    }
+
+    /** 感应熔炉：多输入（ingredients 数组，元素 {"item":id,"count":N}）→ 单产物。 */
+    private void thermalSmelter(String name, String resultId, int resultCount, int energy, String[] inputIds, int[] inputCounts) {
+        JsonObject r = new JsonObject();
+        r.addProperty("type", "thermal:smelter");
+        JsonArray ings = new JsonArray();
+        for (int i = 0; i < inputIds.length; i++) {
+            JsonObject in = new JsonObject();
+            in.addProperty("item", inputIds[i]);
+            in.addProperty("count", inputCounts[i]);
+            ings.add(in);
+        }
+        r.add("ingredients", ings);
+        JsonArray res = new JsonArray();
+        res.add(thermalResult(resultId, resultCount));
+        r.add("result", res);
+        r.addProperty("energy", energy);
+        addConds(r, modLoadedArr("thermal"));
+        put(name, r);
+    }
+
+    /** Thermal result：始终 {"item":id,"count":N}（Thermal 自有序列化器，非 vanilla，不随加载器切换）。 */
+    private JsonObject thermalResult(String id, int count) {
+        JsonObject o = new JsonObject();
+        o.addProperty("item", id);
+        o.addProperty("count", count);
+        return o;
     }
 
     /** Mek 物品输入：1.20.1 {"ingredient":{"item":id},"amount":N?}；1.21.1 {"item":id,"count":N}。 */

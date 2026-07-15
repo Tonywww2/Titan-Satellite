@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 甲烷微浮群渲染器：缩小的原版史莱姆模型占位（真实模型/贴图待美术）。
+ * 甲烷微浮群渲染器：缩小的原版史莱姆模型（占位）。
  */
 public class MethaneMidgeRenderer extends MobRenderer<MethaneMidge, SlimeModel<MethaneMidge>> {
 

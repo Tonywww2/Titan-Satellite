@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 石林迷城（T7.3 · 宏伟地物）：荒芜高原上巨型风化石林组成的天然迷宫——一片密集的锥形风化石柱
+ * 石林迷城（宏伟地物）：荒芜高原上巨型风化石林组成的天然迷宫——一片密集的锥形风化石柱
  * （{@code weathered_titan_stone}），每根从<b>该列真实地表</b>逐层收窄向上，穿行如迷城。
  */
 public class HoodooLabyrinthFeature extends Feature<NoneFeatureConfiguration> {

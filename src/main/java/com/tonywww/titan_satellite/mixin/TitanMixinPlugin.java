@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Mixin 配置插件（PA-2 骨架）。默认全部应用；M4（PE-2）加入塔防波次刷怪 Mixin 时，
+ * Mixin 配置插件。默认全部应用；加入塔防波次刷怪 Mixin 时，
  * 可在 {@link #shouldApplyMixin} 里按配置/加载器条件启用。
  */
 public class TitanMixinPlugin implements IMixinConfigPlugin {

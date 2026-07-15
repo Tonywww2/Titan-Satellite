@@ -7,12 +7,13 @@ import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 悬冰大殿 / 冰晶穹顶（T7.3 · 宏伟地物）：极地迷宫冰原里一座巨型中空冰穹——上半球为地表可见穹顶、
+ * 悬冰大殿 / 冰晶穹顶（宏伟地物）：极地迷宫冰原里一座巨型中空冰穹——上半球为地表可见穹顶、
  * 下半球嵌入厚冰（故整壳接地不悬浮），内部中空；殿心立冰柱、地面散布冰刺与甲烷冰花、殿底积甲烷潭。
  */
 public class IceCathedralFeature extends Feature<NoneFeatureConfiguration> {
@@ -34,7 +35,10 @@ public class IceCathedralFeature extends Feature<NoneFeatureConfiguration> {
         BlockState methane = TSBlocks.LIQUID_METHANE_BLOCK.get().defaultBlockState();
         BlockState bloom = TSBlocks.METHANE_ICE_BLOOM.get().defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-        int floorY = origin.getY() - (radius - 2);
+        // 严格防悬浮：球心锤到该列真实实心地表(OCEAN_FLOOR_WG=实心顶)，而非 placed_feature 的
+        // WORLD_SURFACE_WG(含流体面/噪声估算)——下半球嵌入实心冰、上半球为可见穹顶(设计意图)，绝不悬浮于流体面/半空。
+        int centerY = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, origin.getX(), origin.getZ()) - 1;
+        int floorY = centerY - (radius - 2);
         boolean placed = false;
 
         // 中空冰壳（整球，上半可见穹顶、下半嵌冰）
@@ -42,7 +46,7 @@ public class IceCathedralFeature extends Feature<NoneFeatureConfiguration> {
             for (int dx = -radius; dx <= radius; dx++) {
                 for (int dz = -radius; dz <= radius; dz++) {
                     double dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
-                    pos.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
+                    pos.set(origin.getX() + dx, centerY + dy, origin.getZ() + dz);
                     if (dist <= radius - 1.5D) {
                         setBlock(level, pos, air);
                         placed = true;
@@ -67,7 +71,7 @@ public class IceCathedralFeature extends Feature<NoneFeatureConfiguration> {
         }
 
         // 殿心冰柱
-        for (int y = floorY + 1; y <= origin.getY() + radius - 2; y++) {
+        for (int y = floorY + 1; y <= centerY + radius - 2; y++) {
             setBlock(level, pos.set(origin.getX(), y, origin.getZ()), shell);
         }
 

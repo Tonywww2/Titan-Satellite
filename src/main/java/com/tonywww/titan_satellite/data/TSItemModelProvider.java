@@ -36,13 +36,13 @@ public class TSItemModelProvider extends ItemModelProvider {
         generated("depleted_battery", "titan_satellite:item/depleted_battery");
         generated("precision_components", "titan_satellite:item/precision_components");
 
-        // 生态深化材料（ECO-A2；generated + 本模组纯色占位贴图）
+        // 生态深化材料（generated + 本模组纯色占位贴图）
         generated("crystalline_twig", "titan_satellite:item/crystalline_twig");
         generated("tholin_fibre", "titan_satellite:item/tholin_fibre");
         generated("tough_neural_gland", "titan_satellite:item/tough_neural_gland");
         generated("tholin_silk_sac", "titan_satellite:item/tholin_silk_sac");
 
-        // 材料加工链（MC1；generated + 纯色占位贴图）
+        // 材料加工链（generated + 纯色占位贴图）
         generated("tholin_dust", "titan_satellite:item/tholin_dust");
         generated("condensed_acetylene", "titan_satellite:item/condensed_acetylene");
         generated("hydrogen_capsule", "titan_satellite:item/hydrogen_capsule");
@@ -62,6 +62,7 @@ public class TSItemModelProvider extends ItemModelProvider {
         // 不再复用固定蓝色的 water_bucket 贴图，故每种流体的桶显示各自的液体颜色。
         fluidBucket("liquid_methane_bucket", TSFluids.LIQUID_METHANE.get());
         fluidBucket("liquid_ammonia_bucket", TSFluids.LIQUID_AMMONIA.get());
+        fluidBucket("liquid_hydrogen_bucket", TSFluids.LIQUID_HYDROGEN.get());
 
         // 刷怪蛋（parent template_spawn_egg，无贴图）
         withExistingParent("aero_jelly_spawn_egg", mcLoc("item/template_spawn_egg"));

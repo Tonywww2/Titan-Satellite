@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 冰硅甲虫渲染器（桩，复用原版蜘蛛模型）。真实模型/贴图由 M2 / PC-1 替换。
+ * 冰硅甲虫渲染器：复用原版蜘蛛模型（占位）。
  */
 public class CryoScavengerRenderer extends MobRenderer<CryoScavenger, SpiderModel<CryoScavenger>> {
 

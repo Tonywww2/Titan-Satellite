@@ -16,7 +16,7 @@ import net.minecraft.world.phys.AABB;
 /**
  * 甲烷冰花（Methane Ice Bloom）：高危易燃的碳基花簇。
  * 通过随机刻检测周围是否存在<b>着火的实体</b>或<b>火焰标签方块</b>；命中则瞬间引爆，
- * 并把相邻的甲烷冰花延迟点燃，形成连锁化学爆炸（见生态设计 §2.3）。
+ * 并把相邻的甲烷冰花延迟点燃，形成连锁化学爆炸。
  */
 public class MethaneIceBloomBlock extends Block {
 

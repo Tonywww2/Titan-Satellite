@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * 甲烷开采塔防「整套流程」的 Forge 事件族，供整合包 / 附属高度自定义。
  *
- * <p>波次开始沿用 <b>冻结签名</b>的 {@link MethaneExtractionWaveEvent}（PA-2 冻结，仅通知）；
+ * <p>波次开始沿用 <b>冻结签名</b>的 {@link MethaneExtractionWaveEvent}（冻结，仅通知）；
  * 本类补齐生命周期其余节点：启动（可取消）/ 成功 / 失败。全部在服务端由 {@link WaveController}
  * 通过 {@code MinecraftForge.EVENT_BUS.post(...)} 抛出。
  */

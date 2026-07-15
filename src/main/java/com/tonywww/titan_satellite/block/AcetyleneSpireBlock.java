@@ -14,7 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.phys.AABB;
 
 /**
- * 乙炔冰笋（Acetylene Ice Spire）：液态甲烷深渊「乙炔大晶洞」的高能乙炔富集晶柱（初级生产者 / 燃料源，设计 §2.4）。
+ * 乙炔冰笋（Acetylene Ice Spire）：液态甲烷深渊「乙炔大晶洞」的高能乙炔富集晶柱（初级生产者 / 燃料源）。
  * <p>富集的乙炔极不稳定：一旦邻近火源（火焰标签方块或着火实体）即发生<b>剧烈连锁爆炸</b>——
  * 当量高于甲烷冰花，并把相邻乙炔冰笋延迟引爆，形成沿晶脉传播的链爆。
  */

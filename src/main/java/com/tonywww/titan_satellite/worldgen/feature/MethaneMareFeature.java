@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 甲烷海特征（PG-4）：液态甲烷深渊大面积地表塌陷至液面以下、被液态甲烷淹没，形成开阔的甲烷之海。
+ * 甲烷海特征：液态甲烷深渊大面积地表塌陷至液面以下、被液态甲烷淹没，形成开阔的甲烷之海。
  *
  * <p>大半径碗形下沉（中心深、边缘浅）；下沉区上方清空塌陷地表、液面及以下填液态甲烷。
  */

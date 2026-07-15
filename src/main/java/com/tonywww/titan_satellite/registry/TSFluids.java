@@ -37,6 +37,11 @@ public final class TSFluids {
     public static final Supplier<FlowingFluid> FLOWING_LIQUID_AMMONIA =
             REGISTER.register("flowing_liquid_ammonia", () -> new ForgeFlowingFluid.Flowing(ammoniaProperties()));
 
+    public static final Supplier<FlowingFluid> LIQUID_HYDROGEN =
+            REGISTER.register("liquid_hydrogen", () -> new ForgeFlowingFluid.Source(hydrogenProperties()));
+    public static final Supplier<FlowingFluid> FLOWING_LIQUID_HYDROGEN =
+            REGISTER.register("flowing_liquid_hydrogen", () -> new ForgeFlowingFluid.Flowing(hydrogenProperties()));
+
     private static ForgeFlowingFluid.Properties methaneProperties() {
         return new ForgeFlowingFluid.Properties(TSFluidTypes.LIQUID_METHANE, LIQUID_METHANE, FLOWING_LIQUID_METHANE)
                 .slopeFindDistance(3)
@@ -52,6 +57,14 @@ public final class TSFluids {
                 .block(TSBlocks.LIQUID_AMMONIA_BLOCK)
                 .bucket(TSItems.LIQUID_AMMONIA_BUCKET);
     }
+
+    private static ForgeFlowingFluid.Properties hydrogenProperties() {
+        return new ForgeFlowingFluid.Properties(TSFluidTypes.LIQUID_HYDROGEN, LIQUID_HYDROGEN, FLOWING_LIQUID_HYDROGEN)
+                .slopeFindDistance(2)
+                .levelDecreasePerBlock(1)
+                .block(TSBlocks.LIQUID_HYDROGEN_BLOCK)
+                .bucket(TSItems.LIQUID_HYDROGEN_BUCKET);
+    }
     //?} else {
     /*public static final Supplier<FlowingFluid> LIQUID_METHANE =
             REGISTER.register("liquid_methane", () -> new BaseFlowingFluid.Source(methaneProperties()));
@@ -62,6 +75,11 @@ public final class TSFluids {
             REGISTER.register("liquid_ammonia", () -> new BaseFlowingFluid.Source(ammoniaProperties()));
     public static final Supplier<FlowingFluid> FLOWING_LIQUID_AMMONIA =
             REGISTER.register("flowing_liquid_ammonia", () -> new BaseFlowingFluid.Flowing(ammoniaProperties()));
+
+    public static final Supplier<FlowingFluid> LIQUID_HYDROGEN =
+            REGISTER.register("liquid_hydrogen", () -> new BaseFlowingFluid.Source(hydrogenProperties()));
+    public static final Supplier<FlowingFluid> FLOWING_LIQUID_HYDROGEN =
+            REGISTER.register("flowing_liquid_hydrogen", () -> new BaseFlowingFluid.Flowing(hydrogenProperties()));
 
     private static BaseFlowingFluid.Properties methaneProperties() {
         return new BaseFlowingFluid.Properties(TSFluidTypes.LIQUID_METHANE, LIQUID_METHANE, FLOWING_LIQUID_METHANE)
@@ -77,6 +95,14 @@ public final class TSFluids {
                 .levelDecreasePerBlock(1)
                 .block(TSBlocks.LIQUID_AMMONIA_BLOCK)
                 .bucket(TSItems.LIQUID_AMMONIA_BUCKET);
+    }
+
+    private static BaseFlowingFluid.Properties hydrogenProperties() {
+        return new BaseFlowingFluid.Properties(TSFluidTypes.LIQUID_HYDROGEN, LIQUID_HYDROGEN, FLOWING_LIQUID_HYDROGEN)
+                .slopeFindDistance(2)
+                .levelDecreasePerBlock(1)
+                .block(TSBlocks.LIQUID_HYDROGEN_BLOCK)
+                .bucket(TSItems.LIQUID_HYDROGEN_BUCKET);
     }
     *///?}
 }

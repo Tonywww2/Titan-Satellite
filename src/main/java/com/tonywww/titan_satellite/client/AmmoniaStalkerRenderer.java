@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 氨泉掠食者渲染器（桩，复用原版蠹虫模型）。真实模型/贴图由 M2 / PC-2 替换。
+ * 氨泉掠食者渲染器：复用原版人形（僵尸）模型（占位）。
  */
 public class AmmoniaStalkerRenderer extends MobRenderer<AmmoniaStalker, HumanoidModel<AmmoniaStalker>> {
 

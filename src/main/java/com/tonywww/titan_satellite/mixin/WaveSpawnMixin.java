@@ -12,14 +12,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
- * 塔防波次怪定制 Mixin（PE-2 / T4.2）。
+ * 塔防波次怪定制 Mixin。
  *
  * <p>注入 vanilla {@link Mob#aiStep()}，对带 {@link WaveController#WAVE_MOB_TAG} 标记的波次怪
  * 做<b>一次性强化</b>：标记为常驻（塔防期间不自然消失）并附加持续加速（「深渊狂暴」，提升进攻强度）。
- * 对应设计 §5.2「结合 Mixin 高度自定义每波怪物的生成逻辑和强度」。
  *
  * <p>选择稳定的 vanilla 注入点（而非 {@code NaturalSpawner}）以降低跨版本脆弱性、并靠标记过滤
- * 只作用于本模组波次怪，见设计 §6 原则 / 风险 R3。附属可继续往同一注入点叠加定制。
+ * 只作用于本模组波次怪。附属可继续往同一注入点叠加定制。
  */
 @Mixin(Mob.class)
 public abstract class WaveSpawnMixin {

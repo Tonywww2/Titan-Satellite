@@ -45,12 +45,12 @@ public final class TSItems {
     public static final Supplier<Item> SPECIAL_METHANE_PUMP = blockItem("special_methane_pump", TSBlocks.SPECIAL_METHANE_PUMP);
     public static final Supplier<Item> THOLIN_CRYSTAL = blockItem("tholin_crystal", TSBlocks.THOLIN_CRYSTAL);
 
-    // ---- M6 群系特色化新增方块物品（PG-1）----
+    // ---- 群系特色化新增方块物品 ----
     public static final Supplier<Item> WEATHERED_TITAN_STONE = blockItem("weathered_titan_stone", TSBlocks.WEATHERED_TITAN_STONE);
     public static final Supplier<Item> SEDIMENTARY_TITAN_STONE = blockItem("sedimentary_titan_stone", TSBlocks.SEDIMENTARY_TITAN_STONE);
     public static final Supplier<Item> BRANCH_CRYSTAL = blockItem("branch_crystal", TSBlocks.BRANCH_CRYSTAL);
 
-    // ---- 装饰地物新增方块物品（CR-15）----
+    // ---- 装饰地物新增方块物品 ----
     public static final Supplier<Item> ABYSS_CRYSTAL = blockItem("abyss_crystal", TSBlocks.ABYSS_CRYSTAL);
     public static final Supplier<Item> THOLIN_TAR = blockItem("tholin_tar", TSBlocks.THOLIN_TAR);
     public static final Supplier<Item> METEOR_FRAGMENT = blockItem("meteor_fragment", TSBlocks.METEOR_FRAGMENT);
@@ -61,12 +61,12 @@ public final class TSItems {
     public static final Supplier<Item> TITAN_GRAVEL = blockItem("titan_gravel", TSBlocks.TITAN_GRAVEL);
     public static final Supplier<Item> FROST_BUSH = blockItem("frost_bush", TSBlocks.FROST_BUSH);
 
-    // ---- M7 宏伟地物构成方块物品（T7.1）----
+    // ---- 宏伟地物构成方块物品 ----
     public static final Supplier<Item> ACETYLENE_SPIRE = blockItem("acetylene_spire", TSBlocks.ACETYLENE_SPIRE);
     public static final Supplier<Item> THOLIN_MYCELIUM = blockItem("tholin_mycelium", TSBlocks.THOLIN_MYCELIUM);
     public static final Supplier<Item> HYDROGEN_BUBBLE_MAT = blockItem("hydrogen_bubble_mat", TSBlocks.HYDROGEN_BUBBLE_MAT);
 
-    // ---- 材料加工链被动生产方块物品（MC2/MC3）----
+    // ---- 材料加工链被动生产方块物品 ----
     public static final Supplier<Item> HYDROGEN_COLLECTOR = blockItem("hydrogen_collector", TSBlocks.HYDROGEN_COLLECTOR);
     public static final Supplier<Item> THOLIN_COMPOSTER = blockItem("tholin_composter", TSBlocks.THOLIN_COMPOSTER);
 
@@ -76,26 +76,30 @@ public final class TSItems {
             () -> new BucketItem(TSFluids.LIQUID_METHANE, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
     public static final Supplier<Item> LIQUID_AMMONIA_BUCKET = register("liquid_ammonia_bucket",
             () -> new BucketItem(TSFluids.LIQUID_AMMONIA, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+    public static final Supplier<Item> LIQUID_HYDROGEN_BUCKET = register("liquid_hydrogen_bucket",
+            () -> new BucketItem(TSFluids.LIQUID_HYDROGEN, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
     //?} else {
     /*public static final Supplier<Item> LIQUID_METHANE_BUCKET = register("liquid_methane_bucket",
             () -> new BucketItem(TSFluids.LIQUID_METHANE.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
     public static final Supplier<Item> LIQUID_AMMONIA_BUCKET = register("liquid_ammonia_bucket",
             () -> new BucketItem(TSFluids.LIQUID_AMMONIA.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
+    public static final Supplier<Item> LIQUID_HYDROGEN_BUCKET = register("liquid_hydrogen_bucket",
+            () -> new BucketItem(TSFluids.LIQUID_HYDROGEN.get(), new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET)));
     *///?}
 
-    // ---- 生物掉落材料（M2；稀有度按获取复杂度）----
+    // ---- 生物掉落材料（稀有度按获取复杂度）----
     public static final Supplier<Item> CRYO_CARAPACE = mat("cryo_carapace", Rarity.COMMON);
     public static final Supplier<Item> TOXIC_GLAND = mat("toxic_gland", Rarity.COMMON);
     public static final Supplier<Item> DEPLETED_BATTERY = mat("depleted_battery", Rarity.UNCOMMON);
     public static final Supplier<Item> PRECISION_COMPONENTS = mat("precision_components", Rarity.UNCOMMON);
 
-    // ---- 生态深化掉落材料（ECO；稀有度按获取复杂度）----
+    // ---- 生态深化掉落材料（稀有度按获取复杂度）----
     public static final Supplier<Item> CRYSTALLINE_TWIG = mat("crystalline_twig", Rarity.COMMON);
     public static final Supplier<Item> THOLIN_FIBRE = mat("tholin_fibre", Rarity.COMMON);
     public static final Supplier<Item> TOUGH_NEURAL_GLAND = mat("tough_neural_gland", Rarity.UNCOMMON);
     public static final Supplier<Item> THOLIN_SILK_SAC = mat("tholin_silk_sac", Rarity.UNCOMMON);
 
-    // ---- 材料加工链（MC1；稀有度按获取复杂度：直采→COMMON，1 步→UNCOMMON，多步组合/深层→RARE，终局→EPIC）----
+    // ---- 材料加工链（稀有度按获取复杂度：直采→COMMON，1 步→UNCOMMON，多步组合/深层→RARE，终局→EPIC）----
     // 中间体
     public static final Supplier<Item> THOLIN_DUST = mat("tholin_dust", Rarity.UNCOMMON);
     public static final Supplier<Item> CONDENSED_ACETYLENE = mat("condensed_acetylene", Rarity.UNCOMMON);

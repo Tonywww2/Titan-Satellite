@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 冰层天坑特征（PG-4 增大为巨型）：极地迷宫冰原下巨大的冰窟窿（半径 4-7、深 14-26），直通下层地形。
+ * 冰层天坑特征（巨型）：极地迷宫冰原下巨大的冰窟窿（半径 4-7、深 14-26），直通下层地形。
  */
 public class IceSinkholeFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -31,11 +31,16 @@ public class IceSinkholeFeature extends Feature<NoneFeatureConfiguration> {
         BlockState ice = TSBlocks.PACKED_METHANE_ICE.get().defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         boolean placed = false;
+        int minY = level.getMinBuildHeight();
         for (int dy = 0; dy > -depth; dy--) {
+            int y = origin.getY() + dy;
+            if (y < minY + 5) {
+                break;                                 // 基岩守卫：不凿穿 Y0-4 基岩带
+            }
             for (int dx = -radius; dx <= radius; dx++) {
                 for (int dz = -radius; dz <= radius; dz++) {
                     double horiz = Math.sqrt((double) (dx * dx + dz * dz));
-                    pos.set(origin.getX() + dx, origin.getY() + dy, origin.getZ() + dz);
+                    pos.set(origin.getX() + dx, y, origin.getZ() + dz);
                     if (horiz <= radius - 0.5D) {
                         setBlock(level, pos, air);
                         placed = true;

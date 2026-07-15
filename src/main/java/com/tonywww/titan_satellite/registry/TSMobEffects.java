@@ -14,7 +14,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 /**
- * 生物效果注册表（桩效果）。具体作用由 M4（毒气）填充监听逻辑。
+ * 生物效果注册表。
  */
 public final class TSMobEffects {
 

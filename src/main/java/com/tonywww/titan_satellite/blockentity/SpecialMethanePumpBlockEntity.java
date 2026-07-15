@@ -1,5 +1,6 @@
 package com.tonywww.titan_satellite.blockentity;
 
+import com.tonywww.titan_satellite.config.TSConfig;
 import com.tonywww.titan_satellite.event.MethaneExtractionEvents;
 import com.tonywww.titan_satellite.event.WaveController;
 import com.tonywww.titan_satellite.registry.TSBlockEntities;
@@ -53,34 +54,17 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
     /** 状态机阶段。 */
     public enum Phase {IDLE, RUNNING, SUCCESS, FAILED}
 
-    /** 满进度所需 tick（≈2 分钟）。 */
-    public static final int MAX_PROGRESS = 2400;
-    /** 总波数。 */
-    public static final int WAVE_COUNT = 5;
-    /** 泵完整度上限。 */
-    public static final int MAX_INTEGRITY = 100;
-    /** 怪物「攻击」泵的判定半径（格）。 */
-    private static final double ATTACK_RADIUS = 2.5;
-    /** 流体槽容量（mB）。 */
-    public static final int TANK_CAPACITY = 16000;
-    /** 运行期每 tick 产出的液态甲烷（mB）。 */
-    private static final int FLUID_PER_TICK = 8;
-    /** 运行期每隔多少 tick 产出一次材料。 */
-    private static final int ITEM_INTERVAL = 240;
-    /** 每累计抽取多少 mB 提升 1 点生态压力（波次强度）。 */
-    private static final int EXTRACTION_PER_INTENSITY = 4000;
-
     private Phase phase = Phase.IDLE;
     private int progress = 0;
     private int waveIndex = 0;
-    private int integrity = MAX_INTEGRITY;
+    private int integrity = TSConfig.PUMP_MAX_INTEGRITY.get();
     /** 上一 tick 的红石供电状态（用于上升沿检测，防止持续/重复开启）。 */
     private boolean powered = false;
     /** 本次开采累计抽取量（mB，用于生态压力→波次强度）。 */
     private int extractedTotal = 0;
 
     /** 产出液体槽：只出不进（外部只能抽取，产出经 {@link OutputOnlyTank#fillInternal}）。 */
-    private final OutputOnlyTank methaneTank = new OutputOnlyTank(TANK_CAPACITY,
+    private final OutputOnlyTank methaneTank = new OutputOnlyTank(TSConfig.PUMP_TANK_CAPACITY.get(),
             fs -> fs.getFluid() == TSFluids.LIQUID_METHANE.get());
     //? if forge {
     private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> methaneTank);
@@ -111,19 +95,19 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         }
         progress++;
         // 波次调度：波次强度随累计抽取量（生态压力）提升
-        if (waveIndex < WAVE_COUNT && progress >= waveThreshold(waveIndex + 1)) {
+        if (waveIndex < TSConfig.PUMP_WAVE_COUNT.get() && progress >= waveThreshold(waveIndex + 1)) {
             waveIndex++;
-            WaveController.beginWave(level, pos, waveIndex, waveIndex + extractedTotal / EXTRACTION_PER_INTENSITY);
+            WaveController.beginWave(level, pos, waveIndex, waveIndex + extractedTotal / TSConfig.PUMP_EXTRACTION_PER_INTENSITY.get());
         }
         // 产出：液态甲烷入流体槽（累计抽取量）；材料按间隔入缓冲，并推送至正上方容器（自动化输出）
-        methaneTank.fillInternal(new FluidStack(TSFluids.LIQUID_METHANE.get(), FLUID_PER_TICK), IFluidHandler.FluidAction.EXECUTE);
-        extractedTotal += FLUID_PER_TICK;
-        if (progress % ITEM_INTERVAL == 0) {
+        methaneTank.fillInternal(new FluidStack(TSFluids.LIQUID_METHANE.get(), TSConfig.PUMP_FLUID_PER_TICK.get()), IFluidHandler.FluidAction.EXECUTE);
+        extractedTotal += TSConfig.PUMP_FLUID_PER_TICK.get();
+        if (progress % TSConfig.PUMP_ITEM_INTERVAL.get() == 0) {
             produceItem(level, pos, 1);
         }
         pushOutputs(level, pos);
         // 完整度：贴近泵的怪物削减之，安全时缓恢
-        AABB box = new AABB(pos).inflate(ATTACK_RADIUS);
+        AABB box = new AABB(pos).inflate(TSConfig.PUMP_ATTACK_RADIUS.get());
         int attackers = level.getEntitiesOfClass(Monster.class, box, Monster::isAlive).size();
         if (attackers > 0) {
             integrity -= attackers;
@@ -136,7 +120,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
                 reset();
                 return;
             }
-        } else if (integrity < MAX_INTEGRITY && progress % 20 == 0) {
+        } else if (integrity < TSConfig.PUMP_MAX_INTEGRITY.get() && progress % 20 == 0) {
             integrity++;
         }
         // 环境音画
@@ -144,7 +128,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
             WaveController.ambientPulse(level, pos);
         }
         // 成功
-        if (progress >= MAX_PROGRESS) {
+        if (progress >= TSConfig.PUMP_MAX_PROGRESS.get()) {
             WaveController.succeed(level, pos, corePos, waveIndex);
             produceItem(level, pos, 2 + waveIndex);   // 终局额外产出，一并推送至上方容器
             pushOutputs(level, pos);
@@ -157,7 +141,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
 
     /** 每波触发的进度阈值（在 [0,MAX] 内均匀分布，末尾留缓冲）。 */
     private static int waveThreshold(int wave) {
-        return (MAX_PROGRESS / (WAVE_COUNT + 1)) * wave;
+        return (TSConfig.PUMP_MAX_PROGRESS.get() / (TSConfig.PUMP_WAVE_COUNT.get() + 1)) * wave;
     }
 
     /** 右键交互：IDLE→启动；RUNNING→播报进度；SUCCESS/FAILED→重置以便重试。 */
@@ -165,7 +149,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         switch (phase) {
             case IDLE -> startExtraction(level, pos, player);
             case RUNNING -> player.displayClientMessage(Component.literal(
-                    "Extracting... " + (progress * 100 / MAX_PROGRESS) + "%  integrity " + integrity), true);
+                    "Extracting... " + (progress * 100 / TSConfig.PUMP_MAX_PROGRESS.get()) + "%  integrity " + integrity), true);
             default -> {
                 reset();
                 player.displayClientMessage(Component.literal("Pump reset."), true);
@@ -197,7 +181,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
             phase = Phase.RUNNING;
             progress = 0;
             waveIndex = 0;
-            integrity = MAX_INTEGRITY;
+            integrity = TSConfig.PUMP_MAX_INTEGRITY.get();
             extractedTotal = 0;
             setChanged();
             if (activator != null) {
@@ -219,7 +203,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         phase = Phase.IDLE;
         progress = 0;
         waveIndex = 0;
-        integrity = MAX_INTEGRITY;
+        integrity = TSConfig.PUMP_MAX_INTEGRITY.get();
         extractedTotal = 0;
         setChanged();
     }
@@ -335,7 +319,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         }
         progress = tag.getInt("Progress");
         waveIndex = tag.getInt("WaveIndex");
-        integrity = tag.contains("Integrity") ? tag.getInt("Integrity") : MAX_INTEGRITY;
+        integrity = tag.contains("Integrity") ? tag.getInt("Integrity") : TSConfig.PUMP_MAX_INTEGRITY.get();
         powered = tag.getBoolean("Powered");
         extractedTotal = tag.getInt("Extracted");
         methaneTank.readFromNBT(tag.getCompound("Tank"));
@@ -367,7 +351,7 @@ public class SpecialMethanePumpBlockEntity extends BlockEntity {
         }
         progress = tag.getInt("Progress");
         waveIndex = tag.getInt("WaveIndex");
-        integrity = tag.contains("Integrity") ? tag.getInt("Integrity") : MAX_INTEGRITY;
+        integrity = tag.contains("Integrity") ? tag.getInt("Integrity") : TSConfig.PUMP_MAX_INTEGRITY.get();
         powered = tag.getBoolean("Powered");
         extractedTotal = tag.getInt("Extracted");
         methaneTank.readFromNBT(registries, tag.getCompound("Tank"));

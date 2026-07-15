@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 巨型陨石坑特征（PA-2 桩）。M1（PB-3）填充：砸穿地层的巨大凹陷，底部露出微型甲烷湖。
+ * 巨型陨石坑特征：砸穿地层的巨大凹陷，底部露出微型甲烷湖。
  */
 public class GiantCraterFeature extends Feature<NoneFeatureConfiguration> {
 
@@ -33,6 +33,7 @@ public class GiantCraterFeature extends Feature<NoneFeatureConfiguration> {
         BlockState deep = TSBlocks.TITAN_BASALT.get().defaultBlockState();
         BlockState methane = TSBlocks.LIQUID_METHANE_BLOCK.get().defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        int minY = level.getMinBuildHeight();
         boolean placed = false;
         for (int dx = -radius - 1; dx <= radius + 1; dx++) {
             for (int dz = -radius - 1; dz <= radius + 1; dz++) {
@@ -49,7 +50,7 @@ public class GiantCraterFeature extends Feature<NoneFeatureConfiguration> {
                 if (horiz <= radius - 2) {
                     // 碗形凹陷：中心深、向外变浅
                     int bowl = (int) ((radius - 2 - horiz) * 0.9D) + 1;
-                    int floorY = origin.getY() - bowl;
+                    int floorY = Math.max(origin.getY() - bowl, minY + 5);   // 基岩守卫：坑底不低于基岩带
                     if (terrainTop <= floorY) {
                         // 该列真实地表已在碗底或更低（悬崖/深谷）：不铺碗底(否则悬浮)，仅铲掉其上方残留的悬浮地物
                         for (int y = surfaceTop; y > terrainTop; y--) {

@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 甲烷浮游体渲染器：骨架阶段复用原版史莱姆模型与贴图。
+ * 甲烷浮游体渲染器：复用原版史莱姆模型（占位）。
  */
 public class AeroJellyRenderer extends MobRenderer<AeroJelly, SlimeModel<AeroJelly>> {
 

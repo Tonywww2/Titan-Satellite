@@ -22,7 +22,7 @@ import net.neoforged.fml.common.Mod;
 import org.slf4j.Logger;
 
 /**
- * Titan Satellite - 土卫六维度 mod 主类（Forge 1.20.1 骨架）。
+ * Titan Satellite - 土卫六维度 mod 主类（Forge 1.20.1）。
  * 统一在构造器里把各 DeferredRegister 注册到 mod 事件总线。
  */
 @Mod(TitanSatellite.MODID)

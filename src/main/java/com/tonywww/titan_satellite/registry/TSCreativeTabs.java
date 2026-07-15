@@ -41,11 +41,11 @@ public final class TSCreativeTabs {
                         output.accept(TSBlocks.METHANE_POOL_CORE.get());
                         output.accept(TSBlocks.SPECIAL_METHANE_PUMP.get());
                         output.accept(TSBlocks.THOLIN_CRYSTAL.get());
-                        // M6 新增表层/装饰块
+                        // 新增表层/装饰块
                         output.accept(TSBlocks.WEATHERED_TITAN_STONE.get());
                         output.accept(TSBlocks.SEDIMENTARY_TITAN_STONE.get());
                         output.accept(TSBlocks.BRANCH_CRYSTAL.get());
-                        // 装饰地物新增方块（CR-15）
+                        // 装饰地物新增方块
                         output.accept(TSBlocks.ABYSS_CRYSTAL.get());
                         output.accept(TSBlocks.THOLIN_TAR.get());
                         output.accept(TSBlocks.METEOR_FRAGMENT.get());
@@ -55,27 +55,28 @@ public final class TSCreativeTabs {
                         output.accept(TSBlocks.AMMONIA_CRYSTAL.get());
                         output.accept(TSBlocks.TITAN_GRAVEL.get());
                         output.accept(TSBlocks.FROST_BUSH.get());
-                        // M7 宏伟地物构成方块
+                        // 宏伟地物构成方块
                         output.accept(TSBlocks.ACETYLENE_SPIRE.get());
                         output.accept(TSBlocks.THOLIN_MYCELIUM.get());
                         output.accept(TSBlocks.HYDROGEN_BUBBLE_MAT.get());
-                        // 材料加工链被动生产方块（MC2/MC3）
+                        // 材料加工链被动生产方块
                         output.accept(TSBlocks.HYDROGEN_COLLECTOR.get());
                         output.accept(TSBlocks.THOLIN_COMPOSTER.get());
                         // 流体桶
                         output.accept(TSItems.LIQUID_METHANE_BUCKET.get());
                         output.accept(TSItems.LIQUID_AMMONIA_BUCKET.get());
+                        output.accept(TSItems.LIQUID_HYDROGEN_BUCKET.get());
                         // 生物掉落材料
                         output.accept(TSItems.CRYO_CARAPACE.get());
                         output.accept(TSItems.TOXIC_GLAND.get());
                         output.accept(TSItems.DEPLETED_BATTERY.get());
                         output.accept(TSItems.PRECISION_COMPONENTS.get());
-                        // 生态深化掉落材料（ECO）
+                        // 生态深化掉落材料
                         output.accept(TSItems.CRYSTALLINE_TWIG.get());
                         output.accept(TSItems.THOLIN_FIBRE.get());
                         output.accept(TSItems.TOUGH_NEURAL_GLAND.get());
                         output.accept(TSItems.THOLIN_SILK_SAC.get());
-                        // 材料加工链（MC1）
+                        // 材料加工链
                         output.accept(TSItems.THOLIN_DUST.get());
                         output.accept(TSItems.CONDENSED_ACETYLENE.get());
                         output.accept(TSItems.HYDROGEN_CAPSULE.get());

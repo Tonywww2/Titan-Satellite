@@ -61,23 +61,23 @@ public final class TSBlocks {
     public static final Supplier<Block> PACKED_METHANE_ICE = register("packed_methane_ice", () ->
             new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.5F, 0.5F, SoundType.GLASS)));
 
-    // ---- 特殊/功能方块（占位，行为逻辑后续里程碑实现）----
-    // 冰火山喷泉：周期喷发击飞实体（行为由 M4/PE-1 填充）。
+    // ---- 特殊/功能方块 ----
+    // 冰火山喷泉：周期喷发击飞实体。
     public static final Supplier<Block> CRYOVOLCANIC_GEYSER = register("cryovolcanic_geyser", () ->
             new CryovolcanicGeyserBlock(props(MapColor.ICE, 1.5F, 1.5F, SoundType.GLASS).lightLevel(s -> 6)));
-    // 甲烷池核心：开采塔防事件触发点（行为由 M4/PE-2 填充）。
+    // 甲烷池核心：开采塔防事件触发点。
     public static final Supplier<Block> METHANE_POOL_CORE = register("methane_pool_core", () ->
             new MethanePoolCoreBlock(props(MapColor.COLOR_BLACK, 25.0F, 1200.0F, SoundType.NETHER_ORE)
                     .requiresCorrectToolForDrops().lightLevel(s -> 3)));
-    // 特制甲烷泵：玩家放置以开采（带方块实体，行为由 M4/PE-2 填充）。
+    // 特制甲烷泵：玩家放置以开采（带方块实体）。
     public static final Supplier<Block> SPECIAL_METHANE_PUMP = register("special_methane_pump", () ->
             new SpecialMethanePumpBlock(props(MapColor.METAL, 4.0F, 6.0F, SoundType.METAL).requiresCorrectToolForDrops()));
-    // 托林晶体：晶洞发光合成材料（破坏放毒气，行为由 M4/PE-3 填充）。
+    // 托林晶体：晶洞发光合成材料（破坏放毒气）。
     public static final Supplier<Block> THOLIN_CRYSTAL = register("tholin_crystal", () ->
             new TholinCrystalBlock(props(MapColor.COLOR_ORANGE, 1.5F, 1.5F, SoundType.AMETHYST)
                     .requiresCorrectToolForDrops().lightLevel(s -> 10)));
 
-    // ---- M6 群系特色化新增表层/装饰方块（PG-1）----
+    // ---- 群系特色化新增表层/装饰方块 ----
     // 风化泰坦石：荒芜高原 / 撞击陨坑荒原 表层（占位复用 titan_stone 贴图）。
     public static final Supplier<Block> WEATHERED_TITAN_STONE = register("weathered_titan_stone", () ->
             new Block(props(MapColor.TERRACOTTA_GRAY, 1.4F, 5.5F, SoundType.STONE).requiresCorrectToolForDrops()));
@@ -89,7 +89,7 @@ public final class TSBlocks {
             new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.0F, 0.0F, SoundType.AMETHYST_CLUSTER)
                     .noCollission().noOcclusion().lightLevel(s -> 4)));
 
-    // ---- 装饰地物新增方块（CR-15，纯色占位贴图；附加不改现有）----
+    // ---- 装饰地物新增方块（纯色占位贴图；附加不改现有）----
     // 深渊晶体：液态甲烷深渊 暗紫发光矿物装饰。
     public static final Supplier<Block> ABYSS_CRYSTAL = register("abyss_crystal", () ->
             new Block(props(MapColor.COLOR_PURPLE, 1.5F, 1.5F, SoundType.AMETHYST).lightLevel(s -> 6)));
@@ -119,7 +119,7 @@ public final class TSBlocks {
     public static final Supplier<Block> FROST_BUSH = register("frost_bush", () ->
             new SlowingBushBlock(props(MapColor.COLOR_LIGHT_GRAY, 0.0F, 0.0F, SoundType.GRASS).noCollission().noOcclusion()));
 
-    // ---- M7 宏伟地物构成方块（T7.1）----
+    // ---- 宏伟地物构成方块 ----
     // 乙炔冰笋：液态甲烷深渊「乙炔大晶洞」的高能乙炔晶柱（发光；近火连锁爆炸，见 AcetyleneSpireBlock）。
     public static final Supplier<Block> ACETYLENE_SPIRE = register("acetylene_spire", () ->
             new AcetyleneSpireBlock(props(MapColor.SAND, 1.0F, 1.0F, SoundType.AMETHYST).lightLevel(s -> 8).randomTicks()));
@@ -130,7 +130,7 @@ public final class TSBlocks {
     public static final Supplier<Block> HYDROGEN_BUBBLE_MAT = register("hydrogen_bubble_mat", () ->
             new HydrogenBubbleMatBlock(props(MapColor.COLOR_GREEN, 0.4F, 0.4F, SoundType.MOSS_CARPET).randomTicks()));
 
-    // ---- 材料加工链被动生产方块（MC2/MC3，带方块实体）----
+    // ---- 材料加工链被动生产方块（带方块实体）----
     // 集氢罩：架在氢泡菌毯上被动产氢（见 HydrogenCollectorBlock）。不要求正确工具，确保掉落。
     public static final Supplier<Block> HYDROGEN_COLLECTOR = register("hydrogen_collector", () ->
             new HydrogenCollectorBlock(props(MapColor.METAL, 2.0F, 3.0F, SoundType.METAL)));
@@ -144,11 +144,15 @@ public final class TSBlocks {
             new LiquidBlock(TSFluids.LIQUID_METHANE, liquidProps(MapColor.COLOR_BROWN)));
     public static final Supplier<LiquidBlock> LIQUID_AMMONIA_BLOCK = REGISTER.register("liquid_ammonia", () ->
             new LiquidBlock(TSFluids.LIQUID_AMMONIA, liquidProps(MapColor.COLOR_LIGHT_BLUE)));
+    public static final Supplier<LiquidBlock> LIQUID_HYDROGEN_BLOCK = REGISTER.register("liquid_hydrogen", () ->
+            new LiquidBlock(TSFluids.LIQUID_HYDROGEN, liquidProps(MapColor.COLOR_LIGHT_BLUE)));
     //?} else {
     /*public static final Supplier<LiquidBlock> LIQUID_METHANE_BLOCK = REGISTER.register("liquid_methane", () ->
             new LiquidBlock(TSFluids.LIQUID_METHANE.get(), liquidProps(MapColor.COLOR_BROWN)));
     public static final Supplier<LiquidBlock> LIQUID_AMMONIA_BLOCK = REGISTER.register("liquid_ammonia", () ->
             new LiquidBlock(TSFluids.LIQUID_AMMONIA.get(), liquidProps(MapColor.COLOR_LIGHT_BLUE)));
+    public static final Supplier<LiquidBlock> LIQUID_HYDROGEN_BLOCK = REGISTER.register("liquid_hydrogen", () ->
+            new LiquidBlock(TSFluids.LIQUID_HYDROGEN.get(), liquidProps(MapColor.COLOR_LIGHT_BLUE)));
     *///?}
 
     private static BlockBehaviour.Properties props(MapColor color, float destroyTime, float resistance, SoundType sound) {

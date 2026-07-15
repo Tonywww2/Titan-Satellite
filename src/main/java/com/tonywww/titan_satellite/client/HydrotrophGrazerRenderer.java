@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 氢营养蹒兽渲染器：原版猪模型占位（真实模型/贴图待美术）。
+ * 氢营养蹒兽渲染器：复用原版猪模型（占位）。
  */
 public class HydrotrophGrazerRenderer extends MobRenderer<HydrotrophGrazer, PigModel<HydrotrophGrazer>> {
 

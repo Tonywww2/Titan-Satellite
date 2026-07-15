@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 陨星撞击盆地（T7.2 · 宏伟地物）：远大于普通陨石坑的超级盆地——宽碗形凹陷 + 抬升坑缘 +
+ * 陨星撞击盆地（宏伟地物）：远大于普通陨石坑的超级盆地——宽碗形凹陷 + 抬升坑缘 +
  * 中央半埋的陨铁矿核（可开采 {@code meteor_fragment}）+ 向外若干辐射溅射脊线。
  *
  * <p>遵 repo 地物防悬浮约定：碗体/坑缘/脊线每一块都相对<b>该列真实地表</b>放置，绝不 origin 相对、
@@ -43,6 +43,12 @@ public class ImpactBasinFeature extends Feature<NoneFeatureConfiguration> {
         BlockState core = TSBlocks.METEOR_FRAGMENT.get().defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
         boolean placed = false;
+        int minY = level.getMinBuildHeight();
+        // 仅允许读写 origin 所在区块的 3x3 邻域：半径大(16-22)易越界，越界列既不读 getHeight(避免越界读崩溃)也不写
+        int minChunkX = (origin.getX() >> 4) - 1;
+        int maxChunkX = (origin.getX() >> 4) + 1;
+        int minChunkZ = (origin.getZ() >> 4) - 1;
+        int maxChunkZ = (origin.getZ() >> 4) + 1;
 
         int outer = (int) (radius * 1.5D);             // 溅射脊线延伸到 1.5R
         for (int dx = -outer - 1; dx <= outer + 1; dx++) {
@@ -53,13 +59,16 @@ public class ImpactBasinFeature extends Feature<NoneFeatureConfiguration> {
                 }
                 int wx = origin.getX() + dx;
                 int wz = origin.getZ() + dz;
+                if ((wx >> 4) < minChunkX || (wx >> 4) > maxChunkX || (wz >> 4) < minChunkZ || (wz >> 4) > maxChunkZ) {
+                    continue;                          // 越界丢弃：远区块不读不写，杜绝越界读崩溃 + far-chunk 写报错
+                }
                 int terrainTop = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, wx, wz) - 1;
                 int surfaceTop = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, wx, wz) - 1;
 
                 if (horiz <= radius - 3) {
                     // 宽碗形凹陷：中心最深、向外变浅
                     int bowl = (int) ((radius - 3 - horiz) * 0.72D) + 1;
-                    int floorY = origin.getY() - bowl;
+                    int floorY = Math.max(origin.getY() - bowl, minY + 5);   // 基岩守卫：盆底不低于基岩带
                     if (terrainTop <= floorY) {
                         for (int y = surfaceTop; y > terrainTop; y--) {
                             pos.set(wx, y, wz);

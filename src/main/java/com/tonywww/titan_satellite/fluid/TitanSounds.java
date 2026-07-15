@@ -11,9 +11,9 @@ import net.minecraftforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 /**
- * PF-3 音效注册表：土卫六流体相关的自定义音效事件。
+ * 音效注册表：土卫六流体相关的自定义音效事件。
  * 经 {@link TitanFluidInteractions} 在 mod 构造阶段自订阅装配到 mod 总线（不改冻结主类）。
- * 具体音频在 assets/titan_satellite/sounds.json 中映射（当前复用原版 ogg 作占位，实测可播放）。
+ * 具体音频在 assets/titan_satellite/sounds.json 中映射（当前复用原版 ogg 作占位，可播放）。
  */
 public final class TitanSounds {
 

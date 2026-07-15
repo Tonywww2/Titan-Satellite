@@ -34,7 +34,7 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import java.util.EnumSet;
 
 /**
- * 氨泉掠食者（Ammonia-Stalker，敌对，桩）。两栖 + 攻击附毒的完整行为由 M2 / PC-2 填充。
+ * 氨泉掠食者（Ammonia-Stalker，敌对）。两栖掠食者：攻击附异星毒素 + 挖掘疲劳。
  */
 public class AmmoniaStalker extends Monster {
 
@@ -105,13 +105,13 @@ public class AmmoniaStalker extends Monster {
         this.goalSelector.addGoal(6, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        // 顶级掠食（食物网 §3.1）：无玩家时猎食下位物种——托林织体蛛、冰硅甲虫。
+        // 顶级掠食（食物网）：无玩家时猎食下位物种——托林织体蛛、冰硅甲虫。
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, TholinWeaver.class, true));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, CryoScavenger.class, true));
     }
 
     /**
-     * 借冰火山喷泉弹射（E3 / 设计 §5.1③）：当目标明显在上方且附近有喷泉时，寻路踩上喷泉口，
+     * 借冰火山喷泉弹射：当目标明显在上方且附近有喷泉时，寻路踩上喷泉口，
      * 喷发瞬间被击飞逼近目标。击飞本身由 {@link CryovolcanicGeyserBlock#stepOn} 自动完成，
      * 本目标只负责把掠食者带到喷泉口并停留。
      */

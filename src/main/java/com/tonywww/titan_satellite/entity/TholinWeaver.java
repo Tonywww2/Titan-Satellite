@@ -57,7 +57,7 @@ public class TholinWeaver extends Monster {
         this.goalSelector.addGoal(5, new RandomLookAroundGoal(this));
         this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
         this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true));
-        // 捕食（食物网 §3.1）：无玩家时猎食下位物种——甲烷浮游体、冰硅甲虫。
+        // 捕食（食物网）：无玩家时猎食下位物种——甲烷浮游体、冰硅甲虫。
         this.targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, AeroJelly.class, true));
         this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, CryoScavenger.class, true));
     }
@@ -97,7 +97,7 @@ public class TholinWeaver extends Monster {
     }
 
     private void spitWeb(ServerLevel level, LivingEntity target) {
-        // 远程毒液命中：伤害随攻击力属性缩放（见需求），并沿视线绘制黏液粒子束 + 音效。
+        // 远程毒液命中：伤害随攻击力属性缩放，并沿视线绘制黏液粒子束 + 音效。
         RangedHitscan.beam(this, target,
                 (float) (this.getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.75D),
                 ParticleTypes.ITEM_SLIME, SoundEvents.SPIDER_HURT, 0.7F);

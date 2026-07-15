@@ -24,8 +24,7 @@ import java.util.List;
  * 甲烷开采塔防的「集中副作用 facade」。
  *
  * <p>状态推进由 {@code SpecialMethanePumpBlockEntity} 驱动，但所有<b>共享副作用</b>
- * （抛事件、刷怪、产出、音画、退散）都上提到本类统一执行（见 parallel-tasks §2.5：
- * 跨并行单元的共享副作用集中于 facade）。
+ * （抛事件、刷怪、产出、音画、退散）都上提到本类统一执行。
  *
  * <p>整套流程对外暴露 Forge 事件以便高度自定义：
  * <ul>
@@ -34,7 +33,7 @@ import java.util.List;
  *   <li>{@link MethaneExtractionEvents.Success} / {@link MethaneExtractionEvents.Fail}——终局。</li>
  * </ul>
  * 每波刷怪数量经 {@link #baseWaveMobCount(int, int)}（可继承覆写以调强度）；波次怪的生命周期与
- * 属性强化由 {@code WaveSpawnMixin} 注入 vanilla {@code Mob.aiStep} 定制（见设计 §5.2 / §6）。
+ * 属性强化由 {@code WaveSpawnMixin} 注入 vanilla {@code Mob.aiStep} 定制。
  */
 public final class WaveController {
 
@@ -87,8 +86,7 @@ public final class WaveController {
      * 每波默认刷怪数量（基于波序与强度）。
      *
      * <p>作为可覆写的扩展点：附属 / 整合包可继承本 facade 或监听 {@link MethaneExtractionWaveEvent}
-     * 调整每波强度；波次怪的属性强化另由 {@code WaveSpawnMixin} 定制（对应设计「结合 Mixin
-     * 高度自定义每波怪物的生成逻辑和强度」）。
+     * 调整每波强度；波次怪的属性强化另由 {@code WaveSpawnMixin} 定制。
      */
     public static int baseWaveMobCount(int waveIndex, int intensity) {
         return 2 + intensity;
@@ -123,7 +121,7 @@ public final class WaveController {
                 spawn.getX() + 0.5, spawn.getY() + 0.5, spawn.getZ() + 0.5, 12, 0.3, 0.5, 0.3, 0.02);
     }
 
-    /** 纯生物围攻：机械探测器已退出生态波次（仅存于先驱者前哨遗迹）；后续 D1 将混入托林织体蛛。 */
+    /** 纯生物围攻：机械探测器已退出生态波次（仅存于先驱者前哨遗迹）。 */
     private static EntityType<? extends Mob> pickMobType(ServerLevel level, int waveIndex) {
         return TSEntities.AMMONIA_STALKER.get();
     }

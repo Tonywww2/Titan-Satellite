@@ -14,7 +14,7 @@ import net.minecraft.world.phys.Vec3;
 /**
  * 敌对生物远程攻击的通用支持：
  * <ul>
- *   <li>{@link #beam} —— 即时命中（hitscan，无弹射物实体，沿用设计 §7 CR-1）：对目标造成伤害、
+ *   <li>{@link #beam} —— 即时命中（hitscan，无弹射物实体）：对目标造成伤害、
  *       沿视线绘制粒子束、播放音效。<b>伤害由调用方按 {@code Attributes.ATTACK_DAMAGE} 传入</b>，
  *       从而远程伤害随生物攻击力属性缩放。</li>
  *   <li>{@link AttackGoal} —— 可复用的「蓄力—发射—冷却」远程 AI：目标位于 [minRange, maxRange]

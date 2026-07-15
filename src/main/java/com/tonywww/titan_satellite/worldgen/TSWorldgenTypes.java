@@ -39,10 +39,10 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 /**
- * 世界生成自定义类型注册（PA-2 冻结）：自定义 DensityFunction 与 Feature 的 codec/类型。
+ * 世界生成自定义类型注册：自定义 DensityFunction 与 Feature 的 codec/类型。
  * 由 {@link TSSystemsBootstrap} 在 mod 构造阶段自订阅装配到 mod 总线（不改主类）。
  *
- * <p>桩类的实际生成逻辑由 M1（PB-2 density / PB-3 features）填充；此处只冻结注册面。
+ * <p>此处只登记 codec/类型，实际生成逻辑在各 Feature / DensityFunction 类中。
  */
 public final class TSWorldgenTypes {
 
@@ -60,7 +60,7 @@ public final class TSWorldgenTypes {
     public static final DeferredRegister<Feature<?>> FEATURES =
             DeferredRegister.create(Registries.FEATURE, TitanSatellite.MODID);
 
-    // 群系影响地形高度的自定义 density function（PB-2 填充实际算法）。
+    // 群系影响地形高度的自定义 density function。
     //? if forge {
     public static final Supplier<Codec<? extends DensityFunction>> BIOME_HEIGHT =
             DENSITY_FUNCTION_TYPES.register("biome_height", () -> BiomeHeightDensityFunction.CODEC.codec());
@@ -69,7 +69,7 @@ public final class TSWorldgenTypes {
             DENSITY_FUNCTION_TYPES.register("biome_height", () -> BiomeHeightDensityFunction.CODEC.codec());
     *///?}
 
-    // 程序化地貌特征（PB-3 填充 place 逻辑）。晶簇/喷泉斑等简单特征由 PB-3 走原版特征类型。
+    // 程序化地貌特征。晶簇/喷泉斑等简单特征走原版特征类型。
     public static final Supplier<Feature<NoneFeatureConfiguration>> METHANE_LAKE =
             FEATURES.register("methane_lake", () -> new MethaneLakeFeature(NoneFeatureConfiguration.CODEC));
     public static final Supplier<Feature<NoneFeatureConfiguration>> GIANT_CRATER =
@@ -79,7 +79,7 @@ public final class TSWorldgenTypes {
     public static final Supplier<Feature<NoneFeatureConfiguration>> ICE_SINKHOLE =
             FEATURES.register("ice_sinkhole", () -> new IceSinkholeFeature(NoneFeatureConfiguration.CODEC));
 
-    // M6/PG-4 群系专属地物：裂隙、甲烷海、破碎海绵。
+    // 群系专属地物：裂隙、甲烷海、破碎海绵。
     public static final Supplier<Feature<NoneFeatureConfiguration>> FISSURE =
             FEATURES.register("fissure", () -> new FissureFeature(NoneFeatureConfiguration.CODEC));
     public static final Supplier<Feature<NoneFeatureConfiguration>> METHANE_MARE =
@@ -87,11 +87,11 @@ public final class TSWorldgenTypes {
     public static final Supplier<Feature<NoneFeatureConfiguration>> SPONGE_CAVE =
             FEATURES.register("sponge_cave", () -> new SpongeCaveFeature(NoneFeatureConfiguration.CODEC));
 
-    // 装饰地物（CR-15）：通用尖塔/石林，BlockStateConfiguration 指定方块，多群系复用。
+    // 装饰地物：通用尖塔/石林，BlockStateConfiguration 指定方块，多群系复用。
     public static final Supplier<Feature<BlockStateConfiguration>> SPIRE =
             FEATURES.register("spire", () -> new SpireFeature(BlockStateConfiguration.CODEC));
 
-    // ---- M7 宏伟地物 Feature（T7.2/T7.3；乙炔大晶洞/陨坑镜湖群走数据版 geode/lake，无 Java）----
+    // ---- 宏伟地物 Feature（乙炔大晶洞/陨坑镜湖群走数据版 geode/lake，无 Java）----
     public static final Supplier<Feature<NoneFeatureConfiguration>> IMPACT_BASIN =
             FEATURES.register("impact_basin", () -> new ImpactBasinFeature(NoneFeatureConfiguration.CODEC));
     public static final Supplier<Feature<NoneFeatureConfiguration>> METHANE_CASCADE =

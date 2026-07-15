@@ -13,9 +13,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * 冰火山喷泉方块（PE-1 / M4）。
+ * 冰火山喷泉方块。
  *
- * <p>周期性喷发：不使用方块实体（见 CR-3，BE 仅甲烷泵），而是用
+ * <p>周期性喷发：不使用方块实体（BE 仅甲烷泵），而是用
  * {@code gameTime} 隐式驱动喷发窗口——每 {@link #CYCLE_TICKS} tick 为一个周期，
  * 其中前 {@link #ERUPT_TICKS} tick 处于喷发态。相邻喷泉按坐标计算相位偏移错峰。
  *

@@ -10,7 +10,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.BlockStateConfiguration;
 
 /**
- * 尖塔/石林特征（CR-15 装饰）：以 origin 为基座向上堆一根逐层收窄的锥形柱
+ * 尖塔/石林特征（装饰）：以 origin 为基座向上堆一根逐层收窄的锥形柱
  * （eroded hoodoo / 冰刺 / 托林风柱 / 寒冰尖峰 / 风化石林）。
  *
  * <p>放置的方块由 {@link BlockStateConfiguration} 指定，供多群系用不同材质复用同一逻辑。

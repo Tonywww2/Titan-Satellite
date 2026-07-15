@@ -1,5 +1,6 @@
 package com.tonywww.titan_satellite.blockentity;
 
+import com.tonywww.titan_satellite.config.TSConfig;
 import com.tonywww.titan_satellite.registry.TSBlockEntities;
 import com.tonywww.titan_satellite.registry.TSBlocks;
 import com.tonywww.titan_satellite.registry.TSItems;
@@ -38,8 +39,6 @@ import org.jetbrains.annotations.Nullable;
  */
 public class TholinComposterBlockEntity extends BlockEntity {
 
-    /** 每转化 1 份生物残渣→托林粉末所需 tick（≈8 秒）。 */
-    public static final int PROCESS_INTERVAL = 160;
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
 
@@ -81,7 +80,7 @@ public class TholinComposterBlockEntity extends BlockEntity {
             return;
         }
         progress++;
-        if (progress >= PROCESS_INTERVAL) {
+        if (progress >= TSConfig.COMPOSTER_PROCESS_INTERVAL.get()) {
             progress = 0;
             // 消耗 1 份输入
             input.shrink(1);

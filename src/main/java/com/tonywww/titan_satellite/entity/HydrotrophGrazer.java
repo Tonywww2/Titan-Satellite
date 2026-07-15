@@ -20,8 +20,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 
 /**
- * 氢营养蹒兽（Hydrotroph Grazer，D3）：荒原上啃食氢泡菌毯的化能食草兽，被动、受惊逃窜，
- * 充实中层营养级（冰硅甲虫/托林织体蛛的潜在猎物）。渲染用原版猪模型占位（真实模型待美术）。
+ * 氢营养蹒兽（Hydrotroph Grazer）：荒原上啃食氢泡菌毯的化能食草兽，被动、受惊逃窜，
+ * 充实中层营养级（冰硅甲虫/托林织体蛛的潜在猎物）。渲染用原版猪模型占位。
  */
 public class HydrotrophGrazer extends PathfinderMob {
 
@@ -40,7 +40,7 @@ public class HydrotrophGrazer extends PathfinderMob {
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new FloatGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.4D));
-        // 啼食氢泡菌毯（化能食草，设计 §3.7）：走向附近菌毯 → 进食（治疗 + 粒子，偶发消耗）。
+        // 啼食氢泡菌毯（化能食草）：走向附近菌毯 → 进食（治疗 + 粒子，偶发消耗）。
         this.goalSelector.addGoal(2, new GrazeMatGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.8D));
         this.goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 6.0F));

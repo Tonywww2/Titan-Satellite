@@ -51,6 +51,12 @@ public final class TSFluidTypes {
                     .density(680).viscosity(1100).temperature(240)
                     .canSwim(true).canDrown(true)));
 
+    // 液氢（H₂，深冷液体）：极淡冰蓝、密度极低、极寒；集氢罩被动产出，经 forge:hydrogen/c:hydrogen tag 接入 Mek 转化炉。
+    public static final Supplier<FluidType> LIQUID_HYDROGEN = REGISTER.register("liquid_hydrogen",
+            () -> tinted(0xCFE8F0, 0x99, FluidType.Properties.create()
+                    .density(70).viscosity(200).temperature(20)
+                    .canSwim(false).canDrown(false)));
+
     /**
      * @param rgb        RGB 色（0xRRGGBB，不含 alpha）
      * @param fluidAlpha 世界液面透明度（0x00 全透明 ~ 0xFF 不透明）；桶物品固定不透明以便辨识。

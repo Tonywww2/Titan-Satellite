@@ -30,7 +30,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 *///?}
 
 /**
- * PF-3 流体交互补全 + 自装配。液态甲烷与液态氨接触时互相「速冻」成冰，并给出音效与粒子反馈。
+ * 流体交互补全 + 自装配。液态甲烷与液态氨接触时互相「速冻」成冰，并给出音效与粒子反馈。
  * 经 {@code @EventBusSubscriber} 自订阅（不改冻结主类）：mod 构造期挂 {@link TitanSounds} 注册表，
  * 通用初始化期登记 {@link FluidInteractionRegistry} 交互。
  */

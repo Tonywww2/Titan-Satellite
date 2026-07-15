@@ -17,7 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 
 /**
- * 失控探测器（Corrupted-Probe，敌对）。远程发射【即时激光光束】（hitscan，无弹射物实体，见 §7 CR-1）：
+ * 失控探测器（Corrupted-Probe，敌对）。远程发射【即时激光光束】（hitscan，无弹射物实体）：
  * 对 4~16 格内且视线通畅的目标蓄力后射线判定，命中造成伤害（<b>伤害随攻击力属性缩放</b>）并沿光束生成
  * 电火花粒子 + 音效；目标贴近（4 格内）则改用近战放电。掉落废弃高能电池 / 精密电子元件（见掉落表）。
  */

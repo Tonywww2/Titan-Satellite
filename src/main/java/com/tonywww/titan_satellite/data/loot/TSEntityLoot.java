@@ -62,7 +62,7 @@ public class TSEntityLoot implements LootTableSubProvider {
                 .withPool(singleDrop(TSItems.TOUGH_NEURAL_GLAND.get(), 1, 2))
                 .withPool(singleDrop(TSItems.CRYO_CARAPACE.get(), 0, 2)));
 
-        // D3 填充生物：微浮群太小无掉落（空表）；蹒兽掉落少量浮游薄膜（化能气囊）。
+        // 微浮群太小无掉落（空表）；蹒兽掉落少量浮游薄膜（化能气囊）。
         consumer.accept(entity("methane_midge"), LootTable.lootTable());
 
         consumer.accept(entity("hydrotroph_grazer"), LootTable.lootTable()

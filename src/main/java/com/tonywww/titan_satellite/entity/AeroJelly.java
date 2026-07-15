@@ -55,9 +55,9 @@ public class AeroJelly extends PathfinderMob {
 
     @Override
     protected void registerGoals() {
-        // 逃逸捕食者（食物网 §3.1）：躲避托林织体蛛。
+        // 逃逸捕食者（食物网）：躲避托林织体蛛。
         this.goalSelector.addGoal(0, new AvoidEntityGoal<>(this, TholinWeaver.class, 10.0F, 1.0D, 1.4D));
-        // 滤食：靠近甲烷微浮群时游向并吸收之（初级消费，设计 §3.2/§3.7）。
+        // 滤食：靠近甲烷微浮群时游向并吸收之（初级消费）。
         this.goalSelector.addGoal(1, new FilterFeedGoal(this));
         this.goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 0.7D));
         this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 8.0F));

@@ -41,7 +41,7 @@ public class TSBlockStateProvider extends BlockStateProvider {
     private static final Map<String, String> CUBE = new LinkedHashMap<>();
     /** cross 方块名 → 完整贴图 ResourceLocation 串。 */
     private static final Map<String, String> CROSS = new LinkedHashMap<>();
-    private static final String[] LIQUIDS = {"liquid_methane", "liquid_ammonia"};
+    private static final String[] LIQUIDS = {"liquid_methane", "liquid_ammonia", "liquid_hydrogen"};
     /**
      * 需四向（Y 0/90/180/270）随机旋转模型、以打破大面积平铺重复的自然地形 / 矿物 cube_all 方块。
      * 随机 Y 旋转主要打散俯视时的顶/底面重复纹理（仿原版沙砾/石头做法）。

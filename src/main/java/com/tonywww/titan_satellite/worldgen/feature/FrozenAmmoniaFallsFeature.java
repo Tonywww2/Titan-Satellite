@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 冻氨巨瀑（T7.3 · 宏伟地物）：冰火山断崖沿最大落差方向倾泻的<b>冻结</b>氨瀑——崖顶氨潭 + 贴崖面
+ * 冻氨巨瀑（宏伟地物）：冰火山断崖沿最大落差方向倾泻的<b>冻结</b>氨瀑——崖顶氨潭 + 贴崖面
  * 竖直冻氨冰帘（{@code cryo_ice} + 氨晶点缀）。全为实心方块（无流动风险）；仅在明显崖沿生成。
  */
 public class FrozenAmmoniaFallsFeature extends Feature<NoneFeatureConfiguration> {
@@ -44,6 +44,8 @@ public class FrozenAmmoniaFallsFeature extends Feature<NoneFeatureConfiguration>
         if (bestDir == null || topY - lowest < 5) {
             return false;
         }
+        int minY = level.getMinBuildHeight();
+        int floorLimit = Math.max(lowest, minY + 5);   // 基岩守卫：冰帘不低于基岩带
 
         BlockState frozen = TSBlocks.CRYO_ICE.get().defaultBlockState();
         BlockState accent = TSBlocks.AMMONIA_CRYSTAL.get().defaultBlockState();
@@ -65,7 +67,7 @@ public class FrozenAmmoniaFallsFeature extends Feature<NoneFeatureConfiguration>
             }
         }
         // 冻氨冰帘
-        for (int y = topY; y >= lowest; y--) {
+        for (int y = topY; y >= floorLimit; y--) {
             for (int w = -1; w <= 1; w++) {
                 pos.set(edgeX + perpX * w, y, edgeZ + perpZ * w);
                 if (level.getBlockState(pos).isAir()) {

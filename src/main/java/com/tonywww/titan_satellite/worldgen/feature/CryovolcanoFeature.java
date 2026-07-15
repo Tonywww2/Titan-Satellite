@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 主冰火山「白喉」（T7.3 · 宏伟地物 · 群系皇冠）：中央巨型冰火山锥 + 山巅氨水火山口湖 + 满山喷泉。
+ * 主冰火山「白喉」（宏伟地物 · 群系皇冠）：中央巨型冰火山锥 + 山巅氨水火山口湖 + 满山喷泉。
  *
  * <p>实心锥体逐列从<b>该列真实地表</b>往上填 {@code cryo_ice}（不悬浮）；峰顶挖出火山口注液氨；
  * 山腰点缀若干 {@code cryovolcanic_geyser}（击飞喷泉，可供玩家借力登顶）。半径较大，远列超出可写区被丢弃。

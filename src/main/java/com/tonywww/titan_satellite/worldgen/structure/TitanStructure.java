@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.StructureType;
 import java.util.Optional;
 
 /**
- * 土卫六自定义结构（PF-1）：单一参数化结构，{@link Variant} 决定建造哪种。
+ * 土卫六自定义结构：单一参数化结构，{@link Variant} 决定建造哪种。
  * <ul>
  *   <li>{@link Variant#GEODE} 托林晶洞——地下中空晶球（冷冰外壳 + 托林晶体内衬 + 战利品箱）；</li>
  *   <li>{@link Variant#OUTPOST} 先驱前哨站——地表废弃小屋（战利品箱 + 一台失控探测器）。</li>

@@ -1,15 +1,14 @@
 package com.tonywww.titan_satellite.blockentity;
 
+import com.tonywww.titan_satellite.config.TSConfig;
 import com.tonywww.titan_satellite.registry.TSBlockEntities;
 import com.tonywww.titan_satellite.registry.TSBlocks;
-import com.tonywww.titan_satellite.registry.TSItems;
+import com.tonywww.titan_satellite.registry.TSFluids;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.Containers;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,40 +16,34 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.IFluidHandler;
+import net.minecraftforge.fluids.capability.templates.FluidTank;
 //?} else {
 /*import net.minecraft.core.HolderLookup;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemHandlerHelper;
-import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.IFluidHandler;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
 *///?}
 import org.jetbrains.annotations.Nullable;
 
 /**
  * 集氢罩方块实体：被动生产者。仅当正下方为 {@code hydrogen_bubble_mat} 时，
- * 无需能量按间隔把菌毯释放的 H₂ 攒成 {@code hydrogen_capsule}，入内部缓冲并推送至相邻容器
- * （亦以 ITEM_HANDLER 能力暴露，供漏斗/管道抽取）。菌毯被移除即停。
+ * 无需能量按间隔产出 {@code liquid_hydrogen}（液氢）流体，入内部流体槽并推送至相邻流体容器
+ * （亦以 FLUID_HANDLER 能力暴露，供管道/Mek 转化炉抽取；液氢经 forge:hydrogen/c:hydrogen tag
+ * 可被 Mek 当作液氢转成氢气）。菌毯被移除即停。
  */
 public class HydrogenCollectorBlockEntity extends BlockEntity {
 
-    /** 每产出 1 个氢气瓶所需 tick（≈10 秒）。 */
-    public static final int PRODUCE_INTERVAL = 200;
-
     private int progress = 0;
 
-    /** 产出缓冲：仅氢气瓶（内部产出 / 外部抽取；限定物品避免异物注入）。 */
-    private final ItemStackHandler output = new ItemStackHandler(4) {
-        @Override
-        public boolean isItemValid(int slot, ItemStack stack) {
-            return stack.is(TSItems.HYDROGEN_CAPSULE.get());
-        }
-    };
+    /** 液氢产出槽：仅液氢（内部产出 / 外部抽取）；容量由 {@link TSConfig#HYDROGEN_TANK_CAPACITY} 配置。 */
+    private final FluidTank tank = new FluidTank(TSConfig.HYDROGEN_TANK_CAPACITY.get(),
+            fs -> fs.getFluid() == TSFluids.LIQUID_HYDROGEN.get());
     //? if forge {
-    private final LazyOptional<IItemHandler> itemCap = LazyOptional.of(() -> output);
+    private final LazyOptional<IFluidHandler> fluidCap = LazyOptional.of(() -> tank);
     //?}
 
     public HydrogenCollectorBlockEntity(BlockPos pos, BlockState state) {
@@ -73,9 +66,9 @@ public class HydrogenCollectorBlockEntity extends BlockEntity {
             return;
         }
         progress++;
-        if (progress >= PRODUCE_INTERVAL) {
+        if (progress >= TSConfig.HYDROGEN_PRODUCE_INTERVAL.get()) {
             progress = 0;
-            insertToBuffer(new ItemStack(TSItems.HYDROGEN_CAPSULE.get(), 1));
+            tank.fill(new FluidStack(TSFluids.LIQUID_HYDROGEN.get(), TSConfig.HYDROGEN_FLUID_PER_INTERVAL.get()), IFluidHandler.FluidAction.EXECUTE);
             level.sendParticles(ParticleTypes.BUBBLE_POP,
                     pos.getX() + 0.5, pos.getY() + 0.4, pos.getZ() + 0.5, 4, 0.2, 0.1, 0.2, 0.0);
         }
@@ -83,18 +76,11 @@ public class HydrogenCollectorBlockEntity extends BlockEntity {
         setChanged();
     }
 
-    private void insertToBuffer(ItemStack stack) {
-        for (int i = 0; i < output.getSlots() && !stack.isEmpty(); i++) {
-            stack = output.insertItem(i, stack, false);
-        }
-        if (!stack.isEmpty() && level != null) {
-            Containers.dropItemStack(level, worldPosition.getX() + 0.5, worldPosition.getY() + 1.0,
-                    worldPosition.getZ() + 0.5, stack);
-        }
-    }
-
-    /** 把缓冲推入相邻容器（除正下方菌毯外的各方向）。 */
+    /** 把液氢推入相邻流体容器（除正下方菌毯外的各方向）。 */
     private void pushOutputs(ServerLevel level, BlockPos pos) {
+        if (tank.getFluidAmount() <= 0) {
+            return;
+        }
         for (Direction dir : Direction.values()) {
             if (dir == Direction.DOWN) {
                 continue;
@@ -104,29 +90,19 @@ public class HydrogenCollectorBlockEntity extends BlockEntity {
                 continue;
             }
             //? if forge {
-            IItemHandler dest = neighbor.getCapability(ForgeCapabilities.ITEM_HANDLER, dir.getOpposite()).orElse(null);
+            IFluidHandler dest = neighbor.getCapability(ForgeCapabilities.FLUID_HANDLER, dir.getOpposite()).orElse(null);
             //?} else {
-            /*IItemHandler dest = Capabilities.ItemHandler.BLOCK.getCapability(level, pos.relative(dir), null, neighbor, dir.getOpposite());
+            /*IFluidHandler dest = Capabilities.FluidHandler.BLOCK.getCapability(level, pos.relative(dir), null, neighbor, dir.getOpposite());
             *///?}
             if (dest == null) {
                 continue;
             }
-            for (int i = 0; i < output.getSlots(); i++) {
-                ItemStack stack = output.getStackInSlot(i);
-                if (!stack.isEmpty()) {
-                    output.setStackInSlot(i, ItemHandlerHelper.insertItem(dest, stack, false));
-                }
+            int filled = dest.fill(tank.getFluid().copy(), IFluidHandler.FluidAction.EXECUTE);
+            if (filled > 0) {
+                tank.drain(filled, IFluidHandler.FluidAction.EXECUTE);
             }
-        }
-    }
-
-    /** 破坏时掉落缓冲内容。 */
-    public void dropContents(Level level, BlockPos pos) {
-        for (int i = 0; i < output.getSlots(); i++) {
-            ItemStack stack = output.getStackInSlot(i);
-            if (!stack.isEmpty()) {
-                Containers.dropItemStack(level, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
-                output.setStackInSlot(i, ItemStack.EMPTY);
+            if (tank.getFluidAmount() <= 0) {
+                return;
             }
         }
     }
@@ -134,8 +110,8 @@ public class HydrogenCollectorBlockEntity extends BlockEntity {
     //? if forge {
     @Override
     public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
-        if (cap == ForgeCapabilities.ITEM_HANDLER) {
-            return itemCap.cast();
+        if (cap == ForgeCapabilities.FLUID_HANDLER) {
+            return fluidCap.cast();
         }
         return super.getCapability(cap, side);
     }
@@ -143,44 +119,40 @@ public class HydrogenCollectorBlockEntity extends BlockEntity {
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        itemCap.invalidate();
+        fluidCap.invalidate();
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putInt("Progress", progress);
-        tag.put("Output", output.serializeNBT());
+        tag.put("Tank", tank.writeToNBT(new CompoundTag()));
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
         progress = tag.getInt("Progress");
-        if (tag.contains("Output")) {
-            output.deserializeNBT(tag.getCompound("Output"));
-        }
+        tank.readFromNBT(tag.getCompound("Tank"));
     }
     //?} else {
     /*public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
-                TSBlockEntities.HYDROGEN_COLLECTOR.get(), (be, side) -> be.output);
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,
+                TSBlockEntities.HYDROGEN_COLLECTOR.get(), (be, side) -> be.tank);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putInt("Progress", progress);
-        tag.put("Output", output.serializeNBT(registries));
+        tag.put("Tank", tank.writeToNBT(registries, new CompoundTag()));
     }
 
     @Override
     protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         progress = tag.getInt("Progress");
-        if (tag.contains("Output")) {
-            output.deserializeNBT(registries, tag.getCompound("Output"));
-        }
+        tank.readFromNBT(registries, tag.getCompound("Tank"));
     }
     *///?}
 }

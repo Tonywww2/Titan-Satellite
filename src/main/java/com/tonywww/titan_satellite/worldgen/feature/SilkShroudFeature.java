@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 丝网谷（T7.3 · 宏伟地物）：托林沙海一处挂满丝网的洼地——地表铺 {@code tholin_mycelium} 菌网、
+ * 丝网谷（宏伟地物）：托林沙海一处挂满丝网的洼地——地表铺 {@code tholin_mycelium} 菌网、
  * 近地空中垂挂蛛丝（{@code cobweb}），营造托林织体蛛群落的伏击场（织体蛛本就在沙海生成，此处为其聚居标志）。
  */
 public class SilkShroudFeature extends Feature<NoneFeatureConfiguration> {
@@ -43,7 +43,7 @@ public class SilkShroudFeature extends Feature<NoneFeatureConfiguration> {
             }
             int wx = origin.getX() + ox;
             int wz = origin.getZ() + oz;
-            int terrainTop = level.getHeight(Heightmap.Types.WORLD_SURFACE_WG, wx, wz) - 1;
+            int terrainTop = level.getHeight(Heightmap.Types.OCEAN_FLOOR_WG, wx, wz) - 1;
             // 地表菌网
             pos.set(wx, terrainTop, wz);
             if (!level.getBlockState(pos).isAir()) {

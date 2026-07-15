@@ -71,6 +71,7 @@ repositories {
         url = uri("https://maven.teamresourceful.com/repository/maven-public/")
         content { includeGroup("com.teamresourceful") }
     }
+    maven("https://maven.covers1624.net/")
 }
 
 dependencies {
@@ -142,6 +143,21 @@ dependencies {
         // Create 联动配方仍对发布版用户生效（mods.toml 可选依赖 + mod_loaded 数据配方）。
         "modLocalRuntime"("maven.modrinth:mekanism:uxe1WQp4")
         "modLocalRuntime"("maven.modrinth:farmers-delight:CsjS7EkP")
+        // Thermal 系列（CoFH Core → Thermal Foundation → Thermal Expansion；配方类型/序列化器 thermal:*
+        // 由 mod id `thermal` = Thermal Core 注册）。核心 mod `thermal`（thermal_core）以 JiJ 内嵌于
+        // Thermal Foundation，Loom dev 不解压内嵌 jar → 需手动解压到 libs/（见 build/extract_thermal_jij.ps1）
+        // 再以 modLocalRuntime(files(...)) 显式补到 dev 运行期（Loom 会重映射本地 mod jar），否则缺
+        // `thermal` 依赖致加载失败。modCompileOnly=编译期；modLocalRuntime=仅 dev 运行期（不进发布产物、
+        // 不强制用户装）。发布版联动由 mods.toml 可选依赖 + mod_loaded:thermal 门控的数据配方保证。
+        // 用 Modrinth 版本 ID 锁定具体文件，避开同号包命中的坑。
+        "modCompileOnly"("maven.modrinth:cofh-core:kglS53Hd")           // CoFH Core 11.0.2 (Forge 1.20.1)
+        "modCompileOnly"("maven.modrinth:thermal-foundation:44ilyZbi") // Thermal Foundation 11.0.6
+        "modCompileOnly"("maven.modrinth:thermal-expansion:Ux2Z0ow1")  // Thermal Expansion 11.0.1
+        "modLocalRuntime"("maven.modrinth:cofh-core:kglS53Hd")
+        "modLocalRuntime"("maven.modrinth:thermal-foundation:44ilyZbi")
+        "modLocalRuntime"("maven.modrinth:thermal-expansion:Ux2Z0ow1")
+        // thermal_core（mod id `thermal`）：从 Thermal Foundation 的 JiJ 解压到 libs/ 后显式补齐。
+        "modLocalRuntime"(files(rootProject.file("libs/thermal_core-1.20.1-11.0.6.24.jar")))
     }
 }
 

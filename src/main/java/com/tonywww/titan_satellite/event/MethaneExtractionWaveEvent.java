@@ -9,9 +9,10 @@ import net.minecraftforge.eventbus.api.Event;
 *///?}
 
 /**
- * 甲烷开采塔防波次事件（PA-2 冻结签名）。
+ * 甲烷开采塔防波次事件（冻结签名，仅通知）。
  * 泵在每一波开始时 {@code MinecraftForge.EVENT_BUS.post(...)}；整合包/附属可监听以
- * 自定义每波刷怪逻辑与强度。默认波次逻辑与 Mixin 定制刷怪由 M4（PE-2）实现。
+ * 自定义每波刷怪逻辑与强度。默认波次逻辑与 Mixin 定制刷怪由 {@link WaveController} 与
+ * {@code WaveSpawnMixin} 实现。
  */
 public class MethaneExtractionWaveEvent extends Event {
 

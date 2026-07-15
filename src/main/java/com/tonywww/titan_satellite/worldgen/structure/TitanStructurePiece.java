@@ -26,7 +26,7 @@ import net.minecraft.world.level.levelgen.structure.StructurePiece;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceSerializationContext;
 
 /**
- * 土卫六结构块（PF-1）：按 {@link TitanStructure.Variant} 程序化建造托林晶洞 / 先驱前哨站。
+ * 土卫六结构块：按 {@link TitanStructure.Variant} 程序化建造托林晶洞 / 先驱前哨站。
  * 所有放置都用 {@link BoundingBox#isInside(net.minecraft.core.Vec3i)} 门控，故跨区块生成时
  * 每个区块只落自己那部分（{@code postProcess} 逐区块调用），整座结构正确拼合。
  */
@@ -123,7 +123,7 @@ public class TitanStructurePiece extends StructurePiece {
         BlockState shell = TSBlocks.CRYO_ICE.get().defaultBlockState();
         BlockState crystal = TSBlocks.THOLIN_CRYSTAL.get().defaultBlockState();
         BlockState hollow = Blocks.CAVE_AIR.defaultBlockState();
-        BlockState floor = TSBlocks.HARDENED_THOLIN.get().defaultBlockState(); // 生物有机壁/巢底（E4）
+        BlockState floor = TSBlocks.HARDENED_THOLIN.get().defaultBlockState(); // 生物有机壁/巢底
         BlockPos.MutableBlockPos m = new BlockPos.MutableBlockPos();
 
         for (int dx = -r; dx <= r; dx++) {
@@ -205,7 +205,7 @@ public class TitanStructurePiece extends StructurePiece {
         spawnProbe(level, new BlockPos(origin.getX() + 1, fy + 1, origin.getZ() + 1), box, random);
     }
 
-    // ---- 深钻者：半沉甲烷海的工业钻井平台（T7.4）----
+    // ---- 深钻者：半沉甲烷海的工业钻井平台 ----
     private void buildDerrick(WorldGenLevel level, BoundingBox box, RandomSource random) {
         BlockState frame = TSBlocks.TITAN_BASALT.get().defaultBlockState();
         BlockState deck = TSBlocks.WEATHERED_TITAN_STONE.get().defaultBlockState();
@@ -254,7 +254,7 @@ public class TitanStructurePiece extends StructurePiece {
         spawnProbe(level, new BlockPos(origin.getX() + 1, deckY + 1, origin.getZ() + 1), box, random);
     }
 
-    // ---- 坠毁研究探测器残骸（T7.4）----
+    // ---- 坠毁研究探测器残骸 ----
     private void buildCrashedProbe(WorldGenLevel level, BoundingBox box, RandomSource random) {
         BlockState debris = TSBlocks.TITAN_BASALT.get().defaultBlockState();
         BlockState metal = TSBlocks.METEOR_FRAGMENT.get().defaultBlockState();
@@ -322,7 +322,7 @@ public class TitanStructurePiece extends StructurePiece {
         spawnIceWorm(level, new BlockPos(origin.getX() + 2, floorY + 1, origin.getZ()), box, random);
     }
 
-    // ---- 深空信标阵：荒原废弃射电天线阵（T7.4）----
+    // ---- 深空信标阵：荒原废弃射电天线阵 ----
     private void buildBeacon(WorldGenLevel level, BoundingBox box, RandomSource random) {
         BlockState platform = TSBlocks.WEATHERED_TITAN_STONE.get().defaultBlockState();
         BlockState mast = TSBlocks.TITAN_STONE.get().defaultBlockState();
@@ -392,7 +392,7 @@ public class TitanStructurePiece extends StructurePiece {
         }
     }
 
-    /** 冰虫巢穴 Boss：在托林晶洞中央生成一只常驻的原生冰虫精英（E4）。 */
+    /** 冰虫巢穴 Boss：在托林晶洞中央生成一只常驻的原生冰虫精英。 */
     private void spawnIceWorm(WorldGenLevel level, BlockPos pos, BoundingBox box, RandomSource random) {
         if (!box.isInside(pos)) {
             return;

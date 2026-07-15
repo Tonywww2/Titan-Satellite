@@ -6,8 +6,8 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.level.levelgen.DensityFunction;
 
 /**
- * 群系影响地形高度的自定义 density function（PA-2 冻结签名，桩实现）。
- * 骨架阶段 {@link #compute} 返回 0；M1（PB-2）填充：按当前 X/Z 所在群系的
+ * 群系影响地形高度的自定义 density function。
+ * {@link #compute} 按当前 X/Z 所在群系的
  * 期望厚度/高差修正密度，实现峡谷/沙丘/断崖的极端高差。
  *
  * <p>{@code factor} 为群系高度影响强度的数据驱动参数（noise_router/density_function JSON 提供）。

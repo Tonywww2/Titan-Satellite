@@ -29,15 +29,15 @@ import net.neoforged.fml.event.lifecycle.FMLConstructModEvent;
 import java.util.UUID;
 
 /**
- * Titan Satellite 平衡配置（PF-1..3 之后的收尾平衡层，PF-4）。
+ * Titan Satellite 平衡配置。
  *
- * <p>生成全局配置文件 {@code config/titan_satellite-common.toml}，当前暴露<b>甲烷开采塔防
- * 波次怪难度</b>的可调项——服务端在波次怪加入世界时（{@link EntityJoinLevelEvent}）读取本配置，
- * 对带 {@link WaveController#WAVE_MOB_TAG} 标记的怪一次性施加最大生命乘子 + 攻击力加成。
+ * <p>生成全局配置文件 {@code config/titan_satellite-common.toml}，暴露两类可调项：
+ * ①<b>甲烷开采塔防波次怪难度</b>——服务端在波次怪加入世界时（{@link EntityJoinLevelEvent}）读取本配置，
+ * 对带 {@link WaveController#WAVE_MOB_TAG} 标记的怪一次性施加最大生命乘子 + 攻击力加成；
+ * ②<b>方块实体调优</b>——集氢罩 / 甲烷泵 / 托林堆肥槽的产出间隔、产量、槽容量、波数、完整度等平衡数值，
+ * 各方块实体在构造 / tick 时读取（详见各自 {@code blockentity} 实现）。
  *
- * <p>只读 PE-2 暴露的公有标记常量，不改任何已冻结/他人 Owns 文件；经 {@link FMLConstructModEvent}
- * 自订阅注册配置并挂 Forge 总线监听（不改主类）。其余系统的平衡数值见 {@code docs/test-matrix.md}
- * 的「平衡参考」一节（当前硬编码在各自 Owns 文件内）。
+ * <p>经 {@link FMLConstructModEvent} 自订阅注册配置并挂 Forge 总线监听（不改主类）。
  */
 //? if forge {
 @Mod.EventBusSubscriber(modid = TitanSatellite.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -54,11 +54,37 @@ public final class TSConfig {
     public static final ForgeConfigSpec.BooleanValue WAVE_MOB_SCALING_ENABLED;
     public static final ForgeConfigSpec.DoubleValue WAVE_MOB_HEALTH_MULTIPLIER;
     public static final ForgeConfigSpec.DoubleValue WAVE_MOB_DAMAGE_BONUS;
+    // 集氢罩 / 甲烷泵 / 托林堆肥槽调优
+    public static final ForgeConfigSpec.IntValue HYDROGEN_PRODUCE_INTERVAL;
+    public static final ForgeConfigSpec.IntValue HYDROGEN_FLUID_PER_INTERVAL;
+    public static final ForgeConfigSpec.IntValue HYDROGEN_TANK_CAPACITY;
+    public static final ForgeConfigSpec.IntValue PUMP_MAX_PROGRESS;
+    public static final ForgeConfigSpec.IntValue PUMP_WAVE_COUNT;
+    public static final ForgeConfigSpec.IntValue PUMP_MAX_INTEGRITY;
+    public static final ForgeConfigSpec.DoubleValue PUMP_ATTACK_RADIUS;
+    public static final ForgeConfigSpec.IntValue PUMP_TANK_CAPACITY;
+    public static final ForgeConfigSpec.IntValue PUMP_FLUID_PER_TICK;
+    public static final ForgeConfigSpec.IntValue PUMP_ITEM_INTERVAL;
+    public static final ForgeConfigSpec.IntValue PUMP_EXTRACTION_PER_INTENSITY;
+    public static final ForgeConfigSpec.IntValue COMPOSTER_PROCESS_INTERVAL;
     //?} else {
     /*public static final ModConfigSpec SPEC;
     public static final ModConfigSpec.BooleanValue WAVE_MOB_SCALING_ENABLED;
     public static final ModConfigSpec.DoubleValue WAVE_MOB_HEALTH_MULTIPLIER;
     public static final ModConfigSpec.DoubleValue WAVE_MOB_DAMAGE_BONUS;
+    // 集氢罩 / 甲烷泵 / 托林堆肥槽调优
+    public static final ModConfigSpec.IntValue HYDROGEN_PRODUCE_INTERVAL;
+    public static final ModConfigSpec.IntValue HYDROGEN_FLUID_PER_INTERVAL;
+    public static final ModConfigSpec.IntValue HYDROGEN_TANK_CAPACITY;
+    public static final ModConfigSpec.IntValue PUMP_MAX_PROGRESS;
+    public static final ModConfigSpec.IntValue PUMP_WAVE_COUNT;
+    public static final ModConfigSpec.IntValue PUMP_MAX_INTEGRITY;
+    public static final ModConfigSpec.DoubleValue PUMP_ATTACK_RADIUS;
+    public static final ModConfigSpec.IntValue PUMP_TANK_CAPACITY;
+    public static final ModConfigSpec.IntValue PUMP_FLUID_PER_TICK;
+    public static final ModConfigSpec.IntValue PUMP_ITEM_INTERVAL;
+    public static final ModConfigSpec.IntValue PUMP_EXTRACTION_PER_INTENSITY;
+    public static final ModConfigSpec.IntValue COMPOSTER_PROCESS_INTERVAL;
     *///?}
 
     //? if forge {
@@ -88,6 +114,52 @@ public final class TSConfig {
                 .comment("塔防波次怪的额外攻击力（点，叠加在基础攻击之上）。")
                 .defineInRange("waveMobDamageBonus", 0.0D, 0.0D, 20.0D);
         builder.pop();
+
+        builder.comment("集氢罩（Hydrogen Collector）——被动产液氢。").push("hydrogen_collector");
+        HYDROGEN_PRODUCE_INTERVAL = builder
+                .comment("每次产出液氢的间隔 tick。")
+                .defineInRange("produceInterval", 20, 1, 1200);
+        HYDROGEN_FLUID_PER_INTERVAL = builder
+                .comment("每次产出的液氢量（mB）。")
+                .defineInRange("fluidPerInterval", 100, 1, 100000);
+        HYDROGEN_TANK_CAPACITY = builder
+                .comment("集氢罩内部流体槽容量（mB）。")
+                .defineInRange("tankCapacity", 8000, 1000, 100000000);
+        builder.pop();
+
+        builder.comment("甲烷泵（Special Methane Pump）——开采塔防状态机。").push("methane_pump");
+        PUMP_MAX_PROGRESS = builder
+                .comment("完成一次开采所需 tick（满进度）。")
+                .defineInRange("maxProgress", 2400, 200, 720000);
+        PUMP_WAVE_COUNT = builder
+                .comment("一次开采的总波数。")
+                .defineInRange("waveCount", 5, 1, 50);
+        PUMP_MAX_INTEGRITY = builder
+                .comment("泵完整度上限。")
+                .defineInRange("maxIntegrity", 100, 10, 100000);
+        PUMP_ATTACK_RADIUS = builder
+                .comment("怪物「攻击」泵的判定半径（格）。")
+                .defineInRange("attackRadius", 2.5D, 1.0D, 16.0D);
+        PUMP_TANK_CAPACITY = builder
+                .comment("甲烷泵内部流体槽容量（mB）。")
+                .defineInRange("tankCapacity", 16000, 1000, 100000000);
+        PUMP_FLUID_PER_TICK = builder
+                .comment("运行期每 tick 产出的液态甲烷（mB）。")
+                .defineInRange("fluidPerTick", 8, 1, 100000);
+        PUMP_ITEM_INTERVAL = builder
+                .comment("运行期每隔多少 tick 产出一次材料。")
+                .defineInRange("itemInterval", 240, 20, 72000);
+        PUMP_EXTRACTION_PER_INTENSITY = builder
+                .comment("每累计抽取多少 mB 提升 1 点生态压力（波次强度）。")
+                .defineInRange("extractionPerIntensity", 4000, 100, 100000000);
+        builder.pop();
+
+        builder.comment("托林堆肥槽（Tholin Composter）——被动分解产托林粉末。").push("tholin_composter");
+        COMPOSTER_PROCESS_INTERVAL = builder
+                .comment("每转化 1 份生物残渣→托林粉末所需 tick。")
+                .defineInRange("processInterval", 160, 1, 72000);
+        builder.pop();
+
         SPEC = builder.build();
     }
 

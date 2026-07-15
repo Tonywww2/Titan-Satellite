@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 液甲烷倾瀑（T7.2 · 宏伟地物）：在液态甲烷深渊的陡崖边缘，沿最大落差方向挂一道液态甲烷瀑布片
+ * 液甲烷倾瀑（宏伟地物）：在液态甲烷深渊的陡崖边缘，沿最大落差方向挂一道液态甲烷瀑布片
  * （崖顶喂给池 + 贴崖面竖直液帘 + 崖底积潭）。
  *
  * <p>仅在存在明显落差（≥5 格）的崖沿生成，否则放弃——保证是「倾瀑」而非平地水洼。液体直接以方块铺设
@@ -50,6 +50,8 @@ public class MethaneCascadeFeature extends Feature<NoneFeatureConfiguration> {
         if (bestDir == null || drop < 5) {
             return false;
         }
+        int minY = level.getMinBuildHeight();
+        int floorLimit = Math.max(lowest, minY + 5);   // 基岩守卫：液帘/积潭不低于基岩带
 
         BlockState methane = TSBlocks.LIQUID_METHANE_BLOCK.get().defaultBlockState();
         BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
@@ -69,7 +71,7 @@ public class MethaneCascadeFeature extends Feature<NoneFeatureConfiguration> {
             }
         }
         // 贴崖面竖直液帘（宽 3），从崖顶淌到崖底
-        for (int y = topY; y >= lowest; y--) {
+        for (int y = topY; y >= floorLimit; y--) {
             for (int w = -1; w <= 1; w++) {
                 pos.set(edgeX + perpX * w, y, edgeZ + perpZ * w);
                 if (level.getBlockState(pos).isAir()) {
@@ -81,7 +83,7 @@ public class MethaneCascadeFeature extends Feature<NoneFeatureConfiguration> {
         }
         // 崖底积潭
         for (int w = -1; w <= 1; w++) {
-            pos.set(edgeX + perpX * w, lowest, edgeZ + perpZ * w);
+            pos.set(edgeX + perpX * w, floorLimit, edgeZ + perpZ * w);
             if (!level.getBlockState(pos).isAir()) {
                 setBlock(level, pos, methane);
                 level.scheduleTick(pos.immutable(), methane.getFluidState().getType(), 5);

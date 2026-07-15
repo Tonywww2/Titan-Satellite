@@ -19,8 +19,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.function.Supplier;
 
 /**
- * 结构类型 / 结构块类型注册（PF-1）。用<b>自订阅</b>挂到 mod 总线（{@link FMLConstructModEvent}），
- * 不改主类，与 PA-2 的 {@code TSSystemsBootstrap} 同模式（遵 §2.5）。
+ * 结构类型 / 结构块类型注册。用<b>自订阅</b>挂到 mod 总线（{@link FMLConstructModEvent}），
+ * 不改主类，与 {@code TSSystemsBootstrap} 同模式。
  *
  * <p>托林晶洞 / 先驱前哨站共用同一参数化 {@link TitanStructure}（variant 区分），故只需一个
  * {@link StructureType} + 一个 {@link StructurePieceType}；结构本体在 {@code worldgen/structure/*.json}

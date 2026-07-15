@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 /**
- * 甲烷湖特征（PA-2 桩）。M1（PB-3）填充：在深渊/陨坑底部挖出凹陷并填液态甲烷。
+ * 甲烷湖特征：在深渊/陨坑底部挖出凹陷并填液态甲烷。
  */
 public class MethaneLakeFeature extends Feature<NoneFeatureConfiguration> {
 

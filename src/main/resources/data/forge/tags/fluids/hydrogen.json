@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "titan_satellite:liquid_hydrogen",
+    "titan_satellite:flowing_liquid_hydrogen"
+  ]
+}

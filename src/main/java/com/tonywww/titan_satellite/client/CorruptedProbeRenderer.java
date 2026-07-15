@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 /**
- * 失控探测器渲染器（桩，复用原版史莱姆模型作占位）。真实模型/贴图由 M2 / PC-3 替换。
+ * 失控探测器渲染器：复用原版史莱姆模型（占位）。
  */
 public class CorruptedProbeRenderer extends MobRenderer<CorruptedProbe, SlimeModel<CorruptedProbe>> {
 
