@@ -36,6 +36,14 @@ versionRange = "[9.2,)"
 ordering = "AFTER"
 side = "BOTH"
 
+# GeckoLib 前置（实体动画）：甲烷微浮群的模型/动画渲染依赖，必需
+[[dependencies.titan_moon]]
+modId = "geckolib"
+type = "required"
+versionRange = "[4.7,)"
+ordering = "AFTER"
+side = "BOTH"
+
 # 可选前置（联动配方用；缺省不影响加载）
 [[dependencies.titan_moon]]
 modId = "create"

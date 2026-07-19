@@ -22,14 +22,43 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib.animatable.GeoEntity;
+//? if forge {
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+//?} else {
+/*import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.RawAnimation;
+import software.bernie.geckolib.animation.PlayState;
+*///?}
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 /**
  * 甲烷浮游体（Aero-Jelly）：漂浮在大气中的被动生物。
  * <p>无重力 + 飞行导航（{@link FlyingMoveControl} / {@link FlyingPathNavigation}）实现平滑悬浮——
  * 天然不受他模组重力属性影响、无抖动；软性限制在地表上方低-中空 Y 带 [+6, +22] 内，避免飞太高/贴地。
- * 渲染复用史莱姆模型（占位）。
+ * <p>GeckoLib 动画：{@code idle_hover}(静止悬停) / {@code swim_drift}(移动喷推) / {@code flee}(遇织体蛛急逃)
+ * 由主控制器按状态自动切换；{@code filter_feed}(滤食) / {@code hurt}(受击) / {@code death}(死亡) 由事件触发；
+ * {@code look_at_player}(伞顶朝玩家) 为叠加层持续播放。
  */
-public class AeroJelly extends PathfinderMob {
+public class AeroJelly extends PathfinderMob implements GeoEntity {
+
+    private static final RawAnimation IDLE_HOVER = RawAnimation.begin().thenLoop("animation.idle_hover");
+    private static final RawAnimation SWIM_DRIFT = RawAnimation.begin().thenLoop("animation.swim_drift");
+    private static final RawAnimation FLEE = RawAnimation.begin().thenLoop("animation.flee");
+    private static final RawAnimation FILTER_FEED = RawAnimation.begin().thenPlay("animation.filter_feed");
+    private static final RawAnimation LOOK_AT_PLAYER = RawAnimation.begin().thenLoop("animation.look_at_player");
+    private static final RawAnimation HURT = RawAnimation.begin().thenPlay("animation.hurt");
+    private static final RawAnimation DEATH = RawAnimation.begin().thenPlay("animation.death");
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     public AeroJelly(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
@@ -93,6 +122,66 @@ public class AeroJelly extends PathfinderMob {
         return false;
     }
 
+    /** 受击：触发 hurt 动画（伞体骤缩凹陷、内光闪红由渲染层表现）。 */
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        boolean result = super.hurt(source, amount);
+        if (result && !this.level().isClientSide && this.isAlive()) {
+            this.triggerAnim("action", "hurt");
+        }
+        return result;
+    }
+
+    /** 死亡：触发 death 动画（膜体泄气瘪缩、螺旋下沉），并冒一小团泄气白雾。 */
+    @Override
+    public void die(DamageSource source) {
+        if (!this.level().isClientSide) {
+            this.triggerAnim("action", "death");
+            if (this.level() instanceof ServerLevel server) {
+                server.sendParticles(ParticleTypes.CLOUD,
+                        this.getX(), this.getY() + 0.4D, this.getZ(),
+                        16, 0.25D, 0.25D, 0.25D, 0.02D);
+            }
+        }
+        super.die(source);
+    }
+
+    // ---------------------------------------------------------------- GeckoLib
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        // 主控制器：按状态在 flee / swim_drift / idle_hover 之间平滑切换（5 tick 过渡）。
+        controllers.add(new AnimationController<>(this, "movement", 5, this::movementPredicate));
+        // 动作控制器：滤食 / 受击 / 死亡 由事件触发（即时，无过渡）。
+        controllers.add(new AnimationController<>(this, "action", 0, state -> PlayState.STOP)
+                .triggerableAnim("filter_feed", FILTER_FEED)
+                .triggerableAnim("hurt", HURT)
+                .triggerableAnim("death", DEATH));
+        // 叠加层：伞顶朝玩家缓转，持续播放、不打断搏动（look_at_player 仅动 bell 旋转，与搏动的 bell 缩放不冲突）。
+        controllers.add(new AnimationController<>(this, "look", 0, state -> state.setAndContinue(LOOK_AT_PLAYER)));
+    }
+
+    private PlayState movementPredicate(AnimationState<AeroJelly> state) {
+        if (this.isFleeing()) {
+            return state.setAndContinue(FLEE);
+        }
+        if (state.isMoving()) {
+            return state.setAndContinue(SWIM_DRIFT);
+        }
+        return state.setAndContinue(IDLE_HOVER);
+    }
+
+    /** 附近（10 格内）出现活着的托林织体蛛时判定为逃逸状态，驱动 flee 循环动画。 */
+    private boolean isFleeing() {
+        return !this.level().getEntitiesOfClass(TholinWeaver.class,
+                this.getBoundingBox().inflate(10.0D), Mob::isAlive).isEmpty();
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return this.cache;
+    }
+
     /** 滤食 AI：游向最近的甲烷微浮群并吸收（治疗 + 粒子）。 */
     private static class FilterFeedGoal extends Goal {
 
@@ -116,6 +205,14 @@ public class AeroJelly extends PathfinderMob {
         @Override
         public boolean canContinueToUse() {
             return this.target != null && this.target.isAlive();
+        }
+
+        /** 锁定猎物开始滤食：触发 filter_feed 动画（触须前伸张网）。 */
+        @Override
+        public void start() {
+            if (!this.jelly.level().isClientSide) {
+                this.jelly.triggerAnim("action", "filter_feed");
+            }
         }
 
         @Override
