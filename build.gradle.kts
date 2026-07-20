@@ -208,7 +208,12 @@ tasks {
         filesMatching(listOf("META-INF/mods.toml", "META-INF/neoforge.mods.toml", "pack.mcmeta", "assets/titan_moon/models/item/liquid_methane_bucket.json", "assets/titan_moon/models/item/liquid_ammonia_bucket.json", "data/titan_moon/dimension/titan_orbit.json")) { expand(props) }
         exclude(if (loader == "neoforge") "META-INF/mods.toml" else "META-INF/neoforge.mods.toml")
     }
-    withType<JavaCompile> { options.release = javaVersion }
+    withType<JavaCompile> {
+        options.release = javaVersion
+        // 源码含中文注释/字符串，显式指定 UTF-8，避免 javac 用平台默认编码（中文 Windows 为 GBK）
+        // 解码 UTF-8 源文件导致“非法字符”编译失败。
+        options.encoding = "UTF-8"
+    }
 }
 
 java {

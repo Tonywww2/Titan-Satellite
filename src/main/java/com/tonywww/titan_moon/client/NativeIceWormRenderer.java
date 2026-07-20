@@ -1,32 +1,19 @@
 package com.tonywww.titan_moon.client;
 
-import com.tonywww.titan_moon.TitanMoon;
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.tonywww.titan_moon.entity.NativeIceWorm;
-import net.minecraft.client.model.SilverfishModel;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 /**
- * 原生冰虫渲染器：复用放大的原版蟹虫模型（占位）。
+ * 原生冰虫渲染器（GeckoLib）：约 2.4m 纺锤形分节钻地环节虫 Boss——蓝白甲烷冰甲 / 深色托林肉、
+ * 背脊与侧向冰晶尖刺、前端多环冰颚巨口。
+ * <p>渲染类型默认 entityCutoutNoCull（不剔除背面——建模阶段已清除共面 z-fighting）；
+ * 阴影半径 1.2（大型 Boss 体型）。
  */
-public class NativeIceWormRenderer extends MobRenderer<NativeIceWorm, SilverfishModel<NativeIceWorm>> {
-
-    private static final ResourceLocation TEXTURE = TitanMoon.rl("textures/entity/native_ice_worm.png");
+public class NativeIceWormRenderer extends GeoEntityRenderer<NativeIceWorm> {
 
     public NativeIceWormRenderer(EntityRendererProvider.Context context) {
-        super(context, new SilverfishModel<>(context.bakeLayer(ModelLayers.SILVERFISH)), 0.6F);
-    }
-
-    @Override
-    protected void scale(NativeIceWorm entity, PoseStack pose, float partialTick) {
-        pose.scale(2.0F, 2.0F, 2.0F);
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(NativeIceWorm entity) {
-        return TEXTURE;
+        super(context, new NativeIceWormModel());
+        this.shadowRadius = 1.2F;
     }
 }

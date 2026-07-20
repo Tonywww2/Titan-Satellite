@@ -1,26 +1,18 @@
 package com.tonywww.titan_moon.client;
 
-import com.tonywww.titan_moon.TitanMoon;
 import com.tonywww.titan_moon.entity.CorruptedProbe;
-import net.minecraft.client.model.SlimeModel;
-import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 /**
- * 失控探测器渲染器：复用原版史莱姆模型（占位）。
+ * 失控探测器渲染器（GeckoLib）：腐蚀金属灰椭球机体 + 发光蓝镜头/激光口（512² 高清贴图、128 UV 空间）。
+ * <p>模型按 Blockbench 像素建（16px = 1m），悬浮无人机；默认缩放（1.0），
+ * 渲染类型 {@code entityCutoutNoCull}（不剔除背面——建模阶段已按面 UV 化并清除共面 z-fighting）。
  */
-public class CorruptedProbeRenderer extends MobRenderer<CorruptedProbe, SlimeModel<CorruptedProbe>> {
-
-    private static final ResourceLocation TEXTURE = TitanMoon.rl("textures/entity/corrupted_probe.png");
+public class CorruptedProbeRenderer extends GeoEntityRenderer<CorruptedProbe> {
 
     public CorruptedProbeRenderer(EntityRendererProvider.Context context) {
-        super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.5F);
-    }
-
-    @Override
-    public ResourceLocation getTextureLocation(CorruptedProbe entity) {
-        return TEXTURE;
+        super(context, new CorruptedProbeModel());
+        this.shadowRadius = 0.5F;
     }
 }

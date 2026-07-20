@@ -1,0 +1,277 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.tholin_weaver",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "tholin_weaver",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "tholin_weaver",
+					"pivot": [0, 3, 0]
+				},
+				{
+					"name": "cephalothorax",
+					"parent": "body",
+					"pivot": [0, 3.5, -1],
+					"cubes": [
+						{"origin": [-3.5, 2.4, -3.5], "size": [7, 2.5, 6], "uv": [34, 1]},
+						{"origin": [-2.6, 4.2, -4.5], "size": [5.2, 1.5, 1.7], "uv": [1, 14]},
+						{"origin": [0.2, 4.3, -5.3], "size": [1.3, 1.25, 1], "uv": [98, 19]},
+						{"origin": [-1.5, 4.3, -5.3], "size": [1.3, 1.25, 1], "uv": [104, 19]},
+						{"origin": [1.65, 4.55, -4.9], "size": [0.85, 0.85, 0.7], "uv": [42, 26]},
+						{"origin": [-2.5, 4.55, -4.9], "size": [0.85, 0.85, 0.7], "uv": [47, 26]},
+						{"origin": [0.15, 5.55, -4], "size": [0.7, 0.65, 0.7], "uv": [52, 26]},
+						{"origin": [-0.85, 5.55, -4], "size": [0.7, 0.65, 0.7], "uv": [56, 26]},
+						{"origin": [1.5, 5.4, -3.85], "size": [0.75, 0.65, 0.65], "uv": [60, 26]},
+						{"origin": [-2.25, 5.4, -3.85], "size": [0.75, 0.65, 0.65], "uv": [64, 26]},
+						{"origin": [0.9, 4.7, -1.2], "size": [1.2, 0.85, 1.6], "uv": [110, 19]},
+						{"origin": [-2, 4.7, -0.3], "size": [1.2, 0.7, 1.7], "uv": [117, 19]},
+						{"origin": [-0.6, 4.7, 1], "size": [1.3, 0.65, 1.3], "uv": [68, 26]}
+					],
+					"locators": {
+						"mouth": [0, 2.5, -6]
+					}
+				},
+				{
+					"name": "chelicera_l",
+					"parent": "cephalothorax",
+					"pivot": [-1.1, 3, -4],
+					"rotation": [-30, 0, 0],
+					"cubes": [
+						{"origin": [-1.7, 0.5, -4.6], "size": [1.2, 2.7, 1.2], "uv": [99, 1]},
+						{"origin": [-1.35, -1.3, -4.35], "size": [0.5, 2, 0.6], "uv": [67, 19]}
+					]
+				},
+				{
+					"name": "chelicera_r",
+					"parent": "cephalothorax",
+					"pivot": [1.1, 3, -4],
+					"rotation": [-30, 0, 0],
+					"cubes": [
+						{"origin": [0.5, 0.5, -4.6], "size": [1.2, 2.7, 1.2], "uv": [105, 1]},
+						{"origin": [0.85, -1.3, -4.35], "size": [0.5, 2, 0.6], "uv": [71, 19]}
+					]
+				},
+				{
+					"name": "pedipalp_l",
+					"parent": "cephalothorax",
+					"pivot": [-2.2, 2.8, -4.5],
+					"rotation": [-20, 10, 0],
+					"cubes": [
+						{"origin": [-2.6, 1.8, -6], "size": [0.8, 1.1, 2], "uv": [111, 1]}
+					]
+				},
+				{
+					"name": "pedipalp_r",
+					"parent": "cephalothorax",
+					"pivot": [2.2, 2.8, -4.5],
+					"rotation": [-20, -10, 0],
+					"cubes": [
+						{"origin": [1.8, 1.8, -6], "size": [0.8, 1.1, 2], "uv": [118, 1]}
+					]
+				},
+				{
+					"name": "leg_l1",
+					"parent": "cephalothorax",
+					"pivot": [-3.2, 3.5, -3],
+					"rotation": [0, -35, 45],
+					"cubes": [
+						{"origin": [-8.2, 3, -3.6], "size": [5, 1, 1.2], "uv": [44, 14]},
+						{"origin": [-5.32, 3.7, -3.21], "size": [0.42, 1.8, 0.42], "uv": [43, 19]},
+						{"origin": [-6.92, 3.7, -3.21], "size": [0.42, 1.5, 0.42], "uv": [18, 26]}
+					]
+				},
+				{
+					"name": "leg_l1_low",
+					"parent": "leg_l1",
+					"pivot": [-8.2, 3.5, -3],
+					"rotation": [0, 0, -120],
+					"cubes": [
+						{"origin": [-15.2, 3.2, -3.3], "size": [7, 0.6, 0.6], "uv": [1, 23]}
+					]
+				},
+				{
+					"name": "leg_l2",
+					"parent": "cephalothorax",
+					"pivot": [-3.5, 3.5, -1],
+					"rotation": [0, -13, 45],
+					"cubes": [
+						{"origin": [-8.5, 3, -1.6], "size": [5, 1, 1.2], "uv": [58, 14]},
+						{"origin": [-5.62, 3.7, -1.21], "size": [0.42, 1.8, 0.42], "uv": [46, 19]},
+						{"origin": [-7.22, 3.7, -1.21], "size": [0.42, 1.5, 0.42], "uv": [21, 26]}
+					]
+				},
+				{
+					"name": "leg_l2_low",
+					"parent": "leg_l2",
+					"pivot": [-8.5, 3.5, -1],
+					"rotation": [0, 0, -120],
+					"cubes": [
+						{"origin": [-15.5, 3.2, -1.3], "size": [7, 0.6, 0.6], "uv": [18, 23]}
+					]
+				},
+				{
+					"name": "leg_l3",
+					"parent": "cephalothorax",
+					"pivot": [-3.5, 3.5, 0.5],
+					"rotation": [0, 13, 45],
+					"cubes": [
+						{"origin": [-8.5, 3, -0.1], "size": [5, 1, 1.2], "uv": [72, 14]},
+						{"origin": [-5.62, 3.7, 0.29], "size": [0.42, 1.8, 0.42], "uv": [49, 19]},
+						{"origin": [-7.22, 3.7, 0.29], "size": [0.42, 1.5, 0.42], "uv": [24, 26]}
+					]
+				},
+				{
+					"name": "leg_l3_low",
+					"parent": "leg_l3",
+					"pivot": [-8.5, 3.5, 0.5],
+					"rotation": [0, 0, -120],
+					"cubes": [
+						{"origin": [-15.5, 3.2, 0.2], "size": [7, 0.6, 0.6], "uv": [35, 23]}
+					]
+				},
+				{
+					"name": "leg_l4",
+					"parent": "cephalothorax",
+					"pivot": [-3.2, 3.5, 2],
+					"rotation": [0, 38, 45],
+					"cubes": [
+						{"origin": [-8.2, 3, 1.4], "size": [5, 1, 1.2], "uv": [86, 14]},
+						{"origin": [-5.32, 3.7, 1.79], "size": [0.42, 1.8, 0.42], "uv": [52, 19]},
+						{"origin": [-6.92, 3.7, 1.79], "size": [0.42, 1.5, 0.42], "uv": [27, 26]}
+					]
+				},
+				{
+					"name": "leg_l4_low",
+					"parent": "leg_l4",
+					"pivot": [-8.2, 3.5, 2],
+					"rotation": [0, 0, -120],
+					"cubes": [
+						{"origin": [-15.2, 3.2, 1.7], "size": [7, 0.6, 0.6], "uv": [52, 23]}
+					]
+				},
+				{
+					"name": "leg_r1",
+					"parent": "cephalothorax",
+					"pivot": [3.2, 3.5, -3],
+					"rotation": [0, 38, -45],
+					"cubes": [
+						{"origin": [3.2, 3, -3.6], "size": [5, 1, 1.2], "uv": [100, 14]},
+						{"origin": [4.9, 3.7, -3.21], "size": [0.42, 1.8, 0.42], "uv": [55, 19]},
+						{"origin": [6.5, 3.7, -3.21], "size": [0.42, 1.5, 0.42], "uv": [30, 26]}
+					]
+				},
+				{
+					"name": "leg_r1_low",
+					"parent": "leg_r1",
+					"pivot": [8.2, 3.5, -3],
+					"rotation": [0, 0, 120],
+					"cubes": [
+						{"origin": [8.2, 3.2, -3.3], "size": [7, 0.6, 0.6], "uv": [69, 23]}
+					]
+				},
+				{
+					"name": "leg_r2",
+					"parent": "cephalothorax",
+					"pivot": [3.5, 3.5, -1],
+					"rotation": [0, 13, -45],
+					"cubes": [
+						{"origin": [3.5, 3, -1.6], "size": [5, 1, 1.2], "uv": [1, 19]},
+						{"origin": [5.2, 3.7, -1.21], "size": [0.42, 1.8, 0.42], "uv": [58, 19]},
+						{"origin": [6.8, 3.7, -1.21], "size": [0.42, 1.5, 0.42], "uv": [33, 26]}
+					]
+				},
+				{
+					"name": "leg_r2_low",
+					"parent": "leg_r2",
+					"pivot": [8.5, 3.5, -1],
+					"rotation": [0, 0, 120],
+					"cubes": [
+						{"origin": [8.5, 3.2, -1.3], "size": [7, 0.6, 0.6], "uv": [86, 23]}
+					]
+				},
+				{
+					"name": "leg_r3",
+					"parent": "cephalothorax",
+					"pivot": [3.5, 3.5, 0.5],
+					"rotation": [0, -13, -45],
+					"cubes": [
+						{"origin": [3.5, 3, -0.1], "size": [5, 1, 1.2], "uv": [15, 19]},
+						{"origin": [5.2, 3.7, 0.29], "size": [0.42, 1.8, 0.42], "uv": [61, 19]},
+						{"origin": [6.8, 3.7, 0.29], "size": [0.42, 1.5, 0.42], "uv": [36, 26]}
+					]
+				},
+				{
+					"name": "leg_r3_low",
+					"parent": "leg_r3",
+					"pivot": [8.5, 3.5, 0.5],
+					"rotation": [0, 0, 120],
+					"cubes": [
+						{"origin": [8.5, 3.2, 0.2], "size": [7, 0.6, 0.6], "uv": [103, 23]}
+					]
+				},
+				{
+					"name": "leg_r4",
+					"parent": "cephalothorax",
+					"pivot": [3.2, 3.5, 2],
+					"rotation": [0, -38, -45],
+					"cubes": [
+						{"origin": [3.2, 3, 1.4], "size": [5, 1, 1.2], "uv": [29, 19]},
+						{"origin": [4.9, 3.7, 1.79], "size": [0.42, 1.8, 0.42], "uv": [64, 19]},
+						{"origin": [6.5, 3.7, 1.79], "size": [0.42, 1.5, 0.42], "uv": [39, 26]}
+					]
+				},
+				{
+					"name": "leg_r4_low",
+					"parent": "leg_r4",
+					"pivot": [8.2, 3.5, 2],
+					"rotation": [0, 0, 120],
+					"cubes": [
+						{"origin": [8.2, 3.2, 1.7], "size": [7, 0.6, 0.6], "uv": [1, 26]}
+					]
+				},
+				{
+					"name": "abdomen",
+					"parent": "body",
+					"pivot": [0, 4, 5],
+					"cubes": [
+						{"origin": [-4, 2.5, 2], "size": [8, 3.5, 8], "uv": [1, 1]},
+						{"origin": [-3, 5.8, 3], "size": [6, 1.6, 6.5], "uv": [61, 1]},
+						{"origin": [0.3, 7.2, 3.8], "size": [1.3, 0.95, 1.6], "uv": [75, 19]},
+						{"origin": [-1.8, 7.2, 5], "size": [1.4, 0.85, 1.9], "uv": [82, 19]},
+						{"origin": [-0.7, 7.2, 7], "size": [1.6, 0.75, 1.6], "uv": [90, 19]},
+						{"origin": [3.6, 3.4, 3.8], "size": [1, 1.5, 1.8], "uv": [16, 14]},
+						{"origin": [-4.6, 3.1, 5.4], "size": [1, 1.7, 2], "uv": [23, 14]},
+						{"origin": [-4.6, 2.8, 2.8], "size": [1, 1.5, 1.7], "uv": [30, 14]},
+						{"origin": [3.6, 2.8, 7], "size": [1, 1.5, 1.8], "uv": [37, 14]}
+					],
+					"locators": {
+						"back": [0, 7.6, 5]
+					}
+				},
+				{
+					"name": "gland",
+					"parent": "abdomen",
+					"pivot": [0, 3, 10],
+					"cubes": [
+						{"origin": [-1.5, 2, 9], "size": [3, 2, 2.5], "uv": [87, 1]}
+					],
+					"locators": {
+						"spinneret": [0, 3, 11.5]
+					}
+				}
+			]
+		}
+	]
+}

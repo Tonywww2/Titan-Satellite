@@ -69,18 +69,28 @@ public final class RangedHitscan {
         private final int chargeTicks;
         private final int cooldownTicks;
         private final Consumer<LivingEntity> fire;
+        private final Runnable onChargeStart;
         private int charge;
         private int cooldown;
         private boolean fired;
 
         public AttackGoal(Mob mob, double minRange, double maxRange, int chargeTicks, int cooldownTicks,
                           Consumer<LivingEntity> fire) {
+            this(mob, minRange, maxRange, chargeTicks, cooldownTicks, fire, null);
+        }
+
+        /**
+         * @param onChargeStart 蓄力刚开始（首个蓄力 tick）时回调一次，可用于触发「蓄力预告」动画；{@code null} 表示不回调。
+         */
+        public AttackGoal(Mob mob, double minRange, double maxRange, int chargeTicks, int cooldownTicks,
+                          Consumer<LivingEntity> fire, Runnable onChargeStart) {
             this.mob = mob;
             this.minRangeSqr = minRange * minRange;
             this.maxRangeSqr = maxRange * maxRange;
             this.chargeTicks = chargeTicks;
             this.cooldownTicks = cooldownTicks;
             this.fire = fire;
+            this.onChargeStart = onChargeStart;
             this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
         }
 
@@ -137,6 +147,9 @@ public final class RangedHitscan {
             this.mob.getNavigation().stop();
             if (targetInBand()) {
                 this.charge++;
+                if (this.charge == 1 && this.onChargeStart != null) {
+                    this.onChargeStart.run();
+                }
                 if (this.charge >= this.chargeTicks) {
                     this.fire.accept(target);
                     this.charge = 0;
