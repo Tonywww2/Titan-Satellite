@@ -36,24 +36,33 @@ public final class TMFluidTypes {
             DeferredRegister.create(NeoForgeRegistries.Keys.FLUID_TYPES, TitanMoon.MODID);
     *///?}
 
-    private static final ResourceLocation STILL_TEXTURE = TitanMoon.mcRl("block/water_still");
-    private static final ResourceLocation FLOWING_TEXTURE = TitanMoon.mcRl("block/water_flow");
+    /** 三种流体的染色基色（0xRRGGBB，不含 alpha）；Forge 经 {@link #tinted} 使用，
+     *  NeoForge 经 {@code TitanClientEvents.fluidExt} 复用同一组值，避免两处平台分支色值漂移。 */
+    public static final int COLOR_METHANE = 0xE7E3B8;
+    public static final int COLOR_AMMONIA = 0xBAE8E4;
+    public static final int COLOR_HYDROGEN = 0xCFE8F0;
+    /** 世界液面透明度（0x00 全透明 ~ 0xFF 不透明）；桶物品固定不透明以便辨识。 */
+    public static final int WORLD_ALPHA = 0x99;
+
+    /** 流体贴图：复用原版 water 静止/流动贴图（再按 {@link #tinted} 染色）。 */
+    public static final ResourceLocation STILL_TEXTURE = TitanMoon.parse("block/water_still");
+    public static final ResourceLocation FLOWING_TEXTURE = TitanMoon.parse("block/water_flow");
 
     // 液态甲烷（CH₄，现实中几乎无色透明/LNG）：极寒、密度低于水；极淡暖黄色 + 半透明液面（贴近无色的液态烃）。
     public static final Supplier<FluidType> LIQUID_METHANE = REGISTER.register("liquid_methane",
-            () -> tinted(0xE7E3B8, 0x99, FluidType.Properties.create()
+            () -> tinted(COLOR_METHANE, WORLD_ALPHA, FluidType.Properties.create()
                     .density(450).viscosity(1200).temperature(90)
                     .canSwim(true).canDrown(true)));
 
     // 液态氨（NH₃，现实中几乎无色）：极淡冷青色 + 半透明液面（贴近无色的冷冽液体）。
     public static final Supplier<FluidType> LIQUID_AMMONIA = REGISTER.register("liquid_ammonia",
-            () -> tinted(0xBAE8E4, 0x99, FluidType.Properties.create()
+            () -> tinted(COLOR_AMMONIA, WORLD_ALPHA, FluidType.Properties.create()
                     .density(680).viscosity(1100).temperature(240)
                     .canSwim(true).canDrown(true)));
 
     // 液氢（H₂，深冷液体）：极淡冰蓝、密度极低、极寒；集氢罩被动产出，经 forge:hydrogen/c:hydrogen tag 接入 Mek 转化炉。
     public static final Supplier<FluidType> LIQUID_HYDROGEN = REGISTER.register("liquid_hydrogen",
-            () -> tinted(0xCFE8F0, 0x99, FluidType.Properties.create()
+            () -> tinted(COLOR_HYDROGEN, WORLD_ALPHA, FluidType.Properties.create()
                     .density(70).viscosity(200).temperature(20)
                     .canSwim(false).canDrown(false)));
 

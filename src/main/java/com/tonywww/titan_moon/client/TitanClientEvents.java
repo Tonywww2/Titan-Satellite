@@ -88,9 +88,10 @@ public final class TitanClientEvents {
     /*@SubscribeEvent
     public static void onRegisterClientExtensions(RegisterClientExtensionsEvent event) {
         // NeoForge 无 FluidType.initializeClient，改由此注册流体客户端渲染（复用水贴图 + 甲烷/氨染色）。
-        event.registerFluidType(fluidExt(0xFFE7E3B8, 0x99E7E3B8), TMFluidTypes.LIQUID_METHANE.get());
-        event.registerFluidType(fluidExt(0xFFBAE8E4, 0x99BAE8E4), TMFluidTypes.LIQUID_AMMONIA.get());
-        event.registerFluidType(fluidExt(0xFFCFE8F0, 0x99CFE8F0), TMFluidTypes.LIQUID_HYDROGEN.get());
+        // 色值/贴图统一取自 TMFluidTypes，避免与 Forge 分支重复维护。
+        event.registerFluidType(fluidExt(TMFluidTypes.COLOR_METHANE), TMFluidTypes.LIQUID_METHANE.get());
+        event.registerFluidType(fluidExt(TMFluidTypes.COLOR_AMMONIA), TMFluidTypes.LIQUID_AMMONIA.get());
+        event.registerFluidType(fluidExt(TMFluidTypes.COLOR_HYDROGEN), TMFluidTypes.LIQUID_HYDROGEN.get());
     }
 
     @SubscribeEvent
@@ -103,16 +104,18 @@ public final class TitanClientEvents {
                 TMItems.LIQUID_HYDROGEN_BUCKET.get());
     }
 
-    private static IClientFluidTypeExtensions fluidExt(int itemColor, int worldColor) {
+    private static IClientFluidTypeExtensions fluidExt(int rgb) {
+        final int itemColor = 0xFF000000 | (rgb & 0xFFFFFF);                        // 桶物品用不透明色
+        final int worldColor = (TMFluidTypes.WORLD_ALPHA << 24) | (rgb & 0xFFFFFF); // 世界液面半透明
         return new IClientFluidTypeExtensions() {
             @Override
             public ResourceLocation getStillTexture() {
-                return TitanMoon.mcRl("block/water_still");
+                return TMFluidTypes.STILL_TEXTURE;
             }
 
             @Override
             public ResourceLocation getFlowingTexture() {
-                return TitanMoon.mcRl("block/water_flow");
+                return TMFluidTypes.FLOWING_TEXTURE;
             }
 
             @Override

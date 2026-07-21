@@ -23,6 +23,6 @@ public class TMSoundDefinitionsProvider extends SoundDefinitionsProvider {
     @Override
     public void registerSounds() {
         add("block.titan_fluid.solidify", definition()
-                .with(sound(TitanMoon.mcRl("random/fizz"))));
+                .with(sound(TitanMoon.parse("random/fizz"))));
     }
 }

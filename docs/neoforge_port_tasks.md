@@ -14,7 +14,7 @@
 - [x] NeoForge 已 provision、stonecutterGenerate 正常、`:1.21.1-neoforge:compileJava` 如期报错=待移植
 
 ## 阶段 1 · registry/ + 主类（地基） ✅ 完成（Forge 编译绿）
-- [x] 主类 `TitanMoon`：`@Mod` 总线隔离 + `rl()` / `mcRl()` ResourceLocation 辅助
+- [x] 主类 `TitanMoon`：`@Mod` 总线隔离 + `rl()` / `parse()` ResourceLocation 辅助
 - [x] 9/9 registry 已移植：TSDimensions/TSCreativeTabs/TSBlockEntities/TSMobEffects/TSEntities/
       TSFluids/TSFluidTypes/TSBlocks/TSItems
 - 已确立范式：字段统一 `Supplier<T>`；`DeferredRegister.create(Registries.X, MODID)` 共用；
@@ -71,7 +71,7 @@
 ## 阶段 6 · data/（datagen）+ worldgen/ ✅ 完成（两端 :compileJava 均 BUILD SUCCESSFUL）
 - [x] datagen：NeoForge 保留了 Forge 风格模型生成器（`BlockStateProvider`/`ItemModelProvider`/`LanguageProvider`/
       `SoundDefinitionsProvider`/`BlockTagsProvider`/`DynamicFluidContainerModelBuilder` 同名，只换包 `net.neoforged.neoforge.*`）；
-      `GatherDataEvent`/`ExistingFileHelper` 换包；`new ResourceLocation` → `TitanMoon.rl/mcRl/parse`
+      `GatherDataEvent`/`ExistingFileHelper` 换包；`new ResourceLocation` → `TitanMoon.rl/parse`
 - [x] **1.21 loot datagen 大改**：`LootTableSubProvider.generate(BiConsumer<ResourceKey<LootTable>,…>)`；
       `SubProviderEntry(Function<HolderLookup.Provider,…>,…)`（子 provider 构造器收 provider）；
       `LootingEnchantFunction`→`EnchantedCountIncreaseFunction.lootingMultiplier(provider,…)`；

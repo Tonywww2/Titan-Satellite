@@ -3,6 +3,7 @@ package com.tonywww.titan_moon.fluid;
 import com.tonywww.titan_moon.TitanMoon;
 import com.tonywww.titan_moon.registry.TMBlocks;
 import com.tonywww.titan_moon.registry.TMFluidTypes;
+import com.tonywww.titan_moon.registry.TMSounds;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -31,8 +32,8 @@ import net.neoforged.neoforge.fluids.FluidType;
 
 /**
  * 流体交互补全 + 自装配。液态甲烷与液态氨接触时互相「速冻」成冰，并给出音效与粒子反馈。
- * 经 {@code @EventBusSubscriber} 自订阅（不改冻结主类）：mod 构造期挂 {@link TitanSounds} 注册表，
- * 通用初始化期登记 {@link FluidInteractionRegistry} 交互。
+ * 经 {@code @EventBusSubscriber} 自订阅（不改主类）在通用初始化期登记 {@link FluidInteractionRegistry} 交互；
+ * 速冻音效取自 {@link TMSounds}（其注册表由主类构造器装配）。
  */
 //? if forge {
 @Mod.EventBusSubscriber(modid = TitanMoon.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
@@ -81,7 +82,7 @@ public final class TitanFluidInteractions {
         //?} else {
         /*level.setBlockAndUpdate(pos, EventHooks.fireFluidPlaceBlockEvent(level, pos, pos, result));
         *///?}
-        level.playSound(null, pos, TitanSounds.FLUID_SOLIDIFY.get(), SoundSource.BLOCKS, 0.7F, 1.4F);
+        level.playSound(null, pos, TMSounds.FLUID_SOLIDIFY.get(), SoundSource.BLOCKS, 0.7F, 1.4F);
         if (level instanceof ServerLevel serverLevel) {
             serverLevel.sendParticles(ParticleTypes.CLOUD,
                     pos.getX() + 0.5D, pos.getY() + 0.9D, pos.getZ() + 0.5D,

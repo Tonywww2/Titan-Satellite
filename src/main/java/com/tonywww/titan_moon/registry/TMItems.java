@@ -33,7 +33,7 @@ public final class TMItems {
             DeferredRegister.create(Registries.ITEM, TitanMoon.MODID);
 
     // ---- 材料物品 ----
-    // 浮游薄膜：甲烷浮游体掉落的轻量材料（占位，复用原版幻翼膜贴图）。
+    // 浮游薄膜：甲烷浮游体掉落的轻量材料。
     public static final Supplier<Item> AERO_MEMBRANE = mat("aero_membrane", Rarity.COMMON);
 
     // ---- 方块物品（与 TMBlocks 一一对应，流体方块除外）----

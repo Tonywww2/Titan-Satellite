@@ -42,22 +42,22 @@ public final class TMBlocks {
             DeferredRegister.create(Registries.BLOCK, TitanMoon.MODID);
 
     // ---- 基础地形方块（可作维度 default_block / surface_rule）----
-    // 泰坦基岩：维度基础填充方块（占位，复用深板岩贴图）。
+    // 泰坦基岩：维度基础填充方块（维度 default_block）。
     public static final Supplier<Block> TITAN_STONE = register("titan_stone", () ->
             new Block(props(MapColor.DEEPSLATE, 1.5F, 6.0F, SoundType.DEEPSLATE).requiresCorrectToolForDrops()));
-    // 泰坦玄武岩：甲烷深渊峡谷岩壁（占位，复用黑石贴图）。
+    // 泰坦玄武岩：甲烷深渊峡谷岩壁。
     public static final Supplier<Block> TITAN_BASALT = register("titan_basalt", () ->
             new Block(props(MapColor.COLOR_BLACK, 1.25F, 4.2F, SoundType.BASALT).requiresCorrectToolForDrops()));
-    // 托林沙：托林沙海群系地表（占位，复用沙子贴图）。
+    // 托林沙：托林沙海群系地表。
     public static final Supplier<Block> THOLIN_SAND = register("tholin_sand", () ->
             new Block(props(MapColor.COLOR_ORANGE, 0.5F, 0.5F, SoundType.SAND)));
-    // 碎冰：撞击陨坑荒原地表（占位）。
+    // 碎冰：撞击陨坑荒原地表。
     public static final Supplier<Block> CRUSHED_ICE = register("crushed_ice", () ->
             new Block(props(MapColor.SNOW, 0.5F, 0.5F, SoundType.SNOW)));
-    // 寒冰：冰火山断崖蓝冰变体（占位）。
+    // 寒冰：冰火山断崖蓝冰变体。
     public static final Supplier<Block> CRYO_ICE = register("cryo_ice", () ->
             new Block(props(MapColor.ICE, 2.8F, 2.8F, SoundType.GLASS)));
-    // 甲烷浮冰：极地迷宫冰原浮冰变体（占位）。
+    // 甲烷浮冰：极地迷宫冰原浮冰变体。
     public static final Supplier<Block> PACKED_METHANE_ICE = register("packed_methane_ice", () ->
             new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.5F, 0.5F, SoundType.GLASS)));
 
@@ -78,10 +78,10 @@ public final class TMBlocks {
                     .requiresCorrectToolForDrops().lightLevel(s -> 10)));
 
     // ---- 群系特色化新增表层/装饰方块 ----
-    // 风化泰坦石：荒芜高原 / 撞击陨坑荒原 表层（占位复用 titan_stone 贴图）。
+    // 风化泰坦石：荒芜高原 / 撞击陨坑荒原 表层（复用 titan_stone 贴图）。
     public static final Supplier<Block> WEATHERED_TITAN_STONE = register("weathered_titan_stone", () ->
             new Block(props(MapColor.TERRACOTTA_GRAY, 1.4F, 5.5F, SoundType.STONE).requiresCorrectToolForDrops()));
-    // 沉积泰坦石：液态甲烷深渊 表层（占位复用 titan_basalt 贴图）。
+    // 沉积泰坦石：液态甲烷深渊 表层（复用 titan_basalt 贴图）。
     public static final Supplier<Block> SEDIMENTARY_TITAN_STONE = register("sedimentary_titan_stone", () ->
             new Block(props(MapColor.TERRACOTTA_BROWN, 1.3F, 4.5F, SoundType.STONE).requiresCorrectToolForDrops()));
     // 树枝状结晶：撞击陨坑荒原 地表装饰（十字无碰撞，占位复用原版 warped_roots 形态）。
@@ -89,7 +89,7 @@ public final class TMBlocks {
             new Block(props(MapColor.COLOR_LIGHT_BLUE, 0.0F, 0.0F, SoundType.AMETHYST_CLUSTER)
                     .noCollission().noOcclusion().lightLevel(s -> 4)));
 
-    // ---- 装饰地物新增方块（纯色占位贴图；附加不改现有）----
+    // ---- 装饰地物新增方块（贴图混合：部分自定义、部分纯色占位）----
     // 深渊晶体：液态甲烷深渊 暗紫发光矿物装饰。
     public static final Supplier<Block> ABYSS_CRYSTAL = register("abyss_crystal", () ->
             new Block(props(MapColor.COLOR_PURPLE, 1.5F, 1.5F, SoundType.AMETHYST).lightLevel(s -> 6)));

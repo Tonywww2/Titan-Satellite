@@ -43,7 +43,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 /**
  * 原生冰虫（Native Ice Worm，敌对·精英）：潜伏于极地迷宫冰原深层洞穴 / 冰虫巢穴的精英守卫兼分解者。
  * <p>高血量 + 高护甲/抗击退（近似「钻地突袭」的耐冲击），近战附加「异星毒素」；伏击感由
- * {@link LeapAtTargetGoal} 扑击近似。渲染复用放大的蠹虫模型（占位）。破坏巢穴发光晶体可惊醒之
+ * {@link LeapAtTargetGoal} 扑击近似。破坏巢穴发光晶体可惊醒之
  * （见 {@code TholinCrystalBlock} 惊扰逻辑）。
  */
 public class NativeIceWorm extends Monster implements GeoEntity {

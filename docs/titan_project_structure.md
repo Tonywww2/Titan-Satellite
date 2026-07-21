@@ -7,7 +7,9 @@
 > mod id: `titan_moon`；主包 / group: `com.tonywww.titan_moon`
 > 配套文档: [titan_design.md](titan_design.md)（创意）、[titan_technical_design.md](titan_technical_design.md)（技术方案）
 
-本文档精确到每一个类、字段与方法，反映当前代码真实状态（注册表类采用 `TSXxx` 命名）。
+> ⚠️ **本文档为早期 M0 骨架快照**：注册表命名已同步为 `TMXxx`，但实体（现 8 种、GeckoLib 渲染）、流体色值、方块清单等已大幅演进，命名以外内容请以源码为准。
+
+本文档精确到每一个类、字段与方法（注册表类采用 `TMXxx` 命名）。
 所有类/字段/方法均已通过 `compileJava`；方块/流体/维度已通过 `runServer` 运行时实测。
 
 ---
@@ -28,14 +30,14 @@ Titan_Satellite/
 └─ src/main/
    ├─ java/com/tonywww/titan_moon/
    │  ├─ TitanMoon.java        # @Mod 主类
-   │  ├─ registry/                  # 全部 DeferredRegister（TSXxx）
-   │  │  ├─ TSBlocks.java
-   │  │  ├─ TSItems.java
-   │  │  ├─ TSFluidTypes.java
-   │  │  ├─ TSFluids.java
-   │  │  ├─ TSEntities.java
-   │  │  ├─ TSCreativeTabs.java
-   │  │  └─ TSDimensions.java
+   │  ├─ registry/                  # 全部 DeferredRegister（TMXxx）
+   │  │  ├─ TMBlocks.java
+   │  │  ├─ TMItems.java
+   │  │  ├─ TMFluidTypes.java
+   │  │  ├─ TMFluids.java
+   │  │  ├─ TMEntities.java
+   │  │  ├─ TMCreativeTabs.java
+   │  │  └─ TMDimensions.java
    │  ├─ entity/AeroJelly.java      # 实体类
    │  ├─ client/                    # 仅 Dist.CLIENT
    │  │  ├─ AeroJellyRenderer.java
@@ -73,12 +75,12 @@ Titan_Satellite/
 |---|---|---|
 | `MODID` | `public static final String` = `"titan_moon"` | mod 唯一 id，注册与资源命名空间。 |
 | `LOGGER` | `public static final Logger` (`LogUtils.getLogger()`) | SLF4J 日志器。 |
-| `TitanMoon()` | 构造器 | 取 `FMLJavaModLoadingContext.get().getModEventBus()`；依次 `register(modBus)`：`TSFluidTypes`→`TSFluids`→`TSBlocks`→`TSItems`→`TSEntities`→`TSCreativeTabs`；`modBus.addListener(TSEntities::onAttributeCreation)`；输出加载日志。 |
+| `TitanMoon()` | 构造器 | 取 `FMLJavaModLoadingContext.get().getModEventBus()`；依次 `register(modBus)`：`TMFluidTypes`→`TMFluids`→`TMBlocks`→`TMItems`→`TMEntities`→`TMCreativeTabs`；`modBus.addListener(TMEntities::onAttributeCreation)`；输出加载日志。 |
 
 ### 3.2 `registry` 包
 
-#### `TSBlocks` — 方块注册表
-`REGISTER : DeferredRegister<Block>`（`ForgeRegistries.BLOCKS`）。固体方块的 `BlockItem` 在 `TSItems` 注册；流体方块不注册 `BlockItem`。
+#### `TMBlocks` — 方块注册表
+`REGISTER : DeferredRegister<Block>`（`ForgeRegistries.BLOCKS`）。固体方块的 `BlockItem` 在 `TMItems` 注册；流体方块不注册 `BlockItem`。
 
 字段（`RegistryObject<Block>`，除流体为 `RegistryObject<LiquidBlock>`）：
 
@@ -94,29 +96,29 @@ Titan_Satellite/
 | `METHANE_POOL_CORE` | `methane_pool_core` | 开采塔防触发点（占位） | `block/basalt_top` | 强度 25/1200，发光 3 |
 | `SPECIAL_METHANE_PUMP` | `special_methane_pump` | 抽取泵（占位） | `block/iron_block` | 强度 4/6，金属音效 |
 | `THOLIN_CRYSTAL` | `tholin_crystal` | 晶洞发光材料（占位） | `block/amethyst_block` | 发光 10 |
-| `LIQUID_METHANE_BLOCK` | `liquid_methane` | 液态甲烷流体块（default_fluid） | 流体渲染 | `LiquidBlock(TSFluids.LIQUID_METHANE, …)` |
-| `LIQUID_AMMONIA_BLOCK` | `liquid_ammonia` | 液态氨流体块 | 流体渲染 | `LiquidBlock(TSFluids.LIQUID_AMMONIA, …)` |
+| `LIQUID_METHANE_BLOCK` | `liquid_methane` | 液态甲烷流体块（default_fluid） | 流体渲染 | `LiquidBlock(TMFluids.LIQUID_METHANE, …)` |
+| `LIQUID_AMMONIA_BLOCK` | `liquid_ammonia` | 液态氨流体块 | 流体渲染 | `LiquidBlock(TMFluids.LIQUID_AMMONIA, …)` |
 
 私有方法：
 - `props(MapColor, float destroyTime, float resistance, SoundType)` → `BlockBehaviour.Properties`：统一构造固体方块属性。
 - `liquidProps(MapColor)` → `Properties`：流体块属性（`noCollission().strength(100).noLootTable()`）。
 - `register(String, Supplier<Block>)` → `RegistryObject<Block>`：注册辅助。
 
-#### `TSItems` — 物品注册表
+#### `TMItems` — 物品注册表
 `REGISTER : DeferredRegister<Item>`（`ForgeRegistries.ITEMS`）。
 
 | 常量 | 注册 id | 类型 | 说明 |
 |---|---|---|---|
 | `AERO_MEMBRANE` | `aero_membrane` | `Item` | 甲烷浮游体掉落材料（复用 `item/phantom_membrane`） |
 | `TITAN_STONE` … `THOLIN_CRYSTAL` | 同名 | `BlockItem` | 10 个固体方块对应的方块物品 |
-| `LIQUID_METHANE_BUCKET` | `liquid_methane_bucket` | `BucketItem` | `BucketItem(TSFluids.LIQUID_METHANE, …stacksTo(1).craftRemainder(BUCKET))` |
+| `LIQUID_METHANE_BUCKET` | `liquid_methane_bucket` | `BucketItem` | `BucketItem(TMFluids.LIQUID_METHANE, …stacksTo(1).craftRemainder(BUCKET))` |
 | `LIQUID_AMMONIA_BUCKET` | `liquid_ammonia_bucket` | `BucketItem` | 同上（氨） |
 
 私有方法：
 - `register(String, Supplier<Item>)`：注册辅助。
 - `blockItem(String, RegistryObject<Block>)`：注册 `BlockItem`（延迟 `block.get()`）。
 
-#### `TSFluidTypes` — 流体类型注册表
+#### `TMFluidTypes` — 流体类型注册表
 `REGISTER : DeferredRegister<FluidType>`（`ForgeRegistries.Keys.FLUID_TYPES`）。
 
 | 成员 | 说明 |
@@ -126,7 +128,7 @@ Titan_Satellite/
 | `LIQUID_AMMONIA : RegistryObject<FluidType>` | 密度 680、粘度 1100、温度 240K；淡蓝染色 `0xFF9FC9E8`。 |
 | `tinted(int tintARGB, FluidType.Properties)` | 私有工厂：返回匿名 `FluidType`，覆写 `initializeClient(Consumer<IClientFluidTypeExtensions>)` 提供 still/flowing 贴图与 `getTintColor`（仅客户端加载，服务端不触碰客户端类）。 |
 
-#### `TSFluids` — 流体注册表
+#### `TMFluids` — 流体注册表
 `REGISTER : DeferredRegister<Fluid>`（`ForgeRegistries.FLUIDS`）。每种液体含 Source + Flowing。
 
 | 常量 | 注册 id | 类型 |
@@ -138,9 +140,9 @@ Titan_Satellite/
 
 私有方法 `methaneProperties()` / `ammoniaProperties()` → `ForgeFlowingFluid.Properties`：
 在注册阶段**延迟构建**（绑定 fluidType/source/flowing/block/bucket + slopeFindDistance/levelDecreasePerBlock），
-以此避免与 `TSBlocks`/`TSItems` 的类初始化循环引用。
+以此避免与 `TMBlocks`/`TMItems` 的类初始化循环引用。
 
-#### `TSEntities` — 实体注册表
+#### `TMEntities` — 实体注册表
 `REGISTER : DeferredRegister<EntityType<?>>`（`ForgeRegistries.ENTITY_TYPES`）。
 
 | 成员 | 说明 |
@@ -148,14 +150,14 @@ Titan_Satellite/
 | `AERO_JELLY : RegistryObject<EntityType<AeroJelly>>` | `EntityType.Builder.of(AeroJelly::new, CREATURE).sized(0.9,1.2).clientTrackingRange(8).build("aero_jelly")`。 |
 | `onAttributeCreation(EntityAttributeCreationEvent)` | mod 总线监听：`event.put(AERO_JELLY.get(), AeroJelly.createAttributes().build())`。 |
 
-#### `TSCreativeTabs` — 创造模式物品栏
+#### `TMCreativeTabs` — 创造模式物品栏
 `REGISTER : DeferredRegister<CreativeModeTab>`（`Registries.CREATIVE_MODE_TAB`）。
 
 | 成员 | 说明 |
 |---|---|
 | `TITAN : RegistryObject<CreativeModeTab>` | 标题 `itemGroup.titan_moon.titan`；图标 `AERO_MEMBRANE`；`displayItems` 依次加入浮游薄膜 + 10 固体方块 + 2 流体桶。 |
 
-#### `TSDimensions` — 维度 ResourceKey 常量
+#### `TMDimensions` — 维度 ResourceKey 常量
 无 DeferredRegister，仅存 key 供运行时判定/传送。
 
 | 成员 | 说明 |
@@ -185,7 +187,7 @@ Titan_Satellite/
 `@Mod.EventBusSubscriber(modid=MODID, bus=MOD, value=Dist.CLIENT)`。
 | 成员 | 说明 |
 |---|---|
-| `onRegisterRenderers(EntityRenderersEvent.RegisterRenderers)` `@SubscribeEvent` | 为 `TSEntities.AERO_JELLY` 注册 `AeroJellyRenderer::new`。 |
+| `onRegisterRenderers(EntityRenderersEvent.RegisterRenderers)` `@SubscribeEvent` | 为 `TMEntities.AERO_JELLY` 注册 `AeroJellyRenderer::new`。 |
 
 ### 3.5 `mixin` 包
 - `package-info.java`：Mixin 占位包文档。当前 `titan_moon.mixins.json` 的 `mixins` 为空，按技术方案第六章后续加入。
@@ -246,13 +248,13 @@ Titan_Satellite/
 
 | 注册表 | 类 | 数量 | 内容 |
 |---|---|---|---|
-| `BLOCKS` | `TSBlocks` | 12 | 6 基础地形 + 4 特殊 + 2 流体块 |
-| `ITEMS` | `TSItems` | 13 | 1 材料 + 10 方块物品 + 2 桶 |
-| `FLUID_TYPES` | `TSFluidTypes` | 2 | 甲烷、氨 |
-| `FLUIDS` | `TSFluids` | 4 | 甲烷/氨 各 Source+Flowing |
-| `ENTITY_TYPES` | `TSEntities` | 1 | `aero_jelly` |
-| `CREATIVE_MODE_TAB` | `TSCreativeTabs` | 1 | `titan` |
-| 维度 key | `TSDimensions` | 2 | Level + DimensionType key |
+| `BLOCKS` | `TMBlocks` | 12 | 6 基础地形 + 4 特殊 + 2 流体块 |
+| `ITEMS` | `TMItems` | 13 | 1 材料 + 10 方块物品 + 2 桶 |
+| `FLUID_TYPES` | `TMFluidTypes` | 2 | 甲烷、氨 |
+| `FLUIDS` | `TMFluids` | 4 | 甲烷/氨 各 Source+Flowing |
+| `ENTITY_TYPES` | `TMEntities` | 1 | `aero_jelly` |
+| `CREATIVE_MODE_TAB` | `TMCreativeTabs` | 1 | `titan` |
+| 维度 key | `TMDimensions` | 2 | Level + DimensionType key |
 
 ---
 

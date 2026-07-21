@@ -9,7 +9,7 @@ import com.tonywww.titan_moon.registry.TMFluidTypes;
 import com.tonywww.titan_moon.registry.TMFluids;
 import com.tonywww.titan_moon.registry.TMItems;
 import com.tonywww.titan_moon.registry.TMMobEffects;
-import com.tonywww.titan_moon.fluid.TitanSounds;
+import com.tonywww.titan_moon.registry.TMSounds;
 import net.minecraft.resources.ResourceLocation;
 //? if forge {
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -41,16 +41,6 @@ public class TitanMoon {
         *///?}
     }
 
-    /** minecraft 命名空间下的 ResourceLocation（Forge 构造器 / NeoForge 工厂）。 */
-    @SuppressWarnings("removal")
-    public static ResourceLocation mcRl(String path) {
-        //? if forge {
-        return new ResourceLocation(path);
-        //?} else {
-        /*return ResourceLocation.withDefaultNamespace(path);
-        *///?}
-    }
-
     /** 解析带命名空间的完整串 {@code ns:path}（Forge 构造器 / NeoForge 1.21 parse）。 */
     @SuppressWarnings("removal")
     public static ResourceLocation parse(String str) {
@@ -77,7 +67,7 @@ public class TitanMoon {
         TMMobEffects.REGISTER.register(modBus);
         TMEntities.REGISTER.register(modBus);
         TMCreativeTabs.REGISTER.register(modBus);
-        TitanSounds.REGISTER.register(modBus);
+        TMSounds.REGISTER.register(modBus);
 
         // 实体属性在 mod 总线事件里注入
         modBus.addListener(TMEntities::onAttributeCreation);
